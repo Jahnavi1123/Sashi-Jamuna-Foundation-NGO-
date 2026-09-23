@@ -1756,7 +1756,8 @@ function footer(){
       if (form.id === 'footerNewsletterForm') { e.preventDefault(); if (saveSubscriber($('input[type=email]', form).value)) form.reset(); }
       if (form.id === 'homeEditorForm') {
         e.preventDefault(); if (!isAuthed()) return;
-        var heroData = new FormData(form), heroSettings = {layout:heroData.get('heroLayout') === 'blue' ? 'blue' : 'madhubani'};
+        var heroData = new FormData(form), selectedHeroLayout = String(heroData.get('heroLayout') || '');
+        var heroSettings = {layout:window.SJFHero.defaults[selectedHeroLayout] ? selectedHeroLayout : 'madhubani'};
         window.SJFHero.fields.forEach(function (key) { heroSettings[key] = String(heroData.get(key) || '').trim(); });
         if (set('hero', heroSettings)) toast('Public website hero saved.', 'success');
       }

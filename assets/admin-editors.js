@@ -14,6 +14,12 @@
           <label class="hero-layout-choice"><input type="radio" name="heroLayout" value="blue" ${s.layout === 'blue' ? 'checked' : ''}>
             <span class="hero-choice-body"><span class="hero-choice-picture hero-choice-blue" aria-hidden="true"><span class="hero-choice-copy">Empowering<br><b>Communities.</b></span><span class="hero-choice-tiles"><i>✺</i><i>❀</i><i>✦</i><i>☼</i></span></span><strong>Blue Art Collage</strong><span>Admin portal hero design</span></span>
           </label>
+          <label class="hero-layout-choice"><input type="radio" name="heroLayout" value="heritage" ${s.layout === 'heritage' ? 'checked' : ''}>
+            <span class="hero-choice-body"><span class="hero-choice-picture hero-choice-heritage" aria-hidden="true"><span class="hero-choice-copy">Heritage in<br><b>Every Heart.</b></span><i>✦</i></span><strong>Heritage Ribbon</strong><span>Traditional navy-and-cream design</span></span>
+          </label>
+          <label class="hero-layout-choice"><input type="radio" name="heroLayout" value="community" ${s.layout === 'community' ? 'checked' : ''}>
+            <span class="hero-choice-body"><span class="hero-choice-picture hero-choice-community" aria-hidden="true"><span class="hero-choice-copy">Every Child.<br><b>Every Chance.</b></span></span><strong>Community Portrait</strong><span>Children activity photo design</span></span>
+          </label>
         </fieldset>
         <p class="text-ink/60 text-sm mt-5">Leave a field blank to use the selected layout’s original text.</p>
         <div class="grid sm:grid-cols-2 gap-5 mt-5">${fields.map(([key,label])=>`<div><label class="label" for="edit-${key}">${label}</label><input class="field" id="edit-${key}" name="${key}" maxlength="60" placeholder="${esc(defaults[key])}" value="${esc(s[key] || '')}"></div>`).join('')}
@@ -22,7 +28,8 @@
       </form>`;
     },
     updateHeroHints(form) {
-      const layout = new FormData(form).get('heroLayout') === 'blue' ? 'blue' : 'madhubani';
+      const selected = new FormData(form).get('heroLayout');
+      const layout = window.SJFHero.defaults[selected] ? selected : 'madhubani';
       window.SJFHero.fields.forEach(key => { form.elements.namedItem(key).placeholder = window.SJFHero.defaults[layout][key]; });
     },
     impact() {

@@ -208,6 +208,26 @@ function heroSection(){return `<section id="publicHero" class="relative min-h-[9
   </div>
   <div class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex" aria-hidden="true"><div class="scroll-cue"><span></span></div></div>
 </section><div class="scallop" aria-hidden="true"></div>`;}
+function heritageHero(){return `<section id="publicHero" class="sjf-heritage-hero">
+  <div class="sjf-heritage-pattern" aria-hidden="true"></div>
+  <div class="wrap sjf-heritage-grid"><div class="sjf-heritage-copy">
+    <span class="eyebrow gold">Sashi Jamuna Foundation</span>
+    <h1><span data-home-copy="heroLead1">Heritage in</span> <em data-home-copy="heroAccent1">Every Heart</em>,<br><span data-home-copy="heroLead2">Hope in</span> <em data-home-copy="heroAccent2">Every Home</em>.</h1>
+    <p data-home-copy="heroDescription">Building stronger communities across Bihar through education, culture and shared opportunity.</p>
+    <div class="sjf-heritage-actions"><a href="#donate" class="btn btn-fire">${ic('heart')} Support Our Work</a><a href="#initiatives" class="btn btn-lite">Explore Initiatives ${ic('arrowR')}</a></div>
+  </div><div class="sjf-heritage-art" aria-label="Sashi Jamuna Foundation heritage emblem">
+    <div class="sjf-heritage-orbit"></div>${foundationLogo(150)}<span>Rosera · Bihar</span>
+  </div></div>
+</section>`;}
+function communityHero(){return `<section id="publicHero" class="sjf-community-hero">
+  <div class="sjf-community-photo" role="img" aria-label="Children taking part in a Sashi Jamuna Foundation activity"></div><div class="sjf-community-wash"></div>
+  <div class="wrap sjf-community-grid"><div class="sjf-community-card">
+    ${foundationLogo(62)}<span class="eyebrow">Together for Bihar</span>
+    <h1><span data-home-copy="heroLead1">Every Child.</span><br><em data-home-copy="heroAccent1">Every Chance.</em><br><span data-home-copy="heroLead2">Every</span> <em data-home-copy="heroAccent2">Future.</em></h1>
+    <p data-home-copy="heroDescription">A community-led foundation creating spaces where children learn, grow and belong.</p>
+    <div class="flex flex-wrap gap-3 mt-7"><a href="#volunteer" class="btn btn-fire">${ic('sparkle')} Join Us</a><a href="#donate" class="btn btn-ghost !bg-cream">Donate Now</a></div>
+  </div></div>
+</section>`;}
 function marquee(){const words=['SERVICE','COMPASSION','DIGNITY','COMMUNITY','CULTURE','HOPE'];
  const track=words.map(w=>`<span class="mq-it">${w}</span><i class="dia"></i>`).join('');
  return `<section class="g-navy relative overflow-hidden py-4 border-y-[3px] border-gold/80" aria-hidden="true"><div class="pat-dark"></div>
@@ -612,6 +632,21 @@ function initReveal() {
 function initCounters() {
   $$('[data-count]').forEach(el => { el.textContent = el.dataset.count + (el.dataset.suffix || ''); });
 }
+function initFishCursor() {
+  if (!matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches || $('#sjf-fish-cursor')) return;
+  const cursor=document.createElement('div'), trails=[0,1,2].map(()=>document.createElement('i'));
+  cursor.id='sjf-fish-cursor'; cursor.className='sjf-fish-cursor'; cursor.innerHTML=fish('#F15A24');
+  trails.forEach((t,i)=>{t.className='sjf-fish-trail sjf-fish-trail-'+i;document.body.appendChild(t);}); document.body.appendChild(cursor);
+  document.body.classList.add('sjf-fish-cursor-active');
+  let pointer={x:innerWidth/2,y:innerHeight/2,angle:0}, last={x:pointer.x,y:pointer.y}, dots=trails.map(()=>({x:pointer.x,y:pointer.y})), frame;
+  const paint=()=>{frame=0; let dx=pointer.x-last.x;if(Math.abs(dx)>1) pointer.angle=dx>0?180:0; last={x:pointer.x,y:pointer.y};
+    cursor.style.transform=`translate(${pointer.x-29}px,${pointer.y-29}px) rotate(${pointer.angle}deg)`;
+    dots.forEach((dot,i)=>{const target=i?dots[i-1]:pointer; dot.x+=(target.x-dot.x)*(.2-i*.035);dot.y+=(target.y-dot.y)*(.2-i*.035);trails[i].style.transform=`translate(${dot.x-6}px,${dot.y-6}px)`;trails[i].style.opacity=String(.75-i*.2);});
+  };
+  addEventListener('pointermove',e=>{pointer.x=e.clientX;pointer.y=e.clientY;if(!frame)frame=requestAnimationFrame(paint)},{passive:true});
+  addEventListener('pointerleave',()=>{cursor.style.opacity='0';trails.forEach(t=>t.style.opacity='0');});
+  addEventListener('pointerenter',()=>{cursor.style.opacity='1';});
+}
 function closeMenu() {
   $('#mnav')?.classList.remove('open');
   $('[data-act="nav-toggle"]')?.setAttribute('aria-expanded','false');
@@ -634,7 +669,10 @@ function navigate(name) {
 }
 function selectedHero() {
   const config = window.SJFHero.read();
-  return config.layout === 'blue' ? window.SJFBlueHero.render(config) : heroSection();
+  if (config.layout === 'blue') return window.SJFBlueHero.render(config);
+  if (config.layout === 'heritage') return heritageHero();
+  if (config.layout === 'community') return communityHero();
+  return heroSection();
 }
 function applyHeroCopy() {
   const s = window.SJFHero.resolve(window.SJFHero.read());
@@ -765,6 +803,7 @@ window.addEventListener('scroll',() => {
 },{passive:true});
 window.addEventListener('resize',() => document.documentElement.style.setProperty('--public-header-height',$('#site-head').offsetHeight+'px'));
 render();
+initFishCursor();
 requestAnimationFrame(() => {
   const legacyRoute = sectionName();
   if (location.hash && legacyRoute in PUBLIC_VIEWS && legacyRoute !== currentPage()) location.replace(routeHref(legacyRoute));

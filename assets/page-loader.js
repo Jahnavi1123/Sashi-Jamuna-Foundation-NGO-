@@ -29,7 +29,7 @@
     }
     #sjf-page-loader .sjf-loading-mark img {
       position: relative; z-index: 1; display: block; width: 110px; height: 110px; object-fit: contain;
-      background: rgba(255,255,255,.88); border-radius: 4px; padding: 8px;
+      background: rgba(255,255,255,.88); border-radius: 50%; padding: 8px;
       border: 2px solid rgba(22,75,140,.12);
     }
     #sjf-page-loader .sjf-loading-name {

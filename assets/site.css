@@ -214,6 +214,11 @@
 .hero-choice-picture { display: flex; align-items: center; gap: 10px; padding: 32px 16px; border-radius: 10px; min-height: 160px; overflow: hidden; }
 .hero-choice-cream { background: #fff8e7; color: #164b8c; }
 .hero-choice-blue { background: radial-gradient(ellipse at top left,#804a41,transparent 70%),#0b2c57; color: #fff8e7; }
+.hero-choice-heritage { justify-content:space-between; background:linear-gradient(135deg,#0a2547,#164b8c); color:#fff8e7; }
+.hero-choice-heritage i { display:grid;place-items:center;width:54px;height:54px;border:2px dashed #ff9933;border-radius:50%;color:#ff9933;font-style:normal;font-size:28px;animation:spin 14s linear infinite; }
+.hero-choice-heritage b { color:#ff9933; }
+.hero-choice-community { position:relative;align-items:flex-end;background:linear-gradient(90deg,rgba(10,37,71,.88),rgba(10,37,71,.18)),url('images/video-posters/sjf-video-01.jpg') center/cover; color:#fff8e7; }
+.hero-choice-community b { color:#ff9933; }
 .hero-choice-copy { flex: 1; font: 700 clamp(16px,2vw,24px)/1.15 Georgia,serif; }
 .hero-choice-cream b { color: #f15a24; }
 .hero-choice-blue b { color: #ff8a00; }
