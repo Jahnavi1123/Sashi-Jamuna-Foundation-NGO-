@@ -117,21 +117,24 @@ function confirmBox(msg,onYes){openModal(`<div class="p-8 text-center">
 
 /* ---------------- shell: header & footer ---------------- */
 const NAV=[['home','Home'],['about','About Us'],['initiatives','Initiatives'],['gallery','Gallery'],['videos','Videos'],['news','Updates'],['contact','Contact']];
-function header(){const links=NAV.map(([r,l])=>`<a class="nlink" data-nav="${r}" href="#${r}">${l}</a>`).join('');
+const ROUTES={home:'3.html',about:'about.html',initiatives:'initiatives.html',gallery:'gallery.html',videos:'videos.html',news:'updates.html',donate:'donate.html',volunteer:'volunteer.html',contact:'contact.html'};
+const routeHref=name=>ROUTES[name]||'#'+name;
+const currentPage=()=>document.body.dataset.page||'home';
+function header(){const links=NAV.map(([r,l])=>`<a class="nlink" data-nav="${r}" href="${routeHref(r)}">${l}</a>`).join('');
  return `<header id="site-head" class="sticky top-0 inset-x-0 z-50">
   <div class="bar"><div class="wrap flex items-center justify-between h-16 md:h-20">
-    <a href="#home" class="flex items-center gap-2.5 group" aria-label="Sashi Jamuna Foundation home">
+    <a href="${routeHref('home')}" class="flex items-center gap-2.5 group" aria-label="Sashi Jamuna Foundation home">
       ${foundationLogo(40)}
       <span class="brand-lockup font-disp text-xl md:text-[1.35rem]"><span class="brand-line"><span class="brand-sashi">SASHI</span> <span class="brand-jamuna">Jamuna</span></span><span class="brand-foundation">Foundation</span></span></a>
     <nav class="hidden lg:flex items-center gap-7" aria-label="Primary">${links}</nav>
     <div class="flex items-center gap-3">
-      <a href="#volunteer" class="btn btn-ghost btn-sm hidden md:inline-flex">${ic('sparkle')} Volunteer</a>
-      <a href="#donate" class="btn btn-fire btn-sm">${ic('heart')} Donate</a>
+      <a href="${routeHref('volunteer')}" class="btn btn-ghost btn-sm hidden md:inline-flex">${ic('sparkle')} Volunteer</a>
+      <a href="${routeHref('donate')}" class="btn btn-fire btn-sm">${ic('heart')} Donate</a>
       <button class="lg:hidden w-11 h-11 grid place-items-center rounded-xl border-2 border-navy/20 text-navy" data-act="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mnav">${ic('menu','w-6 h-6')}</button>
     </div></div></div>
   <div id="mnav" class="lg:hidden absolute top-full inset-x-0 bg-cream/98 backdrop-blur border-b-2 border-navy/10 shadow-xl">
-    <nav class="wrap py-4 flex flex-col gap-1" aria-label="Mobile">${NAV.map(([r,l])=>`<a class="px-3 py-3 rounded-xl font-bold text-navy hover:bg-navy/5 flex items-center justify-between" data-nav="${r}" href="#${r}">${l}${ic('chevR','w-4 h-4 opacity-40')}</a>`).join('')}
-    <div class="flex gap-3 px-3 py-3"><a href="#donate" class="btn btn-fire btn-sm flex-1">${ic('heart')} Donate</a><a href="#volunteer" class="btn btn-ghost btn-sm flex-1">${ic('sparkle')} Volunteer</a></div></nav></div>
+    <nav class="wrap py-4 flex flex-col gap-1" aria-label="Mobile">${NAV.map(([r,l])=>`<a class="px-3 py-3 rounded-xl font-bold text-navy hover:bg-navy/5 flex items-center justify-between" data-nav="${r}" href="${routeHref(r)}">${l}${ic('chevR','w-4 h-4 opacity-40')}</a>`).join('')}
+    <div class="flex gap-3 px-3 py-3"><a href="${routeHref('donate')}" class="btn btn-fire btn-sm flex-1">${ic('heart')} Donate</a><a href="${routeHref('volunteer')}" class="btn btn-ghost btn-sm flex-1">${ic('sparkle')} Volunteer</a></div></nav></div>
  </header>`;}
 function footer(){const s=DB.data.settings;
  const soc=(key,brand,label)=>s[key]?`<a href="${esc(s[key])}" target="_blank" rel="noopener" aria-label="${label}" class="w-11 h-11 rounded-full grid place-items-center bg-cream/10 text-cream hover:bg-gold hover:text-night transition">${brand}</a>`
@@ -145,9 +148,9 @@ function footer(){const s=DB.data.settings;
     <div><div class="flex items-center gap-3">${foundationLogo(64)}<span class="brand-lockup font-disp text-2xl"><span class="brand-line"><span class="brand-sashi">SASHI</span> <span class="brand-jamuna">Jamuna</span></span><span class="brand-foundation">Foundation</span></span></div>
       <p class="mt-4 text-cream/70 text-[15px] max-w-sm">A community-driven foundation carrying the colours of Mithila into modern service — rooted in culture, growing hope.</p>
       <div class="mt-5 flex gap-3">${soc('instaUrl',BRAND.ig,'Instagram')}${soc('fbUrl',BRAND.fb,'Facebook')}${soc('ytUrl',BRAND.yt,'YouTube')}</div></div>
-    <div><h4 class="font-disp text-lg text-gold">Quick Links</h4><ul class="mt-4 space-y-2.5 text-cream/75">${NAV.map(([r,l])=>`<li><a class="hover:text-gold transition flex items-center gap-2" href="#${r}"><i class="dia" style="width:6px;height:6px"></i>${l}</a></li>`).join('')}
-      <li><a class="hover:text-gold transition flex items-center gap-2" href="#donate"><i class="dia" style="width:6px;height:6px"></i>Donate</a></li><li><a class="hover:text-gold transition flex items-center gap-2" href="#volunteer"><i class="dia" style="width:6px;height:6px"></i>Volunteer</a></li></ul></div>
-    <div><h4 class="font-disp text-lg text-gold">Our Work</h4><ul class="mt-4 space-y-2.5 text-cream/75">${DB.data.initiatives.slice(0,6).map(i=>`<li><a class="hover:text-gold transition flex items-center gap-2" href="#initiatives"><i class="dia" style="width:6px;height:6px"></i>${esc(i.title)}</a></li>`).join('')}</ul></div>
+    <div><h4 class="font-disp text-lg text-gold">Quick Links</h4><ul class="mt-4 space-y-2.5 text-cream/75">${NAV.map(([r,l])=>`<li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref(r)}"><i class="dia" style="width:6px;height:6px"></i>${l}</a></li>`).join('')}
+      <li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref('donate')}"><i class="dia" style="width:6px;height:6px"></i>Donate</a></li><li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref('volunteer')}"><i class="dia" style="width:6px;height:6px"></i>Volunteer</a></li></ul></div>
+    <div><h4 class="font-disp text-lg text-gold">Our Work</h4><ul class="mt-4 space-y-2.5 text-cream/75">${DB.data.initiatives.slice(0,6).map(i=>`<li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref('initiatives')}"><i class="dia" style="width:6px;height:6px"></i>${esc(i.title)}</a></li>`).join('')}</ul></div>
     <div><h4 class="font-disp text-lg text-gold">Reach Us</h4>
       <ul class="mt-4 space-y-3 text-cream/75 text-[15px]">
         <li class="flex gap-3">${ic('pin','mt-1 text-gold')}<span class="ph !text-cream/60">${esc(finalAddress)}</span></li>
@@ -315,23 +318,7 @@ function viewHome(){const ins=DB.data.initiatives,gals=DB.data.gallery.slice(0,6
    ${secHead('Fresh From the Field','Daily Updates','News, notes and little victories — published straight from the dashboard.')}
    <div class="grid md:grid-cols-3 gap-6 mt-12">${ups.map((u,i)=>updateCard(u,i)).join('')||'<p class="ph">No updates yet.</p>'}</div>
    <div class="text-center mt-8 rv"><a href="#news" class="btn btn-navy">${ic('megaphone')} Read All Updates</a></div>
- </div></section>
- ${divider()}
- <section class="pb-24"><div class="wrap grid lg:grid-cols-[1.35fr_1fr] gap-6">
-   <div class="relative g-fire rounded-3xl p-8 md:p-12 text-cream overflow-hidden rv">
-     <div class="absolute -right-14 -bottom-20 w-80 opacity-25 pointer-events-none" aria-hidden="true">${lotusFan()}</div>
-     <span class="eyebrow gold">Donate</span>
-     <h3 class="font-disp text-3xl md:text-[2.6rem] leading-snug mt-3">Every contribution becomes<br>someone's tomorrow.</h3>
-     <p class="mt-3 text-cream/85 max-w-md">Support the causes you believe in — learning, health, dignity. One-time or monthly, every rupee is a seed.</p>
-     <a href="#donate" class="btn btn-white mt-7">${ic('heart')} Donate Today</a></div>
-   <div class="relative g-navy rounded-3xl p-8 md:p-10 text-cream overflow-hidden rv" style="--d:120ms"><div class="pat-dark" aria-hidden="true"></div>
-     <div class="absolute -right-8 -top-10 w-40 opacity-30 fl" aria-hidden="true">${fish('#168A45','#0E3262')}</div>
-     <span class="eyebrow gold">Volunteer</span>
-     <h3 class="font-disp text-2xl md:text-3xl mt-3 leading-snug">Give a few hours.<br>Change many lives.</h3>
-     <p class="mt-3 text-cream/75 text-[15px]">Join a growing family of doers — on the field, at events, or from home.</p>
-     <a href="#volunteer" class="btn btn-gold mt-7">${ic('sparkle')} Register as Volunteer</a></div>
- </div></section>`;}
-function updateCard(u,i=0){const d=new Date(u.date);
+ </div></section>`;}function updateCard(u,i=0){const d=new Date(u.date);
  return `<article class="card p-6 rv" style="--d:${i*90}ms">${crn()}
   <div class="flex items-center gap-3">
     <span class="cal" aria-hidden="true"><b>${u.date ? d.toLocaleDateString('en-IN',{month:'short'}).toUpperCase() : 'DATE'}</b><span>${u.date ? d.getDate() : '—'}</span></span>
@@ -634,17 +621,14 @@ function activeNav(name) {
     if (active) a.setAttribute('aria-current','location'); else a.removeAttribute('aria-current');
   });
 }
-function sectionName() { const n = location.hash.replace(/^#\/?/,'').split('?')[0] || 'home'; return n === 'updates' ? 'news' : n; }
-function navigate(name, initial = false) {
+function sectionName() { const n = location.hash.replace(/^#\/?/,'').split('?')[0] || currentPage(); return n === 'updates' ? 'news' : n; }
+function navigate(name) {
   if (name === 'admin') { location.assign('admin.html'); return; }
   if (!(name in PUBLIC_VIEWS)) name = 'home';
+  if (name !== currentPage()) { location.assign(routeHref(name)); return; }
   closeMenu();
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
   activeNav(name);
-  if (initial && !location.hash) return;
-  const target = document.getElementById(name);
-  target.scrollIntoView({behavior:initial || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',block:'start'});
-  if (!initial) target.focus({preventScroll:true});
 }
 function selectedHero() {
   const config = window.SJFHero.read();
@@ -665,7 +649,13 @@ function refreshHero() {
 function render() {
   DB.load();
   if (!DB.data.gallery.some(g => g.cat === gfilter)) gfilter = 'All';
-  $('#app').innerHTML = header() + '<main id="main">' + Object.entries(PUBLIC_VIEWS).map(([name,view]) => '<section class="site-section" id="'+name+'" tabindex="-1">'+announcement()+view()+'</section>').join('') + '</main>' + footer();
+  const name = currentPage() in PUBLIC_VIEWS ? currentPage() : 'home';
+  $('#app').innerHTML = header() + '<main id="main"><section class="site-section" id="'+name+'" tabindex="-1">'+announcement()+PUBLIC_VIEWS[name]()+'</section></main>' + footer();
+  $$('a[href^="#"]').forEach(anchor => {
+    let route = anchor.getAttribute('href').replace(/^#\/?/, '');
+    if (route === 'updates') route = 'news';
+    if (route in PUBLIC_VIEWS) anchor.setAttribute('href', routeHref(route));
+  });
   applyHeroCopy();
   // Every submission stays local in the requested demo.
   $$('form[data-form]').forEach(form => {
@@ -673,7 +663,7 @@ function render() {
   });
   initReveal(); initCounters();
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
-  activeNav(sectionName());
+  activeNav(name);
 }
 function saveRecord(key, record) {
   const list = DATA.read(key); list.unshift(record);
@@ -682,12 +672,6 @@ function saveRecord(key, record) {
 }
 
 document.addEventListener('click', e => {
-  const anchor = e.target.closest('a[href^="#"]');
-  if (anchor && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
-    let name = anchor.getAttribute('href').replace(/^#\/?/,'');
-    if (name === 'updates') name = 'news';
-    if (name in PUBLIC_VIEWS) { e.preventDefault(); if (location.hash !== '#'+name) history.pushState(null,'','#'+name); navigate(name); }
-  }
   const pause = e.target.closest('.announcement-toggle');
   if (pause) {
     paused = !paused; document.body.classList.toggle('announcements-paused',paused);
@@ -759,8 +743,10 @@ document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') { LB.i = (LB.i+1)%LB.items.length; paintLB(); }
   }
 });
-window.addEventListener('hashchange',() => navigate(sectionName()));
-window.addEventListener('popstate',() => navigate(sectionName()));
+window.addEventListener('hashchange',() => {
+  const name = sectionName();
+  if (name in PUBLIC_VIEWS && name !== currentPage()) location.replace(routeHref(name));
+});
 window.addEventListener('storage',e => {
   if (e.key === 'sjf_hero') { refreshHero(); return; }
   if (e.key === 'sjf_admin_credentials') return;
@@ -772,12 +758,15 @@ window.addEventListener('scroll',() => {
   if (scrollFrame) return; scrollFrame = true;
   requestAnimationFrame(() => {
     scrollFrame = false; $('#site-head').classList.toggle('scrolled',scrollY > 30);
-    let active = 'home'; const offset = $('#site-head').offsetHeight+80;
-    $$('.site-section').forEach(s => { if (s.getBoundingClientRect().top <= offset) active = s.id; }); activeNav(active);
+    activeNav(currentPage());
   });
 },{passive:true});
 window.addEventListener('resize',() => document.documentElement.style.setProperty('--public-header-height',$('#site-head').offsetHeight+'px'));
 render();
-requestAnimationFrame(() => navigate(sectionName(),true));
+requestAnimationFrame(() => {
+  const legacyRoute = sectionName();
+  if (location.hash && legacyRoute in PUBLIC_VIEWS && legacyRoute !== currentPage()) location.replace(routeHref(legacyRoute));
+  else navigate(currentPage());
+});
 
 })();
