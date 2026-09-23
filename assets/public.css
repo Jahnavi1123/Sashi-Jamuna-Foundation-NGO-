@@ -59,7 +59,7 @@ body{font-family:Mukta,sans-serif;color:#22304A;background-color:#FFF8E7;
 /* cards + Madhubani corners */
 .card{background:#fff;border-radius:1.25rem;border:1.5px solid rgba(22,75,140,.14);box-shadow:0 10px 30px -14px rgba(22,75,140,.2);position:relative;transition:.35s cubic-bezier(.2,.7,.3,1)}
 .card:hover{transform:translateY(-6px);box-shadow:0 26px 46px -14px rgba(22,75,140,.3)}
-.sjf-story-showcase{position:relative;display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:0;align-items:stretch;overflow:hidden;box-shadow:0 20px 40px -18px rgba(22,75,140,.28);background:#fff8e7;min-height:clamp(420px,30vw,560px);width:100vw;margin-inline:calc(50% - 50vw)}
+.sjf-story-showcase{position:relative;left:50%;display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:0;align-items:stretch;overflow:hidden;box-shadow:0 20px 40px -18px rgba(22,75,140,.28);background:#fff8e7;min-height:clamp(420px,30vw,560px);width:100vw;max-width:100vw;margin:0;transform:translateX(-50%);border-radius:0}
 .sjf-story-panel{position:relative;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;overflow:hidden;padding:2.2rem clamp(1.4rem,4vw,4rem);min-height:100%;background-size:cover;background-position:center;color:#fff8e7}
 .sjf-story-panel-orange{background-image:linear-gradient(140deg,rgba(7,43,40,.76),rgba(8,47,57,.6)),url("images/video-posters/sjf-day-17.jpg")}
 .sjf-story-panel-green{background-image:linear-gradient(140deg,rgba(0,83,63,.82),rgba(7,50,75,.64)),url("images/video-posters/sjf-day-16.jpg")}
