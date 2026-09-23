@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sashi Jamuna Foundation | Empowering Communities & Preserving Mithila Heritage</title>
+    <!-- Meta Tags -->
+    <meta name="description" content="Sashi Jamuna Foundation is dedicated to rural development, education, healthcare, and Mithila Madhubani heritage empowerment in Bihar.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#164B8C',
+                            blueDark: '#0D315E',
+                            blueLight: '#2369BC',
+                            cream: '#FFF8E7',
+                            creamDark: '#F4ECD8',
+                            parchment: '#FCF7ED',
+                            terracotta: '#D9532F',
+                            coral: '#E07A5F',
+                            amber: '#D4AC0D',
+                            ochre: '#C87D20',
+                            gold: '#B78A3A',
+                            softPink: '#F7D6D0'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Cinzel', 'serif'],
+                        folk: ['Rozha One', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Canvas Confetti for Donation Celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* Custom Madhubani & Texture Styling */
+        body {
+            background-color: #FFF8E7;
+            color: #1A2530;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(#164B8C 0.65px, transparent 0.65px), radial-gradient(#D9532F 0.65px, #FFF8E7 0.65px);
+            background-size: 26px 26px;
+            background-position: 0 0, 13px 13px;
+        }
+
+        /* Madhubani Traditional Line Border */
+        .madhubani-border {
+            border: 3px double #164B8C;
+            position: relative;
+        }
+        .madhubani-border::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border: 1px dashed #D9532F;
+            pointer-events: none;
+        }
+
+        .madhubani-ribbon {
+            background: repeating-linear-gradient(
+                45deg,
+                #164B8C,
+                #164B8C 10px,
+                #D9532F 10px,
+                #D9532F 20px,
+                #D4AC0D 20px,
+                #D4AC0D 30px
+            );
+            height: 6px;
+        }
+
+        /* Mithila Motifs SVG Backgrounds */
+        .mithila-pattern-bg {
+            background-color: #FCF7ED;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23164b8c' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M30 30c0-8.284-6.716-15-15-15 8.284 0 15-6.716 15-15 0 8.284 6.716 15 15 15-8.284 0-15 6.716-15 15zm0 0c0 8.284 6.716 15 15 15-8.284 0-15 6.716-15 15 0-8.284-6.716-15-15-15 8.284 0 15-6.716 15-15z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .mithila-fish-border {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='16' viewBox='0 0 40 16'%3E%3Cpath d='M0 8 C 8 2, 16 2, 24 8 C 16 14, 8 14, 0 8 Z M 24 8 L 32 3 L 28 8 L 32 13 Z' fill='none' stroke='%23164B8C' stroke-width='1.2'/%3E%3Ccircle cx='8' cy='8' r='1.5' fill='%23D9532F'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            height: 16px;
+        }
+
+        /* Kachni & Bharni geometric styling */
+        .hatching-bg {
+            background-image: repeating-linear-gradient(45deg, rgba(22, 75, 140, 0.04) 0px, rgba(22, 75, 140, 0.04) 2px, transparent 2px, transparent 6px);
+        }
+
+        /* Glass / Card styling */
+        .folk-card {
+            background: rgba(255, 255, 255, 0.94);
+            border: 2px solid #E8DCBF;
+            box-shadow: 0 10px 25px -5px rgba(22, 75, 140, 0.07), 0 8px 10px -6px rgba(217, 83, 47, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .folk-card:hover {
+            border-color: #164B8C;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -10px rgba(22, 75, 140, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF8E7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #164B8C;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D9532F;
+        }
+
+        /* Animated Pulse Ring */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; }
+        }
+        .animate-subtle {
+            animation: subtle-pulse 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800">
+
+    <!-- TOP ANNOUNCEMENT & HERITAGE BAR -->
+    <header class="bg-brand-blue text-white text-xs py-2 px-4 border-b border-brand-gold/30">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-3">
+                <span class="bg-brand-terracotta text-white px-2 py-0.5 rounded font-semibold tracking-wider text-[10px] uppercase">
+                    Tax Exemption
+                </span>
+                <span class="text-brand-cream/90 font-medium">All donations are eligible for 50% Tax Relief under Section 80G (Reg. #SJ-FND-80G/2023)</span>
+            </div>
+            <div class="flex items-center gap-4 text-brand-cream/90">
+                <a href="tel:+919800000000" class="hover:text-white transition"><i class="fa-solid fa-phone text-brand-amber mr-1"></i> +91 98000 00000</a>
+                <span class="text-brand-gold/50">|</span>
+                <a href="mailto:contact@sashijamunafoundation.org" class="hover:text-white transition"><i class="fa-solid fa-envelope text-brand-amber mr-1"></i> contact@sashijamunafoundation.org</a>
+                <span class="text-brand-gold/50 hidden md:inline">|</span>
+                <button onclick="openAdminModal()" class="text-brand-amber hover:text-white transition font-semibold hidden md:inline-flex items-center gap-1">
+                    <i class="fa-solid fa-lock text-[10px]"></i> Admin Portal
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- TRADITIONAL MADHUBANI BORDER SEPARATOR -->
+    <div class="madhubani-ribbon"></div>
+
+    <!-- MAIN NAVIGATION BAR -->
+    <nav class="sticky top-0 z-40 bg-brand-cream/95 backdrop-blur-md border-b-2 border-brand-blue/20 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- LOGO & FOUNDATION BRANDING -->
+                <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-3 group">
+                    <div class="w-13 h-13 rounded-full bg-brand-blue p-1.5 border-2 border-brand-terracotta shadow-md flex items-center justify-center text-brand-cream">
+                        <!-- Madhubani Sun / Lotus Emblem SVG -->
+                        <svg class="w-8 h-8 text-brand-amber animate-spin-slow" viewBox="0 0 100 100" fill="currentColor">
+                            <circle cx="50" cy="50" r="22" fill="#FFF8E7" stroke="#164B8C" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="10" fill="#D9532F"/>
+                            <!-- Sun Rays / Lotus Petals -->
+                            <path d="M50 5 L55 25 L45 25 Z" fill="#D9532F"/>
+                            <path d="M50 95 L55 75 L45 75 Z" fill="#D9532F"/>
+                            <path d="M5 50 L25 55 L25 45 Z" fill="#D9532F"/>
+                            <path d="M95 50 L75 55 L75 45 Z" fill="#D9532F"/>
+                            <path d="M18 18 L34 30 L28 36 Z" fill="#164B8C"/>
+                            <path d="M82 82 L66 70 L72 64 Z" fill="#164B8C"/>
+                            <path d="M18 82 L34 70 L28 64 Z" fill="#164B8C"/>
+                            <path d="M82 18 L66 30 L72 36 Z" fill="#164B8C"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-heading font-extrabold text-xl sm:text-2xl tracking-wide text-brand-blue leading-none">
+                            SASHI JAMUNA
+                        </div>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <span class="text-[10px] tracking-widest text-brand-terracotta font-bold uppercase">FOUNDATION</span>
+                            <span class="w-1 h-1 rounded-full bg-brand-amber"></span>
+                            <span class="text-[10px] font-medium text-slate-500 italic">Mithila • Bihar</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- DESKTOP NAVIGATION LINKS -->
+                <div class="hidden lg:flex items-center gap-1 xl:gap-2 font-medium text-sm text-slate-700">
+                    <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition active-nav" data-target="home">Home</button>
+                    <button onclick="navigateTo('about')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="about">About Us</button>
+                    <button onclick="navigateTo('initiatives')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="initiatives">Initiatives</button>
+                    <button onclick="navigateTo('gallery')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="gallery">Gallery</button>
+                    <button onclick="navigateTo('videos')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="videos">Stories & Media</button>
+                    <button onclick="navigateTo('updates')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="updates">News & Updates</button>
+                    <button onclick="navigateTo('volunteer')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="volunteer">Volunteer</button>
+                    <button onclick="navigateTo('contact')" class="nav-btn px-3 py-2 rounded-lg hover:text-brand-blue hover:bg-brand-blue/5 transition" data-target="contact">Contact</button>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="hidden sm:flex items-center gap-3">
+                    <button onclick="openDonateModal()" class="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-bold text-white transition-all bg-gradient-to-r from-brand-terracotta via-brand-coral to-brand-amber rounded-full shadow-lg hover:shadow-brand-terracotta/40 hover:-translate-y-0.5 border border-brand-cream">
+                        <i class="fa-solid fa-heart mr-2 animate-bounce"></i>
+                        <span>Donate Now</span>
+                    </button>
+                </div>
+
+                <!-- MOBILE MENU BUTTON -->
+                <button id="mobileMenuToggle" class="lg:hidden p-2.5 rounded-lg text-brand-blue hover:bg-brand-blue/10">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU DRAWER -->
+        <div id="mobileDrawer" class="hidden lg:hidden border-t border-brand-blue/20 bg-brand-cream px-4 pt-3 pb-6 space-y-2">
+            <button onclick="navigateTo('home')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">Home</button>
+            <button onclick="navigateTo('about')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">About Us</button>
+            <button onclick="navigateTo('initiatives')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">Our Initiatives</button>
+            <button onclick="navigateTo('gallery')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">Photo Gallery</button>
+            <button onclick="navigateTo('videos')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">Video Stories</button>
+            <button onclick="navigateTo('updates')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">News & Daily Updates</button>
+            <button onclick="navigateTo('volunteer')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">Volunteer With Us</button>
+            <button onclick="navigateTo('contact')" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-slate-700 hover:bg-brand-blue hover:text-white">Contact Us</button>
+            <button onclick="openAdminModal()" class="w-full text-left px-3 py-2.5 rounded-md font-medium text-brand-amber bg-brand-blue/10">
+                <i class="fa-solid fa-lock mr-2"></i> Admin Portal
+            </button>
+            <div class="pt-2">
+                <button onclick="openDonateModal()" class="w-full py-3 text-center text-white font-bold bg-gradient-to-r from-brand-terracotta to-brand-amber rounded-xl shadow-md">
+                    <i class="fa-solid fa-heart mr-2"></i> Donate to Sashi Jamuna Foundation
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT WRAPPER (Single Page Application Tab Container) -->
+    <main class="flex-grow">
+
+        <!-- ============================================== -->
+        <!-- 1. HOME VIEW -->
+        <!-- ============================================== -->
+        <div id="page-home" class="page-view">
+            
+            <!-- HERO BANNER WITH MADHUBANI ART ACCENTS -->
+            <section class="relative bg-gradient-to-b from-[#FFF3D6] via-brand-cream to-brand-parchment py-12 lg:py-20 overflow-hidden border-b border-brand-gold/30">
+                <!-- Mithila Background Sun Watermark -->
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-10 pointer-events-none select-none">
+                    <svg class="w-[600px] h-[600px] text-brand-blue" viewBox="0 0 200 200" fill="currentColor">
+                        <circle cx="100" cy="100" r="40" fill="none" stroke="currentColor" stroke-width="4"/>
+                        <circle cx="100" cy="100" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <!-- Sun Spikes -->
+                        <g stroke="currentColor" stroke-width="3">
+                            <line x1="100" y1="10" x2="100" y2="45"/>
+                            <line x1="100" y1="155" x2="100" y2="190"/>
+                            <line x1="10" y1="100" x2="45" y2="100"/>
+                            <line x1="155" y1="100" x2="190" y2="100"/>
+                            <line x1="36" y1="36" x2="61" y2="61"/>
+                            <line x1="139" y1="139" x2="164" y2="164"/>
+                            <line x1="36" y1="164" x2="61" y2="139"/>
+                            <line x1="139" y1="61" x2="164" y2="36"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid lg:grid-cols-12 gap-12 items-center">
+                        
+                        <!-- Hero Left Content -->
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-blue text-xs font-semibold tracking-wide">
+                                <span class="w-2 h-2 rounded-full bg-brand-terracotta animate-ping"></span>
+                                Rooted in Bihar's Soil • Touching Lives Globally
+                            </div>
+                            
+                            <h1 class="font-heading font-black text-3xl sm:text-5xl lg:text-6xl text-brand-blueDark leading-[1.15]">
+                                Nurturing Hope, <br/>
+                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-terracotta via-brand-ochre to-brand-amber font-folk">Empowering Heritage</span> & Lives.
+                            </h1>
+
+                            <p class="text-slate-700 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                                Sashi Jamuna Foundation is committed to uplifting rural communities across Bihar through holistic education, accessible healthcare, women artisan entrepreneurship, and sustainable Mithila folk heritage preservation.
+                            </p>
+
+                            <!-- Hero CTAs -->
+                            <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-2">
+                                <button onclick="openDonateModal()" class="px-8 py-3.5 bg-brand-terracotta text-white font-bold rounded-full shadow-lg shadow-brand-terracotta/30 hover:bg-brand-coral hover:shadow-xl transition-all duration-300 flex items-center gap-2 group">
+                                    <span>Make a Contribution</span>
+                                    <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+                                <button onclick="navigateTo('initiatives')" class="px-7 py-3.5 bg-brand-cream text-brand-blue font-bold rounded-full border-2 border-brand-blue shadow-sm hover:bg-brand-blue hover:text-white transition-all duration-300">
+                                    Explore Initiatives
+                                </button>
+                            </div>
+
+                            <!-- Trust Badges -->
+                            <div class="pt-6 border-t border-brand-blue/15 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-xs text-slate-600 font-medium">
+                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-check text-brand-blue text-base"></i> 100% Verified Transparency</span>
+                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-receipt text-brand-terracotta text-base"></i> 80G Tax Exemption</span>
+                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-hands-holding-circle text-brand-amber text-base"></i> Community Governed</span>
+                            </div>
+                        </div>
+
+                        <!-- Hero Right Animated Collage with Mithila Frame -->
+                        <div class="lg:col-span-5 relative">
+                            <div class="relative mx-auto max-w-md p-4 bg-brand-cream/80 backdrop-blur rounded-3xl madhubani-border shadow-2xl">
+                                
+                                <!-- Corner Traditional Motifs -->
+                                <div class="absolute -top-3 -left-3 w-8 h-8 bg-brand-terracotta text-brand-cream rounded-full flex items-center justify-center font-bold text-xs border border-white">✦</div>
+                                <div class="absolute -bottom-3 -right-3 w-8 h-8 bg-brand-blue text-brand-cream rounded-full flex items-center justify-center font-bold text-xs border border-white">✦</div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="space-y-3">
+                                        <div class="rounded-2xl overflow-hidden shadow-md h-44 relative group">
+                                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=80" alt="Children Education in Bihar" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-2.5 text-white text-xs font-semibold">
+                                                <span>Child Literacy Camp</span>
+                                            </div>
+                                        </div>
+                                        <div class="rounded-2xl overflow-hidden shadow-md h-32 relative group">
+                                            <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=600&auto=format&fit=crop&q=80" alt="Mithila Madhubani Artistry" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-2.5 text-white text-xs font-semibold">
+                                                <span>Mithila Artisans</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-3 pt-4">
+                                        <div class="rounded-2xl overflow-hidden shadow-md h-32 relative group">
+                                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=80" alt="Rural Healthcare" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-2.5 text-white text-xs font-semibold">
+                                                <span>Arogya Health Drives</span>
+                                            </div>
+                                        </div>
+                                        <div class="rounded-2xl overflow-hidden shadow-md h-44 relative group">
+                                            <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&auto=format&fit=crop&q=80" alt="Women Self Help Group" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-2.5 text-white text-xs font-semibold">
+                                                <span>Self-Reliance (SHG)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Floating Quote Badge -->
+                                <div class="mt-4 p-3 rounded-xl bg-white border border-brand-amber/40 shadow text-center">
+                                    <p class="text-xs font-folk text-brand-blue tracking-wider">
+                                        "लोकाः समस्ताः सुखिनो भवन्तु"
+                                    </p>
+                                    <p class="text-[11px] text-slate-500 mt-0.5">May all beings in the universe be peaceful and free</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATISTICAL IMPACT COUNTERS (Verified & Editable Placeholders) -->
+            <section class="py-10 bg-brand-blue text-white relative overflow-hidden">
+                <div class="mithila-pattern-bg absolute inset-0 opacity-10"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur">
+                            <div class="text-brand-amber text-3xl sm:text-4xl font-extrabold font-heading" id="stat-lives">24,500+</div>
+                            <div class="text-xs sm:text-sm text-brand-cream/80 uppercase tracking-wider font-semibold mt-1">Lives Touched</div>
+                            <p class="text-[11px] text-slate-300 mt-0.5">Across 42 villages in Bihar</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur">
+                            <div class="text-brand-coral text-3xl sm:text-4xl font-extrabold font-heading" id="stat-artisans">1,280+</div>
+                            <div class="text-xs sm:text-sm text-brand-cream/80 uppercase tracking-wider font-semibold mt-1">Madhubani Artisans</div>
+                            <p class="text-[11px] text-slate-300 mt-0.5">Women empowered with crafts</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur">
+                            <div class="text-brand-amber text-3xl sm:text-4xl font-extrabold font-heading" id="stat-camps">165+</div>
+                            <div class="text-xs sm:text-sm text-brand-cream/80 uppercase tracking-wider font-semibold mt-1">Free Health Camps</div>
+                            <p class="text-[11px] text-slate-300 mt-0.5">Eye, dental & general checkups</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur">
+                            <div class="text-brand-coral text-3xl sm:text-4xl font-extrabold font-heading" id="stat-students">4,800+</div>
+                            <div class="text-xs sm:text-sm text-brand-cream/80 uppercase tracking-wider font-semibold mt-1">Students Supported</div>
+                            <p class="text-[11px] text-slate-300 mt-0.5">Scholarships & digital literacy</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION DIVIDER -->
+            <div class="mithila-fish-border"></div>
+
+            <!-- ABOUT FOUNDATION INTRODUCTION TEASER -->
+            <section class="py-16 lg:py-24 bg-brand-cream">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        
+                        <!-- Imagery & Madhubani Art Motif Frame -->
+                        <div class="relative">
+                            <div class="p-3 bg-white rounded-2xl shadow-xl border-2 border-brand-terracotta">
+                                <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&auto=format&fit=crop&q=80" alt="Rural Empowerment" class="rounded-xl w-full h-[380px] object-cover">
+                                
+                                <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+                                    <div class="bg-brand-cream p-2 rounded-lg border border-brand-amber/30">
+                                        <i class="fa-solid fa-graduation-cap text-brand-blue text-lg mb-1 block"></i>
+                                        <span class="font-bold text-slate-800">Education</span>
+                                    </div>
+                                    <div class="bg-brand-cream p-2 rounded-lg border border-brand-amber/30">
+                                        <i class="fa-solid fa-palette text-brand-terracotta text-lg mb-1 block"></i>
+                                        <span class="font-bold text-slate-800">Mithila Art</span>
+                                    </div>
+                                    <div class="bg-brand-cream p-2 rounded-lg border border-brand-amber/30">
+                                        <i class="fa-solid fa-hand-holding-medical text-brand-blue text-lg mb-1 block"></i>
+                                        <span class="font-bold text-slate-800">Healthcare</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Decorative Floating Badge -->
+                            <div class="absolute -bottom-6 -left-6 bg-brand-blue text-brand-cream p-4 rounded-2xl shadow-xl border-2 border-brand-gold hidden sm:block max-w-[220px]">
+                                <div class="font-heading font-bold text-lg text-brand-amber">Mithila's Pride</div>
+                                <div class="text-[11px] text-slate-200 mt-1">Sustainably nurturing folk painters and rural youth since inception.</div>
+                            </div>
+                        </div>
+
+                        <!-- Content Section -->
+                        <div class="space-y-6">
+                            <div>
+                                <span class="text-xs font-bold text-brand-terracotta uppercase tracking-widest bg-brand-terracotta/10 px-3 py-1 rounded-full">
+                                    Our Core Philosophy
+                                </span>
+                                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-brand-blue mt-3">
+                                    Preserving Heritage, Catalyzing Grassroots Growth
+                                </h2>
+                            </div>
+
+                            <p class="text-slate-700 leading-relaxed">
+                                Inspired by the enduring values of compassion and community strength, <strong>Sashi Jamuna Foundation</strong> serves as a bridge between the vibrant cultural lineage of Bihar and modernized socioeconomic advancement.
+                            </p>
+
+                            <div class="space-y-3 text-slate-700 text-sm">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-brand-terracotta/20 text-brand-terracotta flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-check text-xs"></i>
+                                    </div>
+                                    <span><strong>Mithila Women Artisan Clusters:</strong> Training, raw material provision, and fair market linkage for authentic Madhubani hand-paintings.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-brand-blue/20 text-brand-blue flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-check text-xs"></i>
+                                    </div>
+                                    <span><strong>Shiksha Jyoti Program:</strong> Free learning centers, digital equipment, and girl-child scholarships in underserved hamlets.</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-brand-amber/30 text-brand-amber flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-check text-xs"></i>
+                                    </div>
+                                    <span><strong>Mobile Arogya Vans:</strong> Delivering preventive medical checkups, essential medicines, and maternal hygiene kits.</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex items-center gap-4">
+                                <button onclick="navigateTo('about')" class="px-6 py-3 bg-brand-blue text-white rounded-full font-semibold hover:bg-brand-blueDark transition flex items-center gap-2">
+                                    <span>Read Foundation Journey</span>
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </button>
+                                <button onclick="navigateTo('volunteer')" class="px-6 py-3 border border-brand-blue text-brand-blue rounded-full font-semibold hover:bg-brand-blue/10 transition">
+                                    Join As Volunteer
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEATURED INITIATIVES SECTION -->
+            <section class="py-16 bg-[#F9F3E3] border-y border-brand-gold/30 relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-12">
+                        <span class="text-xs font-bold text-brand-terracotta uppercase tracking-widest bg-brand-terracotta/10 px-3 py-1 rounded-full">
+                            What We Do
+                        </span>
+                        <h2 class="font-heading font-bold text-3xl sm:text-4xl text-brand-blue mt-2">
+                            Transformative Social Initiatives
+                        </h2>
+                        <p class="text-slate-600 text-sm mt-2">
+                            Structured community programs directly improving livelihoods and quality of life across Mithilanchal.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <!-- Card 1: Shiksha Jyoti -->
+                        <div class="folk-card rounded-2xl overflow-hidden flex flex-col">
+                            <div class="h-48 relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80" alt="Education" class="w-full h-full object-cover">
+                                <span class="absolute top-3 left-3 bg-brand-blue text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">Education</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                                <div>
+                                    <h3 class="font-heading font-bold text-xl text-brand-blue">Shiksha Jyoti Rural Classrooms</h3>
+                                    <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                        Providing smart study corners, books, solar lighting, and scholarships for meritorious underprivileged girl children.
+                                    </p>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700">
+                                        <span>Goal Raised: ₹6.4L</span>
+                                        <span class="text-brand-terracotta">80% Funded</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-brand-terracotta w-4/5 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <button onclick="openDonateModal('Shiksha Jyoti Education Initiative')" class="w-full py-2.5 bg-brand-cream border border-brand-terracotta text-brand-terracotta font-bold rounded-xl hover:bg-brand-terracotta hover:text-white transition text-xs flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-heart"></i> Sponsor a Student
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Mithila Kala Shakti -->
+                        <div class="folk-card rounded-2xl overflow-hidden flex flex-col">
+                            <div class="h-48 relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=600&auto=format&fit=crop&q=80" alt="Mithila Art" class="w-full h-full object-cover">
+                                <span class="absolute top-3 left-3 bg-brand-terracotta text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">Heritage & Livelihood</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                                <div>
+                                    <h3 class="font-heading font-bold text-xl text-brand-blue">Mithila Kala Self-Reliance Guild</h3>
+                                    <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                        Training traditional women artists, sourcing natural pigments, and facilitating direct e-commerce exports without middlemen.
+                                    </p>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700">
+                                        <span>Goal Raised: ₹9.1L</span>
+                                        <span class="text-brand-amber font-bold">92% Funded</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-brand-amber w-11/12 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <button onclick="openDonateModal('Mithila Kala Empowerment')" class="w-full py-2.5 bg-brand-cream border border-brand-terracotta text-brand-terracotta font-bold rounded-xl hover:bg-brand-terracotta hover:text-white transition text-xs flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-heart"></i> Support an Artisan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Gramin Arogya Sarthi -->
+                        <div class="folk-card rounded-2xl overflow-hidden flex flex-col">
+                            <div class="h-48 relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80" alt="Health Care" class="w-full h-full object-cover">
+                                <span class="absolute top-3 left-3 bg-brand-blue text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">Healthcare</span>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                                <div>
+                                    <h3 class="font-heading font-bold text-xl text-brand-blue">Gramin Arogya Health Camps</h3>
+                                    <p class="text-slate-600 text-xs mt-2 leading-relaxed">
+                                        Mobile clinics conducting cataract surgeries, prenatal nutrition advice, and diagnostic blood screenings in remote flood-affected belts.
+                                    </p>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700">
+                                        <span>Goal Raised: ₹4.8L</span>
+                                        <span class="text-brand-coral font-bold">65% Funded</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div class="h-full bg-brand-coral w-2/3 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <button onclick="openDonateModal('Gramin Arogya Healthcare')" class="w-full py-2.5 bg-brand-cream border border-brand-terracotta text-brand-terracotta font-bold rounded-xl hover:bg-brand-terracotta hover:text-white transition text-xs flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-heart"></i> Fund Medical Aid
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center mt-10">
+                        <button onclick="navigateTo('initiatives')" class="inline-flex items-center gap-2 font-bold text-brand-blue hover:text-brand-terracotta transition border-b-2 border-brand-blue hover:border-brand-terracotta pb-0.5 text-sm">
+                            View All 8 Ground Initiatives <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LIVE SOCIAL & MEDIA FEEDS SECTION (Simulated Live Feeds for YouTube, Instagram, Facebook) -->
+            <section class="py-16 bg-brand-cream">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-brand-terracotta uppercase tracking-widest bg-brand-terracotta/10 px-3 py-1 rounded-full">
+                                Connect With Us Daily
+                            </span>
+                            <h2 class="font-heading font-bold text-3xl text-brand-blue mt-2">
+                                Live Field Feeds & Stories
+                            </h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Auto-Sync Enabled
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        
+                        <!-- Instagram Feed Embed Card -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between border-b pb-3 mb-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-600 flex items-center justify-center text-white text-xs">
+                                            <i class="fa-brands fa-instagram text-base"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs font-bold text-slate-900">@sashijamunango</div>
+                                            <div class="text-[10px] text-slate-500">Instagram Feed</div>
+                                        </div>
+                                    </div>
+                                    <a href="https://instagram.com" target="_blank" class="text-xs text-brand-blue hover:underline font-semibold">Follow</a>
+                                </div>
+                                <div class="rounded-xl overflow-hidden aspect-square mb-3 relative group">
+                                    <img src="https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?w=500&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-105 transition" alt="Instagram Post">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-medium p-4 text-center">
+                                        "Master artisans handcrafting natural color Madhubani borders at Ranti village training center today."
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-600 line-clamp-2">
+                                    Celebrating the intricate art of Kachni lines with our new cohort of 35 rural women artists! #Madhubani #BiharNGO
+                                </p>
+                            </div>
+                            <div class="text-[11px] text-slate-400 pt-3 border-t mt-3 flex justify-between">
+                                <span>2 hours ago</span>
+                                <span><i class="fa-solid fa-heart text-red-500 mr-1"></i> 342 likes</span>
+                            </div>
+                        </div>
+
+                        <!-- YouTube Story Embed Card -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between border-b pb-3 mb-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-xs">
+                                            <i class="fa-brands fa-youtube text-base"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs font-bold text-slate-900">Sashi Jamuna Foundation TV</div>
+                                            <div class="text-[10px] text-slate-500">YouTube Channel</div>
+                                        </div>
+                                    </div>
+                                    <a href="https://youtube.com" target="_blank" class="text-xs text-red-600 hover:underline font-semibold">Subscribe</a>
+                                </div>
+                                <div class="rounded-xl overflow-hidden aspect-video mb-3 relative group cursor-pointer" onclick="playVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Voices from Mithila: Sashi Jamuna Foundation Documentary')">
+                                    <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-105 transition" alt="Video Thumbnail">
+                                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                        <div class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                            <i class="fa-solid fa-play ml-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-xs font-semibold text-slate-800 line-clamp-2">
+                                    Documentary: How 500 Families in Madhubani Overcame Seasonal Floods Through Artisan Cooperatives
+                                </p>
+                            </div>
+                            <div class="text-[11px] text-slate-400 pt-3 border-t mt-3 flex justify-between">
+                                <span>1 day ago</span>
+                                <span><i class="fa-solid fa-eye text-brand-blue mr-1"></i> 2.4K views</span>
+                            </div>
+                        </div>
+
+                        <!-- Facebook Community Embed Card -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between border-b pb-3 mb-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-[#1877F2] flex items-center justify-center text-white text-xs">
+                                            <i class="fa-brands fa-facebook-f text-base"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs font-bold text-slate-900">Sashi Jamuna NGO Bihar</div>
+                                            <div class="text-[10px] text-slate-500">Facebook Updates</div>
+                                        </div>
+                                    </div>
+                                    <a href="https://facebook.com" target="_blank" class="text-xs text-blue-700 hover:underline font-semibold">Like Page</a>
+                                </div>
+                                <div class="rounded-xl overflow-hidden aspect-video mb-3 relative group">
+                                    <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=500&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-105 transition" alt="Facebook update">
+                                </div>
+                                <p class="text-xs text-slate-600 line-clamp-3">
+                                    "Our volunteer medical brigade completed free screenings for 410 elderly citizens in Jhanjharpur today. Special gratitude to our volunteer doctors from Patna Medical College!"
+                                </p>
+                            </div>
+                            <div class="text-[11px] text-slate-400 pt-3 border-t mt-3 flex justify-between">
+                                <span>Yesterday</span>
+                                <span><i class="fa-solid fa-share text-slate-500 mr-1"></i> 48 shares</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- CALL TO ACTION / VOLUNTEER & DONATION STRIP -->
+            <section class="py-16 bg-gradient-to-r from-brand-blueDark via-brand-blue to-brand-blueDark text-white relative overflow-hidden">
+                <div class="mithila-pattern-bg absolute inset-0 opacity-10"></div>
+                <div class="max-w-5xl mx-auto px-4 text-center relative z-10 space-y-6">
+                    <span class="px-4 py-1.5 rounded-full bg-brand-amber/20 border border-brand-amber/40 text-brand-amber text-xs font-bold uppercase tracking-widest">
+                        Join Our Mission
+                    </span>
+                    <h2 class="font-heading font-black text-3xl sm:text-4xl lg:text-5xl">
+                        Be the Catalyst for Bihar's Resurgence
+                    </h2>
+                    <p class="text-brand-cream/90 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                        Whether through monthly sponsorships, volunteering your professional skill sets, or ordering authentic Madhubani paintings, your contribution creates tangible change.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4 pt-4">
+                        <button onclick="openDonateModal()" class="px-8 py-3.5 bg-gradient-to-r from-brand-terracotta to-brand-amber text-white font-bold rounded-full shadow-xl hover:scale-105 transition">
+                            <i class="fa-solid fa-hand-holding-heart mr-2"></i> Donate to Fund a Cause
+                        </button>
+                        <button onclick="navigateTo('volunteer')" class="px-8 py-3.5 bg-white text-brand-blue font-bold rounded-full hover:bg-brand-cream transition">
+                            <i class="fa-solid fa-user-plus mr-2"></i> Register as Volunteer
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 2. ABOUT US VIEW -->
+        <!-- ============================================== -->
+        <div id="page-about" class="page-view hidden">
+            <!-- Header Banner -->
+            <div class="bg-brand-blue text-white py-14 relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                    <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Our Heritage & Mission</span>
+                    <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">About Sashi Jamuna Foundation</h1>
+                    <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-3">
+                        Founded in homage to enduring familial values of service, benevolence, and community preservation in Bihar.
+                    </p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+                <!-- Story Section -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-5 text-slate-700">
+                        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-brand-blue">
+                            Our Origin & Guiding Light
+                        </h2>
+                        <p class="leading-relaxed">
+                            <strong>Sashi Jamuna Foundation</strong> was established with a singular, resolute objective: to uplift vulnerable communities in rural Bihar while preserving the venerable cultural heritage of Mithila.
+                        </p>
+                        <p class="leading-relaxed">
+                            Named in memory of visionary community elders whose life philosophy revolved around sharing whatever little one possessed with those in greater need, the foundation has evolved into a structured NGO empowering thousands of lives across education, healthcare, nutrition, and indigenous artisan upliftment.
+                        </p>
+                        <div class="p-4 bg-brand-cream rounded-xl border-l-4 border-brand-terracotta italic text-sm">
+                            "True empowerment does not merely offer aid; it restores dignity, builds self-reliant livelihoods, and honors our ancestral roots."
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white rounded-2xl madhubani-border shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=800&auto=format&fit=crop&q=80" class="rounded-xl w-full h-[360px] object-cover" alt="Foundation Community">
+                    </div>
+                </div>
+
+                <!-- Mission & Vision Cards -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-8 rounded-2xl border-2 border-brand-blue/20 shadow-md">
+                        <div class="w-12 h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center text-2xl mb-4">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-2xl text-brand-blue mb-2">Our Vision</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            A thriving Bihar where every child has access to quality education, every village possesses dependable medical care, and every traditional Mithila artisan earns an honorable, sustainable livelihood through their ancestral craft.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border-2 border-brand-terracotta/20 shadow-md">
+                        <div class="w-12 h-12 rounded-xl bg-brand-terracotta/10 text-brand-terracotta flex items-center justify-center text-2xl mb-4">
+                            <i class="fa-solid fa-hands-holding-heart"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-2xl text-brand-terracotta mb-2">Our Mission</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            To implement ground-level grassroots initiatives with 100% financial transparency, partnering directly with local panchayats, women self-help collectives, and medical volunteers to create systemic, multi-generational change.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Governance & Transparency Pillars -->
+                <div class="bg-[#F9F3E3] p-8 rounded-3xl border border-brand-gold/30">
+                    <h3 class="font-heading font-bold text-2xl text-center text-brand-blue mb-8">Governance & Legal Standing</h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center text-xs">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-certificate text-brand-terracotta text-2xl mb-2"></i>
+                            <div class="font-bold text-slate-800 text-sm">Trust Registration</div>
+                            <div class="text-slate-500 mt-1">Registered NGO Trust under Indian Trusts Act, 1882</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-file-invoice-dollar text-brand-blue text-2xl mb-2"></i>
+                            <div class="font-bold text-slate-800 text-sm">80G & 12A Certified</div>
+                            <div class="text-slate-500 mt-1">Tax deductions enabled for all Indian donors</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-scale-balanced text-brand-amber text-2xl mb-2"></i>
+                            <div class="font-bold text-slate-800 text-sm">Annual Audits</div>
+                            <div class="text-slate-500 mt-1">Independently audited financials published yearly</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-users text-emerald-600 text-2xl mb-2"></i>
+                            <div class="font-bold text-slate-800 text-sm">Community Led</div>
+                            <div class="text-slate-500 mt-1">Over 60% of ground staff are local village leaders</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 3. INITIATIVES VIEW -->
+        <!-- ============================================== -->
+        <div id="page-initiatives" class="page-view hidden">
+            <div class="bg-brand-blue text-white py-14 text-center">
+                <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Ground Action</span>
+                <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">Our Strategic Initiatives</h1>
+                <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+                    Focused, measurable programs delivering life-changing impact across Bihar.
+                </p>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="space-y-12">
+                    
+                    <!-- Initiative 1: Shiksha Jyoti -->
+                    <div class="bg-white rounded-3xl p-6 lg:p-8 border border-slate-200 shadow-md grid lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 rounded-2xl overflow-hidden h-64 lg:h-80">
+                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=700&auto=format&fit=crop&q=80" class="w-full h-full object-cover" alt="Shiksha Jyoti">
+                        </div>
+                        <div class="lg:col-span-7 space-y-4">
+                            <span class="text-xs font-bold text-brand-blue bg-brand-blue/10 px-3 py-1 rounded-full uppercase">Project 01 • Education</span>
+                            <h2 class="font-heading font-bold text-2xl sm:text-3xl text-brand-blue">Shiksha Jyoti: Girl-Child & Youth Literacy</h2>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Our flagship educational program operates after-school learning centers across Madhubani and Darbhanga districts. We provide bridge courses, digital literacy tablets, textbooks, nutritious midday snacks, and full secondary school fee coverage for first-generation girl students.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 text-center py-2 border-y border-slate-100 text-xs">
+                                <div><strong class="text-base text-brand-blue block">4,800+</strong> Students Enrolled</div>
+                                <div><strong class="text-base text-brand-terracotta block">28</strong> Smart Centers</div>
+                                <div><strong class="text-base text-brand-amber block">98%</strong> Pass Rate</div>
+                            </div>
+                            <button onclick="openDonateModal('Shiksha Jyoti Project')" class="px-6 py-3 bg-brand-terracotta text-white rounded-full font-bold text-xs hover:bg-brand-coral transition flex items-center gap-2">
+                                <i class="fa-solid fa-heart"></i> Sponsor a Student (₹1,000 / month)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Initiative 2: Mithila Kala Shakti -->
+                    <div class="bg-white rounded-3xl p-6 lg:p-8 border border-slate-200 shadow-md grid lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 rounded-2xl overflow-hidden h-64 lg:h-80 lg:order-2">
+                            <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=700&auto=format&fit=crop&q=80" class="w-full h-full object-cover" alt="Mithila Art">
+                        </div>
+                        <div class="lg:col-span-7 space-y-4 lg:order-1">
+                            <span class="text-xs font-bold text-brand-terracotta bg-brand-terracotta/10 px-3 py-1 rounded-full uppercase">Project 02 • Heritage & Women</span>
+                            <h2 class="font-heading font-bold text-2xl sm:text-3xl text-brand-blue">Mithila Kala Shakti: Women Artisan Guild</h2>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Madhubani painting is a globally celebrated UNESCO recognized art form, yet grassroots women artists often struggle with fair remuneration. We provide high-grade handmade paper, natural dye preparation workshops, design incubation, and direct exhibition access.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 text-center py-2 border-y border-slate-100 text-xs">
+                                <div><strong class="text-base text-brand-blue block">1,280+</strong> Certified Painters</div>
+                                <div><strong class="text-base text-brand-terracotta block">3.2x</strong> Income Surge</div>
+                                <div><strong class="text-base text-brand-amber block">100%</strong> Women Led</div>
+                            </div>
+                            <button onclick="openDonateModal('Mithila Kala Guild')" class="px-6 py-3 bg-brand-blue text-white rounded-full font-bold text-xs hover:bg-brand-blueDark transition flex items-center gap-2">
+                                <i class="fa-solid fa-palette"></i> Fund Artisan Toolkits (₹2,500)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Initiative 3: Arogya Sarthi -->
+                    <div class="bg-white rounded-3xl p-6 lg:p-8 border border-slate-200 shadow-md grid lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 rounded-2xl overflow-hidden h-64 lg:h-80">
+                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=700&auto=format&fit=crop&q=80" class="w-full h-full object-cover" alt="Arogya Sarthi">
+                        </div>
+                        <div class="lg:col-span-7 space-y-4">
+                            <span class="text-xs font-bold text-brand-amber bg-brand-amber/20 px-3 py-1 rounded-full uppercase">Project 03 • Health & Hygiene</span>
+                            <h2 class="font-heading font-bold text-2xl sm:text-3xl text-brand-blue">Gramin Arogya Sarthi: Mobile Healthcare</h2>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Bringing primary diagnosis, basic surgical triage, clean delivery kits, and sanitary pad distribution to remote floodplain villages with limited transport links.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4 text-center py-2 border-y border-slate-100 text-xs">
+                                <div><strong class="text-base text-brand-blue block">165+</strong> Health Camps</div>
+                                <div><strong class="text-base text-brand-terracotta block">8,900+</strong> Eye Screenings</div>
+                                <div><strong class="text-base text-brand-amber block">15,000+</strong> Hygiene Kits</div>
+                            </div>
+                            <button onclick="openDonateModal('Arogya Healthcare Camps')" class="px-6 py-3 bg-brand-terracotta text-white rounded-full font-bold text-xs hover:bg-brand-coral transition flex items-center gap-2">
+                                <i class="fa-solid fa-stethoscope"></i> Sponsor Medical Camp (₹5,000)
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 4. GALLERY VIEW -->
+        <!-- ============================================== -->
+        <div id="page-gallery" class="page-view hidden">
+            <div class="bg-brand-blue text-white py-14 text-center">
+                <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Ground Moments</span>
+                <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">Visual Gallery</h1>
+                <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+                    A glimpse into our classrooms, art guilds, medical drives, and community events across Bihar.
+                </p>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <!-- Gallery Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button onclick="filterGallery('all')" class="gallery-filter active px-4 py-2 rounded-full text-xs font-bold bg-brand-blue text-white">All Photos</button>
+                    <button onclick="filterGallery('education')" class="gallery-filter px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-brand-blue/10">Education</button>
+                    <button onclick="filterGallery('art')" class="gallery-filter px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-brand-blue/10">Mithila Art</button>
+                    <button onclick="filterGallery('health')" class="gallery-filter px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-brand-blue/10">Health Camps</button>
+                    <button onclick="filterGallery('community')" class="gallery-filter px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-brand-blue/10">Community Relief</button>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="galleryGrid">
+                    
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="art" onclick="openLightbox('https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=1000', 'Master artisan painting Kachni peacocks')">
+                        <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Art">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Mithila Art</span>
+                            <span class="text-xs font-semibold">Master Artisan Workshop</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="education" onclick="openLightbox('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1000', 'Children reading in smart village library')">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Education">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Education</span>
+                            <span class="text-xs font-semibold">Smart Village Library</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="health" onclick="openLightbox('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1000', 'Eye examination camp in Madhubani')">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Health">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Health Camps</span>
+                            <span class="text-xs font-semibold">Free Cataract Checkups</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="community" onclick="openLightbox('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=1000', 'Village meeting with self-help groups')">
+                        <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Community">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Community</span>
+                            <span class="text-xs font-semibold">Women Self-Help Meeting</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="art" onclick="openLightbox('https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1000', 'Natural pigment preparation from marigold and turmeric')">
+                        <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Art pigments">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Mithila Art</span>
+                            <span class="text-xs font-semibold">Natural Dye Preparation</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="education" onclick="openLightbox('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1000', 'Distribution of science & math kits')">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="School Kit">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Education</span>
+                            <span class="text-xs font-semibold">Science Kit Distribution</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="health" onclick="openLightbox('https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1000', 'Maternal health and infant nutrition checkup')">
+                        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Maternal health">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Health</span>
+                            <span class="text-xs font-semibold">Maternal Wellness Checkup</span>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item group relative h-64 rounded-xl overflow-hidden shadow cursor-pointer" data-cat="community" onclick="openLightbox('https://images.unsplash.com/photo-1593113598332-cd288d649433?w=1000', 'Flood relief and clean water kit logistics')">
+                        <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Flood relief">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end text-white">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Relief</span>
+                            <span class="text-xs font-semibold">Flood Emergency Response</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 5. VIDEOS & STORIES VIEW -->
+        <!-- ============================================== -->
+        <div id="page-videos" class="page-view hidden">
+            <div class="bg-brand-blue text-white py-14 text-center">
+                <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Ground Chronicles</span>
+                <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">Video Stories & Impact Films</h1>
+                <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+                    Direct voices from beneficiaries, women painters, and field volunteers.
+                </p>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+                        <div class="relative aspect-video group cursor-pointer" onclick="playVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Sunita Devi’s Journey: From Village Artisan to National Recognition')">
+                            <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition">
+                                <div class="w-14 h-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-brand-terracotta uppercase">Artisan Spotlight</span>
+                            <h3 class="font-bold text-base text-brand-blue mt-1">Sunita Devi’s Journey: From Village Artisan to National Recognition</h3>
+                            <p class="text-xs text-slate-500 mt-2">How our Madhubani incubation center helped a mother of three build a sustainable art business.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+                        <div class="relative aspect-video group cursor-pointer" onclick="playVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Shiksha Jyoti: Bringing Tablets to Rural Madhubani')">
+                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition">
+                                <div class="w-14 h-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-brand-blue uppercase">Digital Education</span>
+                            <h3 class="font-bold text-base text-brand-blue mt-1">Shiksha Jyoti: Bringing Tablets to Rural Madhubani Classrooms</h3>
+                            <p class="text-xs text-slate-500 mt-2">Witness first-generation school students experiencing animated science learning.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+                        <div class="relative aspect-video group cursor-pointer" onclick="playVideoModal('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', 'Flood Preparedness and Mobile Clinics in North Bihar')">
+                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition">
+                                <div class="w-14 h-14 rounded-full bg-red-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-[10px] font-bold text-brand-amber uppercase">Emergency Relief</span>
+                            <h3 class="font-bold text-base text-brand-blue mt-1">Flood Preparedness & Mobile Clinics in North Bihar</h3>
+                            <p class="text-xs text-slate-500 mt-2">Our quick-response volunteer teams navigating waterlogged zones with medical assistance.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 6. NEWS & DAILY UPDATES VIEW -->
+        <!-- ============================================== -->
+        <div id="page-updates" class="page-view hidden">
+            <div class="bg-brand-blue text-white py-14 text-center">
+                <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Live Bulletins</span>
+                <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">News & Daily Field Updates</h1>
+                <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+                    Real-time journals directly updated by our coordinators on the ground.
+                </p>
+            </div>
+
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8" id="updatesContainer">
+                
+                <!-- Daily Update Card 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative pl-8 border-l-4 border-l-brand-terracotta">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <span class="text-xs font-bold text-brand-terracotta bg-brand-terracotta/10 px-2.5 py-0.5 rounded">Field Dispatch</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Today, 11:30 AM • Madhubani Center</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-brand-blue">Orientation Completed for Batch #14 of Mithila Folk Apprentices</h3>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        Today, we welcomed 40 young women from Rajnagar block into our 6-month certified Bharni and Kachni style Madhubani painting apprenticeship. All trainees received initial raw material kits, bamboo nib pens, and natural color sets funded by our monthly donor circle.
+                    </p>
+                    <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                        <span class="font-semibold text-slate-800">Posted by:</span> Renu Jha (Field Coordinator)
+                    </div>
+                </div>
+
+                <!-- Daily Update Card 2 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative pl-8 border-l-4 border-l-brand-blue">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <span class="text-xs font-bold text-brand-blue bg-brand-blue/10 px-2.5 py-0.5 rounded">Healthcare Mission</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Yesterday • Darbhanga Rural</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-brand-blue">Eye Screening & Free Spectacle Distribution Camp</h3>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        In collaboration with Patna Medical Alumni volunteers, our mobile medical van conducted vision tests for 320 elderly citizens. 184 prescription spectacles were custom-fitted and distributed completely free of charge. 22 patients requiring cataract surgery have been scheduled for next week.
+                    </p>
+                    <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                        <span class="font-semibold text-slate-800">Posted by:</span> Dr. Alok Kumar (Medical Lead)
+                    </div>
+                </div>
+
+                <!-- Daily Update Card 3 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative pl-8 border-l-4 border-l-brand-amber">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <span class="text-xs font-bold text-brand-amber bg-brand-amber/20 px-2.5 py-0.5 rounded">Education Grant</span>
+                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> 3 Days Ago • Samastipur</span>
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-brand-blue">Annual Shiksha Jyoti Merit Scholarships Awarded to 75 Girls</h3>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        A proud day for our education team! 75 high-performing girl students from underprivileged agrarian households were awarded annual academic grants covering tuition, bicycle transportation, and STEM learning subscriptions.
+                    </p>
+                    <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                        <span class="font-semibold text-slate-800">Posted by:</span> Foundation Secretariat
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 7. VOLUNTEER REGISTRATION VIEW -->
+        <!-- ============================================== -->
+        <div id="page-volunteer" class="page-view hidden">
+            <div class="bg-brand-blue text-white py-14 text-center">
+                <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Join the Force</span>
+                <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">Volunteer With Sashi Jamuna Foundation</h1>
+                <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+                    Lend your time, skills, and heart. Whether on ground in Bihar or virtually from anywhere in the world.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="bg-white rounded-3xl p-8 border-2 border-brand-blue/20 shadow-xl">
+                    <form id="volunteerForm" onsubmit="handleVolunteerSubmit(event)" class="space-y-6">
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Full Name *</label>
+                                <input type="text" required placeholder="e.g. Priyanshu Thakur" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-blue focus:outline-none text-sm bg-brand-cream/30">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Email Address *</label>
+                                <input type="email" required placeholder="name@domain.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-blue focus:outline-none text-sm bg-brand-cream/30">
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Phone / WhatsApp Number *</label>
+                                <input type="tel" required placeholder="+91 98765 43210" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-blue focus:outline-none text-sm bg-brand-cream/30">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Your Current City / State *</label>
+                                <input type="text" required placeholder="e.g. Patna, Bihar or Bangalore" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-blue focus:outline-none text-sm bg-brand-cream/30">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Area of Interest / Skillset *</label>
+                            <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-brand-blue/5">
+                                    <input type="checkbox" name="skills" value="teaching" class="rounded text-brand-blue">
+                                    <span>Teaching & Mentorship</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-brand-blue/5">
+                                    <input type="checkbox" name="skills" value="medical" class="rounded text-brand-blue">
+                                    <span>Medical & Healthcare</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-brand-blue/5">
+                                    <input type="checkbox" name="skills" value="crafts" class="rounded text-brand-blue">
+                                    <span>Mithila Art & Design</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-brand-blue/5">
+                                    <input type="checkbox" name="skills" value="media" class="rounded text-brand-blue">
+                                    <span>Social Media & Tech</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-brand-blue/5">
+                                    <input type="checkbox" name="skills" value="fundraising" class="rounded text-brand-blue">
+                                    <span>Fundraising & PR</span>
+                                </label>
+                                <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-brand-blue/5">
+                                    <input type="checkbox" name="skills" value="field" class="rounded text-brand-blue">
+                                    <span>Ground Relief Logistics</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Tell Us Why You Wish To Volunteer</label>
+                            <textarea rows="3" placeholder="Share a few words about your motivation and time availability..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-blue focus:outline-none text-sm bg-brand-cream/30"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-brand-blue text-white font-bold rounded-xl shadow-lg hover:bg-brand-blueDark transition text-sm">
+                            <i class="fa-solid fa-paper-plane mr-2"></i> Submit Volunteer Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 8. CONTACT US VIEW -->
+        <!-- ============================================== -->
+        <div id="page-contact" class="page-view hidden">
+            <div class="bg-brand-blue text-white py-14 text-center">
+                <span class="text-xs font-bold text-brand-amber uppercase tracking-widest">Reach Out</span>
+                <h1 class="font-heading font-bold text-3xl sm:text-5xl mt-2">Contact Sashi Jamuna Foundation</h1>
+                <p class="text-brand-cream/80 text-sm sm:text-base max-w-2xl mx-auto mt-2">
+                    We welcome inquiries regarding partnerships, donations, CSR collaborations, and artisan outreach.
+                </p>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+                <div class="grid lg:grid-cols-12 gap-12">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="font-heading font-bold text-xl text-brand-blue">Head Office & Registered Trust</h3>
+                            
+                            <div class="flex items-start gap-3 text-sm text-slate-700">
+                                <div class="w-8 h-8 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <strong>Sashi Jamuna Foundation HQ</strong><br>
+                                    Mithila Cultural Complex, Near Station Road,<br>
+                                    Madhubani, Bihar - 847211, India
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 text-sm text-slate-700">
+                                <div class="w-8 h-8 rounded-full bg-brand-terracotta/10 text-brand-terracotta flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <strong>Helpline:</strong><br>
+                                    +91 98000 00000 / +91 98111 22233
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3 text-sm text-slate-700">
+                                <div class="w-8 h-8 rounded-full bg-brand-amber/20 text-brand-amber flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <strong>Official Email:</strong><br>
+                                    contact@sashijamunafoundation.org<br>
+                                    csr@sashijamunafoundation.org
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 80G Tax Exemption Notice -->
+                        <div class="bg-brand-cream p-5 rounded-2xl border-2 border-brand-amber/40 text-xs text-slate-700 space-y-2">
+                            <div class="font-bold text-brand-blue text-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-shield-heart text-brand-terracotta"></i> 80G Tax Exemption Receipts
+                            </div>
+                            <p>All online donations automatically generate 80G tax clearance certificates emailed instantly with 10BE compliance.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-white p-8 rounded-2xl border border-slate-200 shadow-md">
+                        <h3 class="font-heading font-bold text-2xl text-brand-blue mb-4">Send Us a Direct Message</h3>
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4 text-sm">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">Your Name *</label>
+                                    <input type="text" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-blue">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">Email Address *</label>
+                                    <input type="email" required class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-blue">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Subject / Inquiry Type</label>
+                                <select class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-blue">
+                                    <option>General Inquiry</option>
+                                    <option>CSR Partnership</option>
+                                    <option>Donation & 80G Query</option>
+                                    <option>Madhubani Artisan Exhibition</option>
+                                    <option>Media & Press Relations</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Message</label>
+                                <textarea rows="4" required placeholder="Write your query here..." class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-blue"></textarea>
+                            </div>
+                            <button type="submit" class="px-8 py-3 bg-brand-blue text-white font-bold rounded-xl hover:bg-brand-blueDark transition">
+                                Send Message <i class="fa-solid fa-paper-plane ml-1"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SECTION DIVIDER -->
+    <div class="madhubani-ribbon"></div>
+
+    <!-- FOOTER SECTION -->
+    <footer class="bg-brand-blueDark text-brand-cream text-xs pt-16 pb-8 border-t-2 border-brand-amber relative overflow-hidden">
+        <!-- Background folk art watermark -->
+        <div class="mithila-pattern-bg absolute inset-0 opacity-5 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-brand-cream/15">
+                
+                <!-- Col 1: Foundation Info -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 rounded-full bg-brand-amber text-brand-blueDark flex items-center justify-center font-bold text-lg">
+                            SJ
+                        </div>
+                        <div>
+                            <div class="font-heading font-black text-lg text-white">SASHI JAMUNA FOUNDATION</div>
+                            <div class="text-[10px] text-brand-coral uppercase tracking-widest font-bold">Mithila Cultural & Social Trust</div>
+                        </div>
+                    </div>
+                    <p class="text-brand-cream/70 text-xs leading-relaxed max-w-sm">
+                        Dedicated to human development, girl-child literacy, rural healthcare access, and the cultural preservation of authentic Madhubani art in Bihar.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://facebook.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-terracotta transition flex items-center justify-center text-white"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-terracotta transition flex items-center justify-center text-white"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-terracotta transition flex items-center justify-center text-white"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://twitter.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-terracotta transition flex items-center justify-center text-white"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://linkedin.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-terracotta transition flex items-center justify-center text-white"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="space-y-3">
+                    <h4 class="font-heading font-bold text-sm text-brand-amber uppercase tracking-wider">Quick Links</h4>
+                    <ul class="space-y-2 text-brand-cream/80">
+                        <li><a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:text-white transition">Home</a></li>
+                        <li><a href="javascript:void(0)" onclick="navigateTo('about')" class="hover:text-white transition">About Our Trust</a></li>
+                        <li><a href="javascript:void(0)" onclick="navigateTo('initiatives')" class="hover:text-white transition">Our Initiatives</a></li>
+                        <li><a href="javascript:void(0)" onclick="navigateTo('gallery')" class="hover:text-white transition">Ground Gallery</a></li>
+                        <li><a href="javascript:void(0)" onclick="navigateTo('updates')" class="hover:text-white transition">Field Updates</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Legal & Tax -->
+                <div class="space-y-3">
+                    <h4 class="font-heading font-bold text-sm text-brand-amber uppercase tracking-wider">Legal & Compliance</h4>
+                    <ul class="space-y-2 text-brand-cream/80">
+                        <li><span>Section 80G Tax Exemption</span></li>
+                        <li><span>Section 12A Registration</span></li>
+                        <li><span>CSR-1 Filing: Approved</span></li>
+                        <li><span>Annual Audit Reports</span></li>
+                        <li><span>Privacy & Donation Policy</span></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div class="space-y-3">
+                    <h4 class="font-heading font-bold text-sm text-brand-amber uppercase tracking-wider">Mithila Bulletin</h4>
+                    <p class="text-brand-cream/70 text-xs">
+                        Subscribe to our quarterly newsletter on grassroots progress in Bihar.
+                    </p>
+                    <form onsubmit="handleNewsletterSubmit(event)" class="space-y-2">
+                        <input type="email" required placeholder="Enter your email" class="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none text-xs">
+                        <button type="submit" class="w-full py-2 bg-brand-terracotta hover:bg-brand-coral text-white font-bold rounded-lg transition text-xs">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- FOOTER COPYRIGHT & ALPHA AVICS DIGITAL SOLUTIONS CREDIT -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left text-brand-cream/60 text-[11px]">
+                <div>
+                    © <span id="currentYear"></span> Sashi Jamuna Foundation. All Rights Reserved. (Non-Profit NGO Trust)
+                </div>
+                <div class="font-semibold text-brand-cream/90 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                    Designed & Developed by Alpha Avics Digital Solutions
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- INTERACTIVE MODALS -->
+    <!-- ============================================== -->
+
+    <!-- 1. SECURE DONATION MODAL (with Razorpay Configuration Simulation) -->
+    <div id="donateModal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-brand-cream rounded-3xl max-w-lg w-full p-6 sm:p-8 madhubani-border shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="closeDonateModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-200 hover:bg-brand-terracotta hover:text-white transition flex items-center justify-center text-slate-700">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="w-12 h-12 rounded-full bg-brand-terracotta text-white flex items-center justify-center mx-auto text-xl mb-2">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+                <h3 class="font-heading font-bold text-2xl text-brand-blue">Make a Contribution</h3>
+                <p class="text-xs text-slate-600 mt-1" id="donationTargetCause">Supporting Sashi Jamuna Foundation General Fund</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Preset Amounts -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Select Donation Tier (INR)</label>
+                    <div class="grid grid-cols-4 gap-2 text-xs font-bold">
+                        <button type="button" onclick="selectAmount(500)" class="amt-btn py-2.5 rounded-xl border-2 border-brand-blue/30 bg-white hover:border-brand-blue text-brand-blue transition">₹500</button>
+                        <button type="button" onclick="selectAmount(1000)" class="amt-btn py-2.5 rounded-xl border-2 border-brand-blue bg-brand-blue text-white transition">₹1,000</button>
+                        <button type="button" onclick="selectAmount(2500)" class="amt-btn py-2.5 rounded-xl border-2 border-brand-blue/30 bg-white hover:border-brand-blue text-brand-blue transition">₹2,500</button>
+                        <button type="button" onclick="selectAmount(5000)" class="amt-btn py-2.5 rounded-xl border-2 border-brand-blue/30 bg-white hover:border-brand-blue text-brand-blue transition">₹5,000</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Or Enter Custom Amount (₹)</label>
+                    <div class="relative">
+                        <span class="absolute left-3.5 top-2.5 text-slate-400 font-bold">₹</span>
+                        <input type="number" id="customAmount" placeholder="1000" class="w-full pl-8 pr-4 py-2.5 rounded-xl border border-slate-300 font-bold text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue">
+                    </div>
+                </div>
+
+                <!-- Donor Details -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Donor Full Name *</label>
+                        <input type="text" id="donorName" placeholder="Ramesh Mishra" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Email (For 80G Recpt) *</label>
+                        <input type="email" id="donorEmail" placeholder="donor@mail.com" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">PAN Number (Required for 80G Tax Exemption)</label>
+                    <input type="text" id="donorPan" placeholder="ABCDE1234F" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs uppercase tracking-wider">
+                </div>
+
+                <!-- Razorpay Gateway Integration Info Badge -->
+                <div class="p-3 bg-white rounded-xl border border-brand-amber/40 text-[11px] text-slate-600 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-lock text-emerald-600"></i> Razorpay 256-bit Encrypted</span>
+                    <span class="font-semibold text-brand-blue">Cards • UPI • NetBanking</span>
+                </div>
+
+                <!-- CTA Button -->
+                <button type="button" onclick="executeSimulatedRazorpay()" class="w-full py-3.5 bg-gradient-to-r from-brand-terracotta via-brand-coral to-brand-amber text-white font-bold rounded-xl shadow-lg hover:shadow-brand-terracotta/40 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Proceed to Secure Payment</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. LIGHTBOX MODAL -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeLightbox()">
+        <div class="max-w-4xl max-h-[85vh] relative" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute -top-10 right-0 text-white hover:text-brand-coral text-2xl font-bold">
+                <i class="fa-solid fa-xmark"></i> Close
+            </button>
+            <img id="lightboxImg" src="" class="max-w-full max-h-[75vh] rounded-xl shadow-2xl border-2 border-white/20 object-contain mx-auto">
+            <div id="lightboxCaption" class="text-white text-center text-sm font-medium mt-3 bg-black/40 p-2 rounded-lg"></div>
+        </div>
+    </div>
+
+    <!-- 3. VIDEO PLAYER MODAL -->
+    <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeVideoModal()">
+        <div class="max-w-4xl w-full bg-black rounded-2xl overflow-hidden shadow-2xl relative" onclick="event.stopPropagation()">
+            <div class="p-3 bg-brand-blue text-white flex justify-between items-center text-sm">
+                <span id="videoTitle" class="font-bold truncate pr-4">Video Story</span>
+                <button onclick="closeVideoModal()" class="hover:text-brand-coral font-bold text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="aspect-video w-full bg-black">
+                <iframe id="videoIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. SECURE ADMIN DASHBOARD MODAL -->
+    <div id="adminModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col border-2 border-brand-blue">
+            
+            <!-- Admin Header -->
+            <div class="bg-brand-blue text-white p-4 sm:p-6 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-terracotta flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-heading font-bold text-lg">Sashi Jamuna NGO Management Console</h3>
+                        <p class="text-[11px] text-brand-cream/80">Supabase & Database Management • Authenticated Mode</p>
+                    </div>
+                </div>
+                <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Admin Nav Tabs -->
+            <div class="flex border-b border-slate-200 bg-slate-50 px-6 pt-2 text-xs font-bold text-slate-600 gap-4 overflow-x-auto">
+                <button onclick="switchAdminTab('donations')" class="admin-tab-btn py-3 border-b-2 border-brand-blue text-brand-blue active" id="tab-donations">Donations Ledger</button>
+                <button onclick="switchAdminTab('updates')" class="admin-tab-btn py-3 border-b-2 border-transparent hover:text-brand-blue" id="tab-updates">Post Daily Field Update</button>
+                <button onclick="switchAdminTab('volunteers')" class="admin-tab-btn py-3 border-b-2 border-transparent hover:text-brand-blue" id="tab-volunteers">Volunteer Roster</button>
+                <button onclick="switchAdminTab('stats')" class="admin-tab-btn py-3 border-b-2 border-transparent hover:text-brand-blue" id="tab-stats">Impact Metrics</button>
+            </div>
+
+            <!-- Admin Body Content -->
+            <div class="p-6 overflow-y-auto flex-grow text-xs text-slate-700 bg-brand-cream/10">
+                
+                <!-- Tab: Donations -->
+                <div id="admin-sec-donations" class="admin-section space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-sm text-slate-800">Recent Online Donations (Razorpay Gateway)</h4>
+                        <span class="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded font-semibold">Total This Month: ₹4,82,500</span>
+                    </div>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b text-[11px] uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="p-3">Receipt #</th>
+                                    <th class="p-3">Donor Name</th>
+                                    <th class="p-3">Amount</th>
+                                    <th class="p-3">Target Cause</th>
+                                    <th class="p-3">80G Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100" id="donorTableBody">
+                                <tr>
+                                    <td class="p-3 font-mono font-semibold">SJ-80G-9021</td>
+                                    <td class="p-3 font-semibold">Anandita Verma</td>
+                                    <td class="p-3 font-bold text-emerald-600">₹5,000</td>
+                                    <td class="p-3">Shiksha Jyoti Education</td>
+                                    <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[10px]">Emailed</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono font-semibold">SJ-80G-9020</td>
+                                    <td class="p-3 font-semibold">Vikramaditya Jha</td>
+                                    <td class="p-3 font-bold text-emerald-600">₹2,500</td>
+                                    <td class="p-3">Mithila Kala Guild</td>
+                                    <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[10px]">Emailed</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono font-semibold">SJ-80G-9019</td>
+                                    <td class="p-3 font-semibold">Sunil Narain Mathur</td>
+                                    <td class="p-3 font-bold text-emerald-600">₹10,000</td>
+                                    <td class="p-3">Gramin Arogya Healthcare</td>
+                                    <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[10px]">Emailed</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Post Update -->
+                <div id="admin-sec-updates" class="admin-section hidden space-y-4">
+                    <h4 class="font-bold text-sm text-slate-800">Publish New Real-Time Ground Update</h4>
+                    <form onsubmit="handleAdminPostUpdate(event)" class="space-y-3 bg-white p-4 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="block font-bold mb-1">Headline / Event Title *</label>
+                            <input type="text" id="adminUpdateTitle" required placeholder="e.g. Health Camp concluded at Benipatti" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold mb-1">Tag Category</label>
+                                <select id="adminUpdateTag" class="w-full px-3 py-2 border rounded-lg">
+                                    <option>Field Dispatch</option>
+                                    <option>Healthcare Mission</option>
+                                    <option>Education Grant</option>
+                                    <option>Artisan Exhibition</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold mb-1">Author / Coordinator Name</label>
+                                <input type="text" id="adminUpdateAuthor" value="Ground Team Coordinator" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">Details & Impact Report *</label>
+                            <textarea id="adminUpdateContent" rows="3" required placeholder="Describe the outcome, number of beneficiaries..." class="w-full px-3 py-2 border rounded-lg"></textarea>
+                        </div>
+                        <button type="submit" class="px-5 py-2.5 bg-brand-blue text-white font-bold rounded-lg hover:bg-brand-blueDark">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publish Update to Live Feed
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tab: Volunteer Roster -->
+                <div id="admin-sec-volunteers" class="admin-section hidden space-y-4">
+                    <h4 class="font-bold text-sm text-slate-800">Active Volunteer Submissions</h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b text-[11px] uppercase font-bold text-slate-500">
+                                <tr>
+                                    <th class="p-3">Volunteer</th>
+                                    <th class="p-3">Contact</th>
+                                    <th class="p-3">Location</th>
+                                    <th class="p-3">Skillset</th>
+                                    <th class="p-3">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100" id="volunteerTableBody">
+                                <tr>
+                                    <td class="p-3 font-semibold">Pooja Choudhary</td>
+                                    <td class="p-3">pooja.c@example.com</td>
+                                    <td class="p-3">Patna</td>
+                                    <td class="p-3">Teaching, Mithila Art</td>
+                                    <td class="p-3"><span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[10px]">Contacted</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-semibold">Dr. Saurabh Mishra</td>
+                                    <td class="p-3">saurabh.m@example.com</td>
+                                    <td class="p-3">Darbhanga</td>
+                                    <td class="p-3">Medical Healthcare</td>
+                                    <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px]">Active Lead</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Stats -->
+                <div id="admin-sec-stats" class="admin-section hidden space-y-4">
+                    <h4 class="font-bold text-sm text-slate-800">Modify Publicly Displayed Impact Numbers</h4>
+                    <div class="grid grid-cols-2 gap-4 bg-white p-4 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="block font-bold mb-1">Lives Touched Counter</label>
+                            <input type="text" id="statInputLives" value="24,500+" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">Artisans Counter</label>
+                            <input type="text" id="statInputArtisans" value="1,280+" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">Health Camps Counter</label>
+                            <input type="text" id="statInputCamps" value="165+" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-1">Students Supported Counter</label>
+                            <input type="text" id="statInputStudents" value="4,800+" class="w-full px-3 py-2 border rounded-lg">
+                        </div>
+                        <div class="col-span-2">
+                            <button onclick="saveAdminStats()" class="px-5 py-2.5 bg-brand-terracotta text-white font-bold rounded-lg hover:bg-brand-coral">
+                                Update Statistics on Live Website
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+        // 1. SPA Page Routing
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show target page
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Nav active style
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.target === pageId) {
+                    btn.classList.add('bg-brand-blue/10', 'text-brand-blue', 'font-bold');
+                } else {
+                    btn.classList.remove('bg-brand-blue/10', 'text-brand-blue', 'font-bold');
+                }
+            });
+
+            // Close mobile menu if open
+            const mobileDrawer = document.getElementById('mobileDrawer');
+            if (mobileDrawer && !mobileDrawer.classList.contains('hidden')) {
+                mobileDrawer.classList.add('hidden');
+            }
+        }
+
+        // Mobile drawer toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+            const drawer = document.getElementById('mobileDrawer');
+            drawer.classList.toggle('hidden');
+        });
+
+        // 2. Donation Modal Logic & Razorpay Simulation
+        let currentSelectedAmount = 1000;
+
+        function openDonateModal(causeTitle = "Sashi Jamuna Foundation General Fund") {
+            document.getElementById('donationTargetCause').innerText = "Supporting: " + causeTitle;
+            document.getElementById('donateModal').classList.remove('hidden');
+        }
+
+        function closeDonateModal() {
+            document.getElementById('donateModal').classList.add('hidden');
+        }
+
+        function selectAmount(amt) {
+            currentSelectedAmount = amt;
+            document.getElementById('customAmount').value = amt;
+            document.querySelectorAll('.amt-btn').forEach(btn => {
+                if (btn.innerText.includes(amt.toString())) {
+                    btn.className = "amt-btn py-2.5 rounded-xl border-2 border-brand-blue bg-brand-blue text-white transition";
+                } else {
+                    btn.className = "amt-btn py-2.5 rounded-xl border-2 border-brand-blue/30 bg-white hover:border-brand-blue text-brand-blue transition";
+                }
+            });
+        }
+
+        function executeSimulatedRazorpay() {
+            const name = document.getElementById('donorName').value.trim() || 'Generous Supporter';
+            const email = document.getElementById('donorEmail').value.trim() || 'donor@example.com';
+            const customAmt = document.getElementById('customAmount').value;
+            const finalAmount = customAmt ? customAmt : currentSelectedAmount;
+            const targetCause = document.getElementById('donationTargetCause').innerText.replace('Supporting: ', '');
+
+            // Celebration confetti
+            confetti({
+                particleCount: 120,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // Add to live admin ledger
+            const receiptNum = "SJ-80G-" + Math.floor(1000 + Math.random() * 9000);
+            const tableBody = document.getElementById('donorTableBody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td class="p-3 font-mono font-semibold">${receiptNum}</td>
+                <td class="p-3 font-semibold">${name}</td>
+                <td class="p-3 font-bold text-emerald-600">₹${parseInt(finalAmount).toLocaleString('en-IN')}</td>
+                <td class="p-3">${targetCause}</td>
+                <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[10px]">Processing 80G</span></td>
+            `;
+            tableBody.prepend(newRow);
+
+            alert(`🎉 Thank you, ${name}!\n\nYour donation of ₹${parseInt(finalAmount).toLocaleString('en-IN')} was successfully processed via Razorpay.\n\nYour 80G tax exemption receipt (${receiptNum}) has been dispatched to ${email}.`);
+            closeDonateModal();
+        }
+
+        // 3. Volunteer Form Handler
+        function handleVolunteerSubmit(e) {
+            e.preventDefault();
+            confetti({
+                particleCount: 100,
+                spread: 60,
+                origin: { y: 0.5 }
+            });
+            alert("🙏 Thank you for registering to volunteer! Our coordinator from Madhubani HQ will reach out to you within 48 hours.");
+            e.target.reset();
+            navigateTo('home');
+        }
+
+        // 4. Contact & Newsletter Form Handlers
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert("✨ Thank you for your inquiry. The Sashi Jamuna Foundation secretariat will respond promptly.");
+            e.target.reset();
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            alert("📬 You have been successfully subscribed to our Mithila quarterly field dispatch!");
+            e.target.reset();
+        }
+
+        // 5. Gallery Filter & Lightbox
+        function filterGallery(category) {
+            document.querySelectorAll('.gallery-filter').forEach(btn => {
+                btn.className = "gallery-filter px-4 py-2 rounded-full text-xs font-bold bg-white text-slate-700 hover:bg-brand-blue/10";
+            });
+            event.target.className = "gallery-filter active px-4 py-2 rounded-full text-xs font-bold bg-brand-blue text-white";
+
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                if (category === 'all' || item.dataset.cat === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openLightbox(imgSrc, caption) {
+            document.getElementById('lightboxImg').src = imgSrc;
+            document.getElementById('lightboxCaption').innerText = caption;
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        // 6. Video Modal Logic
+        function playVideoModal(videoSrc, title) {
+            document.getElementById('videoTitle').innerText = title;
+            document.getElementById('videoIframe').src = videoSrc + "?autoplay=1";
+            document.getElementById('videoModal').classList.remove('hidden');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('videoIframe').src = "";
+            document.getElementById('videoModal').classList.add('hidden');
+        }
+
+        // 7. Admin Dashboard Functionalities
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('border-brand-blue', 'text-brand-blue');
+                btn.classList.add('border-transparent');
+            });
+
+            document.getElementById('admin-sec-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('border-brand-blue', 'text-brand-blue');
+            document.getElementById('tab-' + tabName).classList.remove('border-transparent');
+        }
+
+        function handleAdminPostUpdate(e) {
+            e.preventDefault();
+            const title = document.getElementById('adminUpdateTitle').value;
+            const tag = document.getElementById('adminUpdateTag').value;
+            const author = document.getElementById('adminUpdateAuthor').value;
+            const content = document.getElementById('adminUpdateContent').value;
+
+            const container = document.getElementById('updatesContainer');
+            const newCard = document.createElement('div');
+            newCard.className = "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative pl-8 border-l-4 border-l-brand-blue animate-pulse";
+            newCard.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <span class="text-xs font-bold text-brand-blue bg-brand-blue/10 px-2.5 py-0.5 rounded">${tag}</span>
+                    <span class="text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i> Just Now • Ground Portal</span>
+                </div>
+                <h3 class="font-heading font-bold text-xl text-brand-blue">${title}</h3>
+                <p class="text-slate-600 text-sm mt-2 leading-relaxed">${content}</p>
+                <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
+                    <span class="font-semibold text-slate-800">Posted by:</span> ${author}
+                </div>
+            `;
+            container.prepend(newCard);
+            setTimeout(() => newCard.classList.remove('animate-pulse'), 1000);
+
+            alert("✅ Field update published live to the News & Updates feed!");
+            e.target.reset();
+            closeAdminModal();
+            navigateTo('updates');
+        }
+
+        function saveAdminStats() {
+            document.getElementById('stat-lives').innerText = document.getElementById('statInputLives').value;
+            document.getElementById('stat-artisans').innerText = document.getElementById('statInputArtisans').value;
+            document.getElementById('stat-camps').innerText = document.getElementById('statInputCamps').value;
+            document.getElementById('stat-students').innerText = document.getElementById('statInputStudents').value;
+            alert("📊 Live impact statistics updated successfully!");
+            closeAdminModal();
+        }
+    </script>
+</body>
+</html>

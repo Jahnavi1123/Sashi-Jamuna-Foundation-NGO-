@@ -1,0 +1,1296 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sashi Jamuna Foundation — Empowering Bihar, Preserving Heritage</title>
+<meta name="description" content="Sashi Jamuna Foundation — a culturally rooted NGO dedicated to community empowerment, heritage preservation, education and welfare across Bihar. Madhubani-inspired, community driven." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#164B8C;
+    --blue-soft:#3D6FA3;
+    --blue-mist:#E8EEF6;
+    --cream:#FFF8E7;
+    --cream-deep:#F7EDD8;
+    --peach:#F4D9C5;
+    --terracotta:#C97B5C;
+    --gold:#D4A95E;
+    --teal:#A8C5C0;
+    --ink:#1B2A3A;
+    --muted:#6B7280;
+  }
+  *{ -webkit-font-smoothing:antialiased; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  .font-display{ font-family:'Fraunces',serif; font-optical-sizing:auto; }
+
+  /* Madhubani background layers */
+  .madhubani-bg{
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(22,75,140,0.04) 0, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(201,123,92,0.05) 0, transparent 40%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'><g fill='none' stroke='%23164B8C' stroke-width='0.8' opacity='0.18'><path d='M90 20 C110 50 110 70 90 90 C70 70 70 50 90 20 Z'/><circle cx='90' cy='90' r='3'/><path d='M40 90 C50 70 70 70 90 90 C70 110 50 110 40 90 Z'/><path d='M90 90 C110 110 130 110 140 90 C130 70 110 70 90 90 Z'/><path d='M90 140 C70 110 50 110 40 140 C50 160 70 160 90 140 Z'/><circle cx='90' cy='90' r='40' stroke-dasharray='2 4'/></g></svg>");
+    background-size:auto, auto, 180px 180px;
+  }
+
+  /* Madhubani border (double line with motifs) */
+  .madhubani-border{
+    border:1.5px solid var(--blue);
+    box-shadow: inset 0 0 0 4px var(--cream), inset 0 0 0 5.5px rgba(22,75,140,0.55);
+    border-radius:18px;
+  }
+
+  /* Section divider with central motif */
+  .divider-motif{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    color:var(--blue);
+  }
+  .divider-motif::before, .divider-motif::after{
+    content:""; flex:1; height:1.5px;
+    background:linear-gradient(90deg, transparent, var(--blue) 60%, transparent);
+    max-width:240px;
+  }
+
+  /* Reveal animation */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* Floating */
+  @keyframes floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-10px) } }
+  .float{ animation:floaty 6s ease-in-out infinite; }
+  .float-slow{ animation:floaty 9s ease-in-out infinite; }
+
+  /* Counter */
+  .stat-num{ font-variant-numeric:tabular-nums; }
+
+  /* Marquee */
+  @keyframes scroll-x{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee{ display:flex; width:max-content; animation:scroll-x 40s linear infinite; }
+
+  /* Card hover */
+  .card-hover{ transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+  .card-hover:hover{ transform:translateY(-8px); box-shadow:0 30px 60px -20px rgba(22,75,140,0.25); }
+
+  /* Button shine */
+  .btn-primary{
+    background:linear-gradient(135deg, var(--blue), var(--blue-soft));
+    color:#fff; position:relative; overflow:hidden;
+  }
+  .btn-primary::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform:translateX(-100%); transition:transform .8s;
+  }
+  .btn-primary:hover::after{ transform:translateX(100%); }
+
+  /* Soft card */
+  .soft-card{
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(22,75,140,0.12);
+    border-radius:20px;
+  }
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(20,30,45,0.85);
+    display:none; align-items:center; justify-content:center; z-index:120;
+    backdrop-filter:blur(8px);
+  }
+  .lightbox.open{ display:flex; }
+
+  /* Admin modal */
+  .modal{ position:fixed; inset:0; background:rgba(20,30,45,0.7); display:none; align-items:center; justify-content:center; z-index:130; backdrop-filter:blur(8px); }
+  .modal.open{ display:flex; }
+
+  /* Hero collage tilt */
+  .tilt-card{ transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+  .tilt-card:hover{ transform:rotate(0deg) scale(1.04) !important; }
+
+  /* Nav scroll state */
+  .nav-scrolled{ background:rgba(255,248,231,0.92); backdrop-filter:blur(12px); box-shadow:0 6px 30px -12px rgba(22,75,140,0.25); }
+
+  /* Feed card */
+  .feed-card{ border-radius:16px; overflow:hidden; }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-track{ background:var(--cream-deep); }
+  ::-webkit-scrollbar-thumb{ background:var(--blue-soft); border-radius:10px; border:2px solid var(--cream-deep); }
+
+  /* Madhubani corner motif overlay */
+  .corner-motif{ position:absolute; width:120px; height:120px; pointer-events:none; opacity:.55; }
+
+  .tab-active{ background:var(--blue); color:#fff; }
+
+  /* Animated gradient blob */
+  @keyframes drift{ 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(30px,-20px) scale(1.08)} 100%{transform:translate(0,0) scale(1)} }
+  .blob{ animation:drift 18s ease-in-out infinite; filter:blur(40px); }
+</style>
+</head>
+<body class="madhubani-bg">
+
+<!-- Decorative background blobs -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+  <div class="blob absolute -top-20 -left-20 w-96 h-96 rounded-full" style="background:rgba(168,197,192,0.35)"></div>
+  <div class="blob absolute top-1/3 right-0 w-96 h-96 rounded-full" style="background:rgba(244,217,197,0.4); animation-delay:-6s"></div>
+  <div class="blob absolute bottom-0 left-1/3 w-80 h-80 rounded-full" style="background:rgba(212,169,94,0.25); animation-delay:-12s"></div>
+</div>
+
+<!-- Top announcement marquee -->
+<div class="bg-[#164B8C] text-[#FFF8E7] text-sm py-2 overflow-hidden">
+  <div class="marquee">
+    <div class="flex items-center gap-10 px-6 whitespace-nowrap">
+      <span>◆ Together we nurture roots and reach skies.</span>
+      <span>◆ Empowering Bihar, preserving heritage.</span>
+      <span>◆ Madhubani art — our living tradition.</span>
+      <span>◆ Volunteer with Sashi Jamuna Foundation today.</span>
+      <span>◆ Together we nurture roots and reach skies.</span>
+      <span>◆ Empowering Bihar, preserving heritage.</span>
+      <span>◆ Madhubani art — our living tradition.</span>
+      <span>◆ Volunteer with Sashi Jamuna Foundation today.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<header id="nav" class="sticky top-0 z-50 transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-3 group">
+      <span class="relative w-12 h-12 grid place-items-center rounded-xl bg-[#164B8C] text-[#FFF8E7] shadow-lg">
+        <svg viewBox="0 0 48 48" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="24" cy="24" r="6"/>
+          <path d="M24 4 C28 12 28 16 24 20 C20 16 20 12 24 4 Z"/>
+          <path d="M24 44 C20 36 20 32 24 28 C28 32 28 36 24 44 Z"/>
+          <path d="M4 24 C12 20 16 20 20 24 C16 28 12 28 4 24 Z"/>
+          <path d="M44 24 C36 20 32 20 28 24 C32 28 36 28 44 24 Z"/>
+        </svg>
+      </span>
+      <span class="leading-tight">
+        <span class="block font-display text-lg font-semibold text-[#164B8C]">Sashi Jamuna</span>
+        <span class="block text-[10px] tracking-[0.25em] uppercase text-[#6B7280]">Foundation</span>
+      </span>
+    </a>
+
+    <ul class="hidden lg:flex items-center gap-1 text-sm">
+      <li><a href="#home" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">Home</a></li>
+      <li><a href="#about" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">About Us</a></li>
+      <li><a href="#initiatives" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">Our Initiatives</a></li>
+      <li><a href="#gallery" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">Gallery</a></li>
+      <li><a href="#videos" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">Videos</a></li>
+      <li><a href="#news" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">News & Updates</a></li>
+      <li><a href="#contact" class="nav-link px-3 py-2 rounded-lg hover:bg-[#164B8C]/10 text-[#1B2A3A]">Contact</a></li>
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <button onclick="openAdmin()" class="hidden sm:inline-flex text-xs px-3 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C] hover:bg-[#164B8C]/10">
+        Admin
+      </button>
+      <a href="#donate" class="btn-primary text-sm px-5 py-2.5 rounded-lg shadow-lg">Donate</a>
+      <button id="menuBtn" class="lg:hidden p-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C]">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="lg:hidden hidden bg-[#FFF8E7]/95 backdrop-blur border-t border-[#164B8C]/15">
+    <div class="px-6 py-4 grid gap-1 text-sm">
+      <a href="#home" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Home</a>
+      <a href="#about" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">About Us</a>
+      <a href="#initiatives" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Our Initiatives</a>
+      <a href="#gallery" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Gallery</a>
+      <a href="#videos" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Videos</a>
+      <a href="#news" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">News & Updates</a>
+      <a href="#donate" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Donate</a>
+      <a href="#volunteer" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Volunteer</a>
+      <a href="#contact" class="py-2 px-2 rounded hover:bg-[#164B8C]/10">Contact</a>
+      <button onclick="openAdmin()" class="mt-2 text-xs px-3 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C] text-left">Admin Dashboard</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home" class="relative pt-12 pb-24 overflow-hidden">
+  <!-- Madhubani corner motifs -->
+  <svg class="corner-motif" style="top:0;left:0" viewBox="0 0 120 120" fill="none" stroke="#164B8C" stroke-width="1.2">
+    <path d="M0 0 L60 0 M0 0 L0 60"/>
+    <path d="M10 10 C30 10 50 30 50 50 M50 50 C30 50 10 30 10 10" stroke-width="1"/>
+    <circle cx="30" cy="30" r="3" fill="#164B8C"/>
+    <path d="M0 0 L0 20 L8 12 L16 20 L8 28 L0 20"/>
+    <path d="M0 0 L20 0 L12 8 L20 16 L12 24 L20 32"/>
+  </svg>
+  <svg class="corner-motif" style="top:0;right:0;transform:scaleX(-1)" viewBox="0 0 120 120" fill="none" stroke="#164B8C" stroke-width="1.2">
+    <path d="M0 0 L60 0 M0 0 L0 60"/>
+    <path d="M10 10 C30 10 50 30 50 50 M50 50 C30 50 10 30 10 10"/>
+    <circle cx="30" cy="30" r="3" fill="#164B8C"/>
+  </svg>
+
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+    <div class="reveal">
+      <span class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-[#164B8C] bg-[#164B8C]/10 px-4 py-2 rounded-full">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#164B8C]"></span> Bihar · Heritage · Humanity
+      </span>
+      <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.05] mt-6 text-[#1B2A3A]">
+        Rooted in <span class="text-[#164B8C]">culture</span>,<br> reaching for <span class="italic text-[#C97B5C]">change</span>.
+      </h1>
+      <p class="mt-6 text-lg text-[#4A5568] max-w-xl leading-relaxed">
+        Sashi Jamuna Foundation is a community-driven organisation weaving together education, welfare, women's empowerment and the living art of Madhubani — a placeholder mission statement, fully editable from the admin dashboard.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#donate" class="btn-primary px-7 py-3.5 rounded-xl font-medium shadow-xl">Donate Now</a>
+        <a href="#volunteer" class="px-7 py-3.5 rounded-xl font-medium border border-[#164B8C]/40 text-[#164B8C] hover:bg-white transition">Become a Volunteer</a>
+      </div>
+      <div class="mt-10 grid grid-cols-3 gap-4 max-w-md">
+        <div>
+          <div class="font-display text-3xl font-semibold text-[#164B8C] stat-num" data-count="0">0</div>
+          <div class="text-xs text-[#6B7280] uppercase tracking-wider">Beneficiaries</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl font-semibold text-[#164B8C] stat-num" data-count="0">0</div>
+          <div class="text-xs text-[#6B7280] uppercase tracking-wider">Villages</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl font-semibold text-[#164B8C] stat-num" data-count="0">0</div>
+          <div class="text-xs text-[#6B7280] uppercase tracking-wider">Artisans</div>
+        </div>
+      </div>
+      <p class="mt-3 text-[10px] text-[#9CA3AF]">* Verified impact statistics — editable in admin dashboard.</p>
+    </div>
+
+    <!-- Animated collage -->
+    <div class="relative h-[460px] sm:h-[540px] reveal">
+      <!-- Madhubani sun backdrop -->
+      <svg class="absolute -top-6 right-6 w-40 h-40 float-slow" viewBox="0 0 200 200" fill="none" stroke="#D4A95E" stroke-width="1.5" opacity="0.9">
+        <circle cx="100" cy="100" r="40"/>
+        <g stroke-width="1.2">
+          <path d="M100 20 L100 50 M100 150 L100 180 M20 100 L50 100 M150 100 L180 100"/>
+          <path d="M44 44 L65 65 M135 65 L156 44 M44 156 L65 135 M135 135 L156 156"/>
+          <path d="M70 30 Q80 50 100 50 Q120 50 130 30"/>
+          <path d="M30 70 Q50 80 50 100 Q50 120 30 130"/>
+          <path d="M170 70 Q150 80 150 100 Q150 120 170 130"/>
+          <path d="M70 170 Q80 150 100 150 Q120 150 130 170"/>
+        </g>
+        <circle cx="100" cy="100" r="18"/>
+        <circle cx="100" cy="100" r="8 fill" fill="#D4A95E"/>
+      </svg>
+
+      <div class="absolute top-4 left-4 w-44 sm:w-56 tilt-card card-hover rounded-3xl overflow-hidden shadow-2xl float" style="transform:rotate(-4deg)">
+        <img src="https://picsum.photos/seed/madhubani1/600/700" alt="Madhubani artisan" class="w-full h-64 sm:h-72 object-cover"/>
+        <div class="bg-[#164B8C] text-[#FFF8E7] text-xs px-4 py-2">Madhubani Artisans</div>
+      </div>
+      <div class="absolute top-20 right-2 w-40 sm:w-48 tilt-card card-hover rounded-3xl overflow-hidden shadow-2xl float-slow" style="transform:rotate(5deg)">
+        <img src="https://picsum.photos/seed/children2/500/600" alt="Children education" class="w-full h-56 sm:h-64 object-cover"/>
+        <div class="bg-[#C97B5C] text-white text-xs px-4 py-2">Education for All</div>
+      </div>
+      <div class="absolute bottom-2 left-12 w-44 sm:w-52 tilt-card card-hover rounded-3xl overflow-hidden shadow-2xl float" style="transform:rotate(3deg); animation-delay:-3s">
+        <img src="https://picsum.photos/seed/women3/500/600" alt="Women empowerment" class="w-full h-60 sm:h-72 object-cover"/>
+        <div class="bg-[#A8C5C0] text-[#1B2A3A] text-xs px-4 py-2">Women Empowerment</div>
+      </div>
+
+      <!-- Madhubani fish motif floating -->
+      <svg class="absolute bottom-10 right-0 w-24 h-16 float-slow" viewBox="0 0 120 80" fill="none" stroke="#164B8C" stroke-width="1.5">
+        <path d="M10 40 Q30 10 60 40 Q30 70 10 40 Z"/>
+        <path d="M60 40 L80 20 M60 40 L80 60 M60 40 L90 40"/>
+        <circle cx="30" cy="35" r="2" fill="#164B8C"/>
+        <path d="M40 40 Q45 35 50 40 Q45 45 40 40"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="max-w-3xl mx-auto px-6">
+  <div class="divider-motif">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2">
+      <circle cx="20" cy="20" r="6"/>
+      <path d="M20 4 C24 10 24 14 20 18 C16 14 16 10 20 4 Z"/>
+      <path d="M20 36 C16 30 16 26 20 22 C24 26 24 30 20 36 Z"/>
+      <path d="M4 20 C10 16 14 16 18 20 C14 24 10 24 4 20 Z"/>
+      <path d="M36 20 C30 16 26 16 22 20 C26 24 30 24 36 20 Z"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
+    <div class="reveal relative">
+      <div class="madhubani-border p-3 bg-[#FFF8E7]">
+        <img src="https://picsum.photos/seed/villagescene/700/520" alt="Village community" class="rounded-xl w-full h-72 sm:h-96 object-cover"/>
+      </div>
+      <!-- peacock motif -->
+      <svg class="absolute -bottom-8 -right-8 w-28 h-28 float" viewBox="0 0 100 100" fill="none" stroke="#164B8C" stroke-width="1.2">
+        <circle cx="50" cy="50" r="3" fill="#164B8C"/>
+        <path d="M50 50 Q20 30 30 60 Q35 80 50 60"/>
+        <path d="M50 50 Q80 30 70 60 Q65 80 50 60"/>
+        <circle cx="35" cy="45" r="6"/>
+        <circle cx="65" cy="45" r="6"/>
+        <circle cx="35" cy="45" r="2" fill="#164B8C"/>
+        <circle cx="65" cy="45" r="2" fill="#164B8C"/>
+      </svg>
+    </div>
+    <div class="reveal">
+      <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">About the Foundation</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">A story of soil, soul & service</h2>
+      <p class="mt-5 text-[#4A5568] leading-relaxed">
+        Born from the heartland of Bihar, Sashi Jamuna Foundation blends grassroots welfare with the timeless elegance of Madhubani heritage. Our work celebrates identity, dignity and inclusive growth — a placeholder narrative you can refine from the dashboard.
+      </p>
+      <div class="mt-8 grid sm:grid-cols-2 gap-5">
+        <div class="soft-card p-5">
+          <div class="w-10 h-10 rounded-lg bg-[#164B8C]/10 grid place-items-center text-[#164B8C] mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 L2 7 L12 12 L22 7 Z"/><path d="M2 17 L12 22 L22 17"/><path d="M2 12 L12 17 L22 12"/></svg>
+          </div>
+          <h4 class="font-semibold text-[#1B2A3A]">Our Vision</h4>
+          <p class="text-sm text-[#6B7280] mt-1">A Bihar where heritage and progress flourish hand in hand.</p>
+        </div>
+        <div class="soft-card p-5">
+          <div class="w-10 h-10 rounded-lg bg-[#C97B5C]/15 grid place-items-center text-[#C97B5C] mb-3">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z"/><circle cx="12" cy="11" r="2"/></svg>
+          </div>
+          <h4 class="font-semibold text-[#1B2A3A]">Our Mission</h4>
+          <p class="text-sm text-[#6B7280] mt-1">Empowering communities through education, art and welfare.</p>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#initiatives" class="text-sm font-medium text-[#164B8C] inline-flex items-center gap-2 hover:gap-3 transition-all">
+          Explore our initiatives
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INITIATIVES -->
+<section id="initiatives" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">What we do</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">Our Initiatives</h2>
+      <p class="mt-4 text-[#6B7280]">Programs crafted to nurture heritage and humanity — fully manageable from the admin dashboard.</p>
+    </div>
+
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+      <!-- Card -->
+      <article class="reveal soft-card p-6 card-hover group">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#164B8C] to-[#3D6FA3] grid place-items-center text-white mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 0 1 2-2h7l5 5v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M13 4v5h5"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-[#1B2A3A]">Education for Every Child</h3>
+        <p class="text-sm text-[#6B7280] mt-2 leading-relaxed">Placeholder description for learning centres, scholarships and digital literacy across rural Bihar.</p>
+        <a href="#" class="mt-4 inline-flex items-center gap-2 text-sm text-[#164B8C] font-medium group-hover:gap-3 transition-all">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="reveal soft-card p-6 card-hover group" style="transition-delay:.05s">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#C97B5C] to-[#D4A95E] grid place-items-center text-white mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z"/><circle cx="12" cy="11" r="2"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-[#1B2A3A]">Women Empowerment</h3>
+        <p class="text-sm text-[#6B7280] mt-2 leading-relaxed">Placeholder for SHGs, skill training, micro-enterprise and leadership development for women.</p>
+        <a href="#" class="mt-4 inline-flex items-center gap-2 text-sm text-[#C97B5C] font-medium group-hover:gap-3 transition-all">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="reveal soft-card p-6 card-hover group" style="transition-delay:.1s">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#A8C5C0] to-[#164B8C] grid place-items-center text-white mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6m0 8v6m10-10h-6M8 12H2"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-[#1B2A3A]">Madhubani Heritage</h3>
+        <p class="text-sm text-[#6B7280] mt-2 leading-relaxed">Placeholder for artisan livelihoods, mural restoration, and cultural exhibitions preserving folk art.</p>
+        <a href="#" class="mt-4 inline-flex items-center gap-2 text-sm text-[#164B8C] font-medium group-hover:gap-3 transition-all">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="reveal soft-card p-6 card-hover group" style="transition-delay:.15s">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#3D6FA3] to-[#A8C5C0] grid place-items-center text-white mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-[#1B2A3A]">Health & Welfare</h3>
+        <p class="text-sm text-[#6B7280] mt-2 leading-relaxed">Placeholder for mobile clinics, sanitation drives, mental wellness and elder care programs.</p>
+        <a href="#" class="mt-4 inline-flex items-center gap-2 text-sm text-[#164B8C] font-medium group-hover:gap-3 transition-all">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="reveal soft-card p-6 card-hover group" style="transition-delay:.2s">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D4A95E] to-[#C97B5C] grid place-items-center text-white mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-[#1B2A3A]">Environment & Sustainability</h3>
+        <p class="text-sm text-[#6B7280] mt-2 leading-relaxed">Placeholder for tree plantation, water conservation and clean energy awareness across villages.</p>
+        <a href="#" class="mt-4 inline-flex items-center gap-2 text-sm text-[#C97B5C] font-medium group-hover:gap-3 transition-all">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="reveal soft-card p-6 card-hover group" style="transition-delay:.25s">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#164B8C] to-[#C97B5C] grid place-items-center text-white mb-5">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-[#1B2A3A]">Youth & Livelihoods</h3>
+        <p class="text-sm text-[#6B7280] mt-2 leading-relaxed">Placeholder for vocational training, entrepreneurship and digital skills for young changemakers.</p>
+        <a href="#" class="mt-4 inline-flex items-center gap-2 text-sm text-[#164B8C] font-medium group-hover:gap-3 transition-all">Learn more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STATS -->
+<section class="py-16 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="madhubani-border bg-gradient-to-br from-[#164B8C] to-[#3D6FA3] text-[#FFF8E7] p-10 sm:p-14 relative overflow-hidden">
+      <svg class="absolute top-0 right-0 w-48 h-48 opacity-20" viewBox="0 0 200 200" fill="none" stroke="#FFF8E7" stroke-width="1.2">
+        <circle cx="100" cy="100" r="40"/>
+        <path d="M100 20 L100 50 M100 150 L100 180 M20 100 L50 100 M150 100 L180 100"/>
+        <path d="M44 44 L65 65 M135 65 L156 44 M44 156 L65 135 M135 135 L156 156"/>
+      </svg>
+      <div class="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <div class="font-display text-5xl font-semibold stat-num" data-count="0">0</div>
+          <div class="mt-2 text-sm text-[#FFF8E7]/80">Families Supported</div>
+        </div>
+        <div>
+          <div class="font-display text-5xl font-semibold stat-num" data-count="0">0</div>
+          <div class="mt-2 text-sm text-[#FFF8E7]/80">Children Educated</div>
+        </div>
+        <div>
+          <div class="font-display text-5xl font-semibold stat-num" data-count="0">0</div>
+          <div class="mt-2 text-sm text-[#FFF8E7]/80">Artisans Empowered</div>
+        </div>
+        <div>
+          <div class="font-display text-5xl font-semibold stat-num" data-count="0">0</div>
+          <div class="mt-2 text-sm text-[#FFF8E7]/80">Camps Organised</div>
+        </div>
+      </div>
+      <p class="text-[10px] text-[#FFF8E7]/60 mt-6">* Verified impact statistics — fully editable from the admin dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4 reveal">
+      <div>
+        <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Moments</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">Photo Gallery</h2>
+      </div>
+      <div class="flex gap-2 text-xs" id="galleryFilters">
+        <button data-filter="all" class="gallery-filter px-4 py-2 rounded-full bg-[#164B8C] text-white">All</button>
+        <button data-filter="events" class="gallery-filter px-4 py-2 rounded-full border border-[#164B8C]/30 text-[#164B8C]">Events</button>
+        <button data-filter="art" class="gallery-filter px-4 py-2 rounded-full border border-[#164B8C]/30 text-[#164B8C]">Art</button>
+        <button data-filter="community" class="gallery-filter px-4 py-2 rounded-full border border-[#164B8C]/30 text-[#164B8C]">Community</button>
+      </div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="galleryGrid">
+      <!-- images inserted via JS -->
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Stories in motion</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">Video Stories</h2>
+      <p class="mt-4 text-[#6B7280]">Watch our journey unfold — placeholder videos, replaceable from the admin dashboard.</p>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-3 gap-7">
+      <article class="reveal soft-card overflow-hidden card-hover group">
+        <div class="relative h-52 bg-[#164B8C]">
+          <img src="https://picsum.photos/seed/video1/600/400" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"/>
+          <button class="absolute inset-0 grid place-items-center" onclick="playVideo('video1')">
+            <span class="w-14 h-14 rounded-full bg-white/90 grid place-items-center text-[#164B8C] shadow-xl">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="p-5">
+          <span class="text-xs text-[#C97B5C] uppercase tracking-wider">Documentary</span>
+          <h3 class="font-display text-lg font-semibold mt-1 text-[#1B2A3A]">Brushstrokes of Bihar</h3>
+          <p class="text-sm text-[#6B7280] mt-1">A short film on Madhubani artisans.</p>
+        </div>
+      </article>
+
+      <article class="reveal soft-card overflow-hidden card-hover group" style="transition-delay:.05s">
+        <div class="relative h-52 bg-[#C97B5C]">
+          <img src="https://picsum.photos/seed/video2/600/400" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"/>
+          <button class="absolute inset-0 grid place-items-center" onclick="playVideo('video2')">
+            <span class="w-14 h-14 rounded-full bg-white/90 grid place-items-center text-[#C97B5C] shadow-xl">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="p-5">
+          <span class="text-xs text-[#164B8C] uppercase tracking-wider">Story</span>
+          <h3 class="font-display text-lg font-semibold mt-1 text-[#1B2A3A]">Classrooms in the Fields</h3>
+          <p class="text-sm text-[#6B7280] mt-1">Education reaching rural children.</p>
+        </div>
+      </article>
+
+      <article class="reveal soft-card overflow-hidden card-hover group" style="transition-delay:.1s">
+        <div class="relative h-52 bg-[#A8C5C0]">
+          <img src="https://picsum.photos/seed/video3/600/400" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"/>
+          <button class="absolute inset-0 grid place-items-center" onclick="playVideo('video3')">
+            <span class="w-14 h-14 rounded-full bg-white/90 grid place-items-center text-[#164B8C] shadow-xl">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </button>
+        </div>
+        <div class="p-5">
+          <span class="text-xs text-[#C97B5C] uppercase tracking-wider">Impact</span>
+          <h3 class="font-display text-lg font-semibold mt-1 text-[#1B2A3A]">Hands That Heal</h3>
+          <p class="text-sm text-[#6B7280] mt-1">Health camps across villages.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS & UPDATES -->
+<section id="news" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4 reveal">
+      <div>
+        <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Daily Updates</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">News & Updates</h2>
+      </div>
+      <a href="#" class="text-sm text-[#164B8C] font-medium inline-flex items-center gap-2 hover:gap-3 transition-all">View all <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+
+    <div class="mt-10 grid lg:grid-cols-3 gap-7" id="newsGrid">
+      <!-- inserted via JS -->
+    </div>
+  </div>
+</section>
+
+<!-- DONATE -->
+<section id="donate" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Support the mission</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">Your gift, their tomorrow</h2>
+        <p class="mt-5 text-[#4A5568] leading-relaxed">Every contribution plants a seed of change. Choose an amount that feels right — 100% secure, transparent and tax-deductible (placeholder note).</p>
+
+        <div class="mt-8 space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="w-5 h-5 mt-1 rounded-full bg-[#164B8C] text-white grid place-items-center text-[10px]">✓</span>
+            <p class="text-sm text-[#4A5568]">Direct impact on grassroots programs across Bihar.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-5 h-5 mt-1 rounded-full bg-[#164B8C] text-white grid place-items-center text-[10px]">✓</span>
+            <p class="text-sm text-[#4A5568]">Transparent reporting and verified utilisation.</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-5 h-5 mt-1 rounded-full bg-[#164B8C] text-white grid place-items-center text-[10px]">✓</span>
+            <p class="text-sm text-[#4A5568]">Razorpay integration activates only after proper configuration.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal soft-card p-8 relative">
+        <svg class="absolute -top-6 -right-6 w-20 h-20" viewBox="0 0 100 100" fill="none" stroke="#164B8C" stroke-width="1.2" opacity="0.4">
+          <circle cx="50" cy="50" r="3" fill="#164B8C"/>
+          <path d="M50 50 Q20 30 30 60 Q35 80 50 60"/>
+          <path d="M50 50 Q80 30 70 60 Q65 80 50 60"/>
+        </svg>
+        <h3 class="font-display text-2xl font-semibold text-[#1B2A3A]">Make a Donation</h3>
+        <p class="text-sm text-[#6B7280] mt-1">Choose an amount or enter your own.</p>
+
+        <div class="mt-6 grid grid-cols-4 gap-3" id="donateAmounts">
+          <button data-amount="500" class="donate-amt py-3 rounded-xl border border-[#164B8C]/30 text-[#164B8C] font-medium hover:bg-[#164B8C] hover:text-white transition">₹500</button>
+          <button data-amount="1000" class="donate-amt py-3 rounded-xl border border-[#164B8C]/30 text-[#164B8C] font-medium hover:bg-[#164B8C] hover:text-white transition tab-active">₹1000</button>
+          <button data-amount="2500" class="donate-amt py-3 rounded-xl border border-[#164B8C]/30 text-[#164B8C] font-medium hover:bg-[#164B8C] hover:text-white transition">₹2500</button>
+          <button data-amount="5000" class="donate-amt py-3 rounded-xl border border-[#164B8C]/30 text-[#164B8C] font-medium hover:bg-[#164B8C] hover:text-white transition">₹5000</button>
+        </div>
+
+        <div class="mt-4">
+          <label class="text-xs uppercase tracking-wider text-[#6B7280]">Custom Amount (₹)</label>
+          <input id="customAmount" type="number" min="1" placeholder="Enter amount" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+        </div>
+
+        <div class="mt-4 grid sm:grid-cols-2 gap-3">
+          <input type="text" placeholder="Your name" class="px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+          <input type="email" placeholder="Email address" class="px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+        </div>
+
+        <button onclick="initiateDonation()" class="btn-primary w-full mt-5 py-4 rounded-xl font-medium shadow-xl flex items-center justify-center gap-2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Donate Securely
+        </button>
+        <p class="text-[10px] text-[#9CA3AF] mt-3 text-center">Razorpay integration pending configuration. This is a placeholder button.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEER -->
+<section id="volunteer" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal soft-card p-8 relative order-2 lg:order-1">
+        <svg class="absolute -bottom-6 -left-6 w-24 h-24 float" viewBox="0 0 120 120" fill="none" stroke="#164B8C" stroke-width="1.2" opacity="0.4">
+          <path d="M60 10 C70 30 70 50 60 60 C50 50 50 30 60 10 Z"/>
+          <path d="M10 60 C30 50 50 50 60 60 C50 70 30 70 10 60 Z"/>
+          <path d="M60 110 C70 90 70 70 60 60 C50 70 50 90 60 110 Z"/>
+          <path d="M110 60 C90 50 70 50 60 60 C70 70 90 70 110 60 Z"/>
+          <circle cx="60" cy="60" r="5"/>
+        </svg>
+        <h3 class="font-display text-2xl font-semibold text-[#1B2A3A]">Volunteer Registration</h3>
+        <p class="text-sm text-[#6B7280] mt-1">Join a community of changemakers. Tell us how you'd like to contribute.</p>
+        <form class="mt-6 grid gap-4" onsubmit="submitVolunteer(event)">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs uppercase tracking-wider text-[#6B7280]">Full Name</label>
+              <input required type="text" placeholder="Your name" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+            </div>
+            <div>
+              <label class="text-xs uppercase tracking-wider text-[#6B7280]">Email</label>
+              <input required type="email" placeholder="you@email.com" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs uppercase tracking-wider text-[#6B7280]">Phone</label>
+              <input type="tel" placeholder="+91" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+            </div>
+            <div>
+              <label class="text-xs uppercase tracking-wider text-[#6B7280]">City / Village</label>
+              <input type="text" placeholder="Location" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+            </div>
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-wider text-[#6B7280]">Area of Interest</label>
+            <select class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]">
+              <option>Education</option>
+              <option>Women Empowerment</option>
+              <option>Madhubani Heritage</option>
+              <option>Health & Welfare</option>
+              <option>Environment</option>
+              <option>Event Support</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-wider text-[#6B7280]">Message</label>
+            <textarea rows="3" placeholder="Tell us about yourself..." class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"></textarea>
+          </div>
+          <button type="submit" class="btn-primary px-7 py-3.5 rounded-xl font-medium shadow-xl w-fit">Register as Volunteer</button>
+        </form>
+      </div>
+      <div class="reveal order-1 lg:order-2">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Be the change</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">Lend a hand, lift a life</h2>
+        <p class="mt-5 text-[#4A5568] leading-relaxed">Volunteers are the heartbeat of Sashi Jamuna Foundation. From teaching children to documenting Madhubani art, every skill matters. Register today and become part of a movement rooted in love and tradition.</p>
+        <div class="mt-8 grid grid-cols-3 gap-4">
+          <div class="text-center soft-card p-4">
+            <div class="font-display text-2xl font-semibold text-[#164B8C]">10+</div>
+            <div class="text-[10px] text-[#6B7280] uppercase tracking-wider mt-1">Active Programs</div>
+          </div>
+          <div class="text-center soft-card p-4">
+            <div class="font-display text-2xl font-semibold text-[#164B8C]">Weekly</div>
+            <div class="text-[10px] text-[#6B7280] uppercase tracking-wider mt-1">Engagements</div>
+          </div>
+          <div class="text-center soft-card p-4">
+            <div class="font-display text-2xl font-semibold text-[#164B8C]">Open</div>
+            <div class="text-[10px] text-[#6B7280] uppercase tracking-wider mt-1">All Ages</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL FEEDS -->
+<section class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Stay connected</span>
+      <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">From Our Social World</h2>
+      <p class="mt-4 text-[#6B7280]">Live feeds from Instagram, Facebook and YouTube — automatically updated when API keys are configured.</p>
+    </div>
+
+    <div class="mt-10 grid lg:grid-cols-3 gap-7">
+      <!-- Instagram -->
+      <div class="reveal soft-card p-5">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#C97B5C] via-[#D4A95E] to-[#164B8C] grid place-items-center text-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </span>
+            <span class="font-semibold text-[#1B2A3A]">Instagram</span>
+          </div>
+          <a href="#" class="text-xs text-[#164B8C]">Follow →</a>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="feed-card aspect-square overflow-hidden"><img src="https://picsum.photos/seed/ig1/300/300" class="w-full h-full object-cover"/></div>
+          <div class="feed-card aspect-square overflow-hidden"><img src="https://picsum.photos/seed/ig2/300/300" class="w-full h-full object-cover"/></div>
+          <div class="feed-card aspect-square overflow-hidden"><img src="https://picsum.photos/seed/ig3/300/300" class="w-full h-full object-cover"/></div>
+          <div class="feed-card aspect-square overflow-hidden"><img src="https://picsum.photos/seed/ig4/300/300" class="w-full h-full object-cover"/></div>
+        </div>
+      </div>
+
+      <!-- Facebook -->
+      <div class="reveal soft-card p-5" style="transition-delay:.05s">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-lg bg-[#164B8C] grid place-items-center text-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-9h3l1-5h-4V6c0-1.5.5-2 2-2h2V0h-3c-3 0-5 1.7-5 4v4H5v5h3v9h5z"/></svg>
+            </span>
+            <span class="font-semibold text-[#1B2A3A]">Facebook</span>
+          </div>
+          <a href="#" class="text-xs text-[#164B8C]">Like →</a>
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl overflow-hidden border border-[#164B8C]/10">
+            <img src="https://picsum.photos/seed/fb1/600/300" class="w-full h-32 object-cover"/>
+            <div class="p-3 bg-white">
+              <p class="text-xs text-[#4A5568]">Placeholder Facebook post — automatically pulled via Graph API once configured.</p>
+            </div>
+          </div>
+          <div class="rounded-xl overflow-hidden border border-[#164B8C]/10">
+            <img src="https://picsum.photos/seed/fb2/600/300" class="w-full h-24 object-cover"/>
+            <div class="p-3 bg-white">
+              <p class="text-xs text-[#4A5568]">Placeholder update from community drive.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- YouTube -->
+      <div class="reveal soft-card p-5" style="transition-delay:.1s">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 rounded-lg bg-[#C97B5C] grid place-items-center text-white">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3-.4-4.3c-.2-.8-.9-1.4-1.7-1.6C19 5.7 12 5.7 12 5.7s-7 0-9 .4c-.8.2-1.5.8-1.7 1.6C1 9 1 12 1 12s0 3 .3 4.3c.2.8.9 1.4 1.7 1.6 2 .4 9 .4 9 .4s7 0 9-.4c.8-.2 1.5-.8 1.7-1.6.4-1.3.4-4.3.4-4.3zm-13 3V9l5 3-5 3z"/></svg>
+            </span>
+            <span class="font-semibold text-[#1B2A3A]">YouTube</span>
+          </div>
+          <a href="#" class="text-xs text-[#164B8C]">Subscribe →</a>
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-xl overflow-hidden border border-[#164B8C]/10 relative">
+            <img src="https://picsum.photos/seed/yt1/600/300" class="w-full h-32 object-cover"/>
+            <span class="absolute inset-0 grid place-items-center text-white"><span class="w-10 h-10 rounded-full bg-[#C97B5C] grid place-items-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+            <div class="p-3 bg-white">
+              <p class="text-xs text-[#4A5568]">Placeholder video — synced via YouTube Data API.</p>
+            </div>
+          </div>
+          <div class="rounded-xl overflow-hidden border border-[#164B8C]/10 relative">
+            <img src="https://picsum.photos/seed/yt2/600/300" class="w-full h-24 object-cover"/>
+            <span class="absolute inset-0 grid place-items-center text-white"><span class="w-9 h-9 rounded-full bg-[#C97B5C] grid place-items-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-[10px] text-[#9CA3AF] mt-6">Social feed integration is placeholder — connect APIs in the admin dashboard to enable live updates.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-20 relative">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-12">
+      <div class="reveal">
+        <span class="text-xs uppercase tracking-[0.3em] text-[#C97B5C]">Get in touch</span>
+        <h2 class="font-display text-4xl sm:text-5xl font-semibold mt-3 text-[#1B2A3A]">Contact Us</h2>
+        <p class="mt-5 text-[#4A5568] leading-relaxed">We'd love to hear from you. Whether you'd like to collaborate, volunteer or simply learn more — reach out and we'll respond within 48 hours.</p>
+
+        <div class="mt-8 space-y-4">
+          <div class="soft-card p-4 flex items-center gap-4">
+            <span class="w-11 h-11 rounded-xl bg-[#164B8C]/10 grid place-items-center text-[#164B8C]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div>
+              <div class="text-xs uppercase tracking-wider text-[#6B7280]">Office</div>
+              <div class="text-[#1B2A3A] font-medium">[Placeholder address], Bihar, India</div>
+            </div>
+          </div>
+          <div class="soft-card p-4 flex items-center gap-4">
+            <span class="w-11 h-11 rounded-xl bg-[#164B8C]/10 grid place-items-center text-[#164B8C]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></span>
+            <div>
+              <div class="text-xs uppercase tracking-wider text-[#6B7280]">Phone</div>
+              <div class="text-[#1B2A3A] font-medium">+91 [placeholder number]</div>
+            </div>
+          </div>
+          <div class="soft-card p-4 flex items-center gap-4">
+            <span class="w-11 h-11 rounded-xl bg-[#164B8C]/10 grid place-items-center text-[#164B8C]"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>
+            <div>
+              <div class="text-xs uppercase tracking-wider text-[#6B7280]">Email</div>
+              <div class="text-[#1B2A3A] font-medium">hello@sashijamuna.org</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl overflow-hidden border border-[#164B8C]/15 h-52">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=85.0,25.5,85.4,25.8&layer=mapnik" class="w-full h-full" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="reveal soft-card p-8">
+        <h3 class="font-display text-2xl font-semibold text-[#1B2A3A]">Send us a message</h3>
+        <form class="mt-6 grid gap-4" onsubmit="submitContact(event)">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input type="text" required placeholder="Name" class="px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+            <input type="email" required placeholder="Email" class="px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+          </div>
+          <input type="text" placeholder="Subject" class="px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"/>
+          <textarea rows="5" required placeholder="Your message..." class="px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-[#FFF8E7] focus:outline-none focus:border-[#164B8C]"></textarea>
+          <button type="submit" class="btn-primary px-7 py-3.5 rounded-xl font-medium shadow-xl w-fit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative bg-[#164B8C] text-[#FFF8E7] overflow-hidden">
+  <!-- Madhubani top border strip -->
+  <div class="h-6 w-full" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2210%22 viewBox=%220 0 60 10%22><g fill=%22none%22 stroke=%22%23FFF8E7%22 stroke-width=%221%22><path d=%22M0 5 H60%22/><path d=%22M0 8 H60%22/><circle cx=%2210%22 cy=%225%22 r=%221.5%22 fill=%22%23FFF8E7%22/><circle cx=%2230%22 cy=%225%22 r=%221.5%22 fill=%22%23FFF8E7%22/><circle cx=%2250%22 cy=%225%22 r=%221.5%22 fill=%22%23FFF8E7%22/></g></svg>'); background-size:60px 10px; opacity:0.6;"></div>
+
+  <!-- decorative motifs -->
+  <svg class="absolute -top-10 -left-10 w-32 h-32 opacity-20" viewBox="0 0 100 100" fill="none" stroke="#FFF8E7" stroke-width="1.2">
+    <circle cx="50" cy="50" r="3"/>
+    <path d="M50 50 Q20 30 30 60 Q35 80 50 60"/>
+    <path d="M50 50 Q80 30 70 60 Q65 80 50 60"/>
+  </svg>
+  <svg class="absolute top-10 right-10 w-24 h-24 opacity-20" viewBox="0 0 100 100" fill="none" stroke="#FFF8E7" stroke-width="1.2">
+    <circle cx="50" cy="50" r="40"/>
+    <path d="M50 10 L50 40 M50 60 L50 90 M10 50 L40 50 M60 50 L90 50"/>
+  </svg>
+
+  <div class="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-4 gap-10 relative">
+    <div>
+      <div class="flex items-center gap-3">
+        <span class="w-12 h-12 grid place-items-center rounded-xl bg-[#FFF8E7] text-[#164B8C]">
+          <svg viewBox="0 0 48 48" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="24" cy="24" r="6"/>
+            <path d="M24 4 C28 12 28 16 24 20 C20 16 20 12 24 4 Z"/>
+            <path d="M24 44 C20 36 20 32 24 28 C28 32 28 36 24 44 Z"/>
+            <path d="M4 24 C12 20 16 20 20 24 C16 28 12 28 4 24 Z"/>
+            <path d="M44 24 C36 20 32 20 28 24 C32 28 36 28 44 24 Z"/>
+          </svg>
+        </span>
+        <div>
+          <div class="font-display text-xl font-semibold">Sashi Jamuna</div>
+          <div class="text-[10px] tracking-[0.25em] uppercase opacity-70">Foundation</div>
+        </div>
+      </div>
+      <p class="mt-5 text-sm opacity-80 leading-relaxed">Empowering Bihar, preserving heritage — a community-driven foundation weaving tradition with transformation.</p>
+      <div class="mt-6 flex gap-3">
+        <a href="#" class="w-9 h-9 rounded-lg bg-[#FFF8E7]/10 hover:bg-[#FFF8E7]/20 grid place-items-center transition"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-9h3l1-5h-4V6c0-1.5.5-2 2-2h2V0h-3c-3 0-5 1.7-5 4v4H5v5h3v9h5z"/></svg></a>
+        <a href="#" class="w-9 h-9 rounded-lg bg-[#FFF8E7]/10 hover:bg-[#FFF8E7]/20 grid place-items-center transition"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" class="w-9 h-9 rounded-lg bg-[#FFF8E7]/10 hover:bg-[#FFF8E7]/20 grid place-items-center transition"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3-.4-4.3c-.2-.8-.9-1.4-1.7-1.6C19 5.7 12 5.7 12 5.7s-7 0-9 .4c-.8.2-1.5.8-1.7 1.6C1 9 1 12 1 12s0 3 .3 4.3c.2.8.9 1.4 1.7 1.6 2 .4 9 .4 9 .4s7 0 9-.4c.8-.2 1.5-.8 1.7-1.6.4-1.3.4-4.3.4-4.3zm-13 3V9l5 3-5 3z"/></svg></a>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="font-display text-lg font-semibold">Explore</h4>
+      <ul class="mt-4 space-y-2 text-sm opacity-80">
+        <li><a href="#home" class="hover:opacity-100 hover:underline">Home</a></li>
+        <li><a href="#about" class="hover:opacity-100 hover:underline">About Us</a></li>
+        <li><a href="#initiatives" class="hover:opacity-100 hover:underline">Our Initiatives</a></li>
+        <li><a href="#gallery" class="hover:opacity-100 hover:underline">Gallery</a></li>
+        <li><a href="#videos" class="hover:opacity-100 hover:underline">Videos</a></li>
+        <li><a href="#news" class="hover:opacity-100 hover:underline">News & Updates</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="font-display text-lg font-semibold">Get Involved</h4>
+      <ul class="mt-4 space-y-2 text-sm opacity-80">
+        <li><a href="#donate" class="hover:opacity-100 hover:underline">Donate</a></li>
+        <li><a href="#volunteer" class="hover:opacity-100 hover:underline">Volunteer</a></li>
+        <li><a href="#contact" class="hover:opacity-100 hover:underline">Contact</a></li>
+        <li><a href="#" class="hover:opacity-100 hover:underline">Annual Reports</a></li>
+        <li><a href="#" class="hover:opacity-100 hover:underline">Transparency</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="font-display text-lg font-semibold">Newsletter</h4>
+      <p class="mt-4 text-sm opacity-80">Receive stories of impact in your inbox monthly.</p>
+      <form class="mt-4 flex gap-2" onsubmit="event.preventDefault(); showToast('Subscribed successfully!');">
+        <input type="email" required placeholder="Email" class="flex-1 px-3 py-2.5 rounded-lg bg-[#FFF8E7]/10 border border-[#FFF8E7]/20 placeholder:text-[#FFF8E7]/50 text-sm focus:outline-none focus:border-[#FFF8E7]/50"/>
+        <button class="bg-[#FFF8E7] text-[#164B8C] px-4 rounded-lg text-sm font-medium">Join</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="border-t border-[#FFF8E7]/15 py-5 text-center text-xs opacity-80 relative">
+    <p>© <span id="year"></span> Sashi Jamuna Foundation. All rights reserved.</p>
+    <p class="mt-1 opacity-90">Designed &amp; Developed by <span class="font-semibold">Alpha Avics Digital Solutions</span>.</p>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <div class="relative max-w-3xl w-full px-4">
+    <img id="lightboxImg" src="" class="w-full max-h-[80vh] rounded-2xl shadow-2xl"/>
+    <p id="lightboxCaption" class="text-center text-sm text-white mt-3 opacity-80"></p>
+  </div>
+</div>
+
+<!-- Video modal -->
+<div id="videoModal" class="lightbox" onclick="closeVideoModal()">
+  <div class="relative max-w-3xl w-full px-4">
+    <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl grid place-items-center text-white">
+      <div class="text-center">
+        <div class="w-16 h-16 mx-auto rounded-full bg-white/10 grid place-items-center mb-3">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <p class="text-sm opacity-80">Video embed will appear here once configured.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 right-6 z-[200] bg-[#164B8C] text-white px-5 py-3 rounded-xl shadow-2xl text-sm translate-y-20 opacity-0 transition-all duration-500"></div>
+
+<!-- Admin Modal -->
+<div id="adminModal" class="modal">
+  <div class="bg-[#FFF8E7] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl m-4 madhubani-border">
+    <!-- Login view -->
+    <div id="adminLogin" class="p-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="font-display text-2xl font-semibold text-[#1B2A3A]">Admin Dashboard</h3>
+          <p class="text-sm text-[#6B7280] mt-1">Secure access for foundation administrators.</p>
+        </div>
+        <button onclick="closeAdmin()" class="w-9 h-9 rounded-lg hover:bg-[#164B8C]/10 grid place-items-center text-[#164B8C]">✕</button>
+      </div>
+      <form class="mt-6 max-w-md" onsubmit="adminLogin(event)">
+        <label class="text-xs uppercase tracking-wider text-[#6B7280]">Username / Email</label>
+        <input type="text" required placeholder="admin@sashijamuna.org" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+        <label class="text-xs uppercase tracking-wider text-[#6B7280] block mt-4">Password</label>
+        <input type="password" required placeholder="••••••••" class="mt-2 w-full px-4 py-3 rounded-xl border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+        <button type="submit" class="btn-primary w-full mt-5 py-3 rounded-xl font-medium">Sign In</button>
+        <p class="text-[10px] text-[#9CA3AF] mt-3">Authentication will be wired to Supabase Auth in production. Demo: any credentials work.</p>
+      </form>
+    </div>
+
+    <!-- Dashboard view -->
+    <div id="adminPanel" class="hidden p-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="font-display text-2xl font-semibold text-[#1B2A3A]">Dashboard</h3>
+          <p class="text-sm text-[#6B7280]">Manage content, media and registrations.</p>
+        </div>
+        <button onclick="closeAdmin()" class="w-9 h-9 rounded-lg hover:bg-[#164B8C]/10 grid place-items-center text-[#164B8C]">✕</button>
+      </div>
+
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="soft-card p-4 text-center"><div class="font-display text-2xl font-semibold text-[#164B8C]">₹0</div><div class="text-[10px] uppercase tracking-wider text-[#6B7280] mt-1">Donations</div></div>
+        <div class="soft-card p-4 text-center"><div class="font-display text-2xl font-semibold text-[#164B8C]">0</div><div class="text-[10px] uppercase tracking-wider text-[#6B7280] mt-1">Volunteers</div></div>
+        <div class="soft-card p-4 text-center"><div class="font-display text-2xl font-semibold text-[#164B8C]">0</div><div class="text-[10px] uppercase tracking-wider text-[#6B7280] mt-1">Photos</div></div>
+        <div class="soft-card p-4 text-center"><div class="font-display text-2xl font-semibold text-[#164B8C]">0</div><div class="text-[10px] uppercase tracking-wider text-[#6B7280] mt-1">Videos</div></div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs">
+        <button data-tab="photos" class="admin-tab px-4 py-2 rounded-lg bg-[#164B8C] text-white">Upload Photos</button>
+        <button data-tab="videos" class="admin-tab px-4 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C]">Manage Videos</button>
+        <button data-tab="updates" class="admin-tab px-4 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C]">Daily Updates</button>
+        <button data-tab="initiatives" class="admin-tab px-4 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C]">Initiatives</button>
+        <button data-tab="volunteers" class="admin-tab px-4 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C]">Volunteers</button>
+        <button data-tab="donations" class="admin-tab px-4 py-2 rounded-lg border border-[#164B8C]/30 text-[#164B8C]">Donations</button>
+      </div>
+
+      <div class="mt-6 soft-card p-5">
+        <!-- Photos upload -->
+        <div class="admin-content" data-content="photos">
+          <h4 class="font-semibold text-[#1B2A3A] mb-3">Upload Photos</h4>
+          <div class="border-2 border-dashed border-[#164B8C]/30 rounded-xl p-8 text-center bg-[#FFF8E7]">
+            <svg width="40" height="40" class="mx-auto text-[#164B8C]/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            <p class="text-sm text-[#6B7280] mt-2">Drag & drop images or click to browse</p>
+            <input type="file" multiple accept="image/*" class="hidden" id="photoUpload"/>
+            <button onclick="document.getElementById('photoUpload').click()" class="mt-4 btn-primary px-5 py-2.5 rounded-lg text-sm">Select Files</button>
+          </div>
+          <p class="text-[10px] text-[#9CA3AF] mt-2">Files will be stored in Supabase Storage when configured.</p>
+        </div>
+
+        <!-- Videos -->
+        <div class="admin-content hidden" data-content="videos">
+          <h4 class="font-semibold text-[#1B2A3A] mb-3">Manage Videos</h4>
+          <div class="grid gap-3">
+            <input type="text" placeholder="Video title" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+            <input type="url" placeholder="YouTube / Vimeo URL" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+            <input type="text" placeholder="Category (Documentary, Story, Impact)" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+            <button onclick="showToast('Video saved (demo)')" class="btn-primary px-5 py-2.5 rounded-lg text-sm w-fit">Add Video</button>
+          </div>
+        </div>
+
+        <!-- Updates -->
+        <div class="admin-content hidden" data-content="updates">
+          <h4 class="font-semibold text-[#1B2A3A] mb-3">Daily Updates</h4>
+          <div class="grid gap-3">
+            <input type="text" placeholder="Update title" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+            <textarea rows="3" placeholder="Update content" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"></textarea>
+            <input type="date" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+            <button onclick="showToast('Update published (demo)')" class="btn-primary px-5 py-2.5 rounded-lg text-sm w-fit">Publish Update</button>
+          </div>
+        </div>
+
+        <!-- Initiatives -->
+        <div class="admin-content hidden" data-content="initiatives">
+          <h4 class="font-semibold text-[#1B2A3A] mb-3">Manage Initiatives</h4>
+          <div class="grid gap-3">
+            <input type="text" placeholder="Initiative title" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"/>
+            <textarea rows="3" placeholder="Description" class="px-4 py-2.5 rounded-lg border border-[#164B8C]/20 bg-white focus:outline-none focus:border-[#164B8C]"></textarea>
+            <button onclick="showToast('Initiative saved (demo)')" class="btn-primary px-5 py-2.5 rounded-lg text-sm w-fit">Save Initiative</button>
+          </div>
+        </div>
+
+        <!-- Volunteers -->
+        <div class="admin-content hidden" data-content="volunteers">
+          <h4 class="font-semibold text-[#1B2A3A] mb-3">Volunteer Registrations</h4>
+          <div class="text-sm text-[#6B7280] bg-white rounded-lg p-6 text-center border border-[#164B8C]/10">No registrations yet. Submissions from the volunteer form will appear here.</div>
+        </div>
+
+        <!-- Donations -->
+        <div class="admin-content hidden" data-content="donations">
+          <h4 class="font-semibold text-[#1B2A3A] mb-3">Donation Records</h4>
+          <div class="text-sm text-[#6B7280] bg-white rounded-lg p-6 text-center border border-[#164B8C]/10">No donations recorded. Razorpay transactions will sync here once configured.</div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between text-xs text-[#9CA3AF]">
+        <span>Logged in as admin@sashijamuna.org</span>
+        <button onclick="adminLogout()" class="text-[#C97B5C] font-medium">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) nav.classList.add('nav-scrolled');
+    else nav.classList.remove('nav-scrolled');
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }});
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Counters
+  const counters = document.querySelectorAll('.stat-num');
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.count || '0', 10);
+        // If placeholder 0, animate small demo to indicate
+        const demoTarget = target > 0 ? target : Math.floor(Math.random()*4000)+800;
+        let n = 0;
+        const step = Math.max(1, Math.floor(demoTarget/80));
+        const t = setInterval(() => {
+          n += step;
+          if (n >= demoTarget) { n = demoTarget; clearInterval(t); }
+          el.textContent = n.toLocaleString();
+        }, 24);
+        countObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(c => countObs.observe(c));
+
+  // Gallery
+  const galleryData = [
+    { seed:'gal1', cat:'events', caption:'Annual community gathering' },
+    { seed:'gal2', cat:'art', caption:'Madhubani mural in progress' },
+    { seed:'gal3', cat:'community', caption:'Village education camp' },
+    { seed:'gal4', cat:'events', caption:'Cultural festival celebration' },
+    { seed:'gal5', cat:'art', caption:'Artisan at work' },
+    { seed:'gal6', cat:'community', caption:'Women self-help group' },
+    { seed:'gal7', cat:'art', caption:'Folk painting workshop' },
+    { seed:'gal8', cat:'events', caption:'Health awareness drive' },
+    { seed:'gal9', cat:'community', caption:'Tree plantation initiative' },
+    { seed:'gal10', cat:'art', caption:'Heritage exhibition' },
+    { seed:'gal11', cat:'events', caption:'Volunteer training day' },
+    { seed:'gal12', cat:'community', caption:'Children scholarship distribution' },
+  ];
+  const galleryGrid = document.getElementById('galleryGrid');
+  function renderGallery(filter='all') {
+    galleryGrid.innerHTML = '';
+    galleryData.filter(g => filter==='all' || g.cat===filter).forEach((g, i) => {
+      const item = document.createElement('div');
+      item.className = 'group relative overflow-hidden rounded-2xl cursor-pointer card-hover reveal in';
+      item.style.aspectRatio = (i%5===0 ? '1/1.3' : '1/1');
+      item.innerHTML = `
+        <img src="https://picsum.photos/seed/${g.seed}/600/700" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#164B8C]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-4">
+          <p class="text-white text-sm">${g.caption}</p>
+        </div>`;
+      item.addEventListener('click', () => openLightbox(`https://picsum.photos/seed/${g.seed}/1200/900`, g.caption));
+      galleryGrid.appendChild(item);
+    });
+  }
+  renderGallery();
+  document.querySelectorAll('.gallery-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gallery-filter').forEach(b => {
+        b.classList.remove('bg-[#164B8C]','text-white');
+        b.classList.add('border','border-[#164B8C]/30','text-[#164B8C]');
+      });
+      btn.classList.add('bg-[#164B8C]','text-white');
+      btn.classList.remove('border','border-[#164B8C]/30','text-[#164B8C]');
+      renderGallery(btn.dataset.filter);
+    });
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  function openLightbox(src, caption) {
+    lightboxImg.src = src;
+    lightboxCaption.textContent = caption || '';
+    lightbox.classList.add('open');
+  }
+  function closeLightbox() { lightbox.classList.remove('open'); }
+
+  // Video modal
+  const videoModal = document.getElementById('videoModal');
+  function playVideo(id) { videoModal.classList.add('open'); }
+  function closeVideoModal() { videoModal.classList.remove('open'); }
+
+  // Toast
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.style.transform = 'translateY(5rem)';
+      toast.style.opacity = '0';
+    }, 2800);
+  }
+
+  // Donate amounts
+  let selectedAmount = 1000;
+  document.querySelectorAll('.donate-amt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.donate-amt').forEach(b => b.classList.remove('tab-active'));
+      btn.classList.add('tab-active');
+      selectedAmount = parseInt(btn.dataset.amount,10);
+      document.getElementById('customAmount').value = '';
+    });
+  });
+  document.getElementById('customAmount').addEventListener('input', e => {
+    if (e.target.value) {
+      document.querySelectorAll('.donate-amt').forEach(b => b.classList.remove('tab-active'));
+      selectedAmount = parseInt(e.target.value,10) || 0;
+    }
+  });
+  function initiateDonation() {
+    if (!selectedAmount || selectedAmount < 1) { showToast('Please select or enter an amount'); return; }
+    showToast(`Donation of ₹${selectedAmount} initiated — Razorpay will activate after configuration.`);
+  }
+
+  // Volunteer & Contact
+  function submitVolunteer(e) {
+    e.preventDefault();
+    e.target.reset();
+    showToast('Volunteer registration received! We\'ll be in touch.');
+  }
+  function submitContact(e) {
+    e.preventDefault();
+    e.target.reset();
+    showToast('Message sent. We\'ll respond within 48 hours.');
+  }
+
+  // Admin
+  const adminModal = document.getElementById('adminModal');
+  function openAdmin() { adminModal.classList.add('open'); mobileMenu.classList.add('hidden'); }
+  function closeAdmin() { adminModal.classList.remove('open'); }
+  function adminLogin(e) {
+    e.preventDefault();
+    document.getElementById('adminLogin').classList.add('hidden');
+    document.getElementById('adminPanel').classList.remove('hidden');
+  }
+  function adminLogout() {
+    document.getElementById('adminPanel').classList.add('hidden');
+    document.getElementById('adminLogin').classList.remove('hidden');
+    closeAdmin();
+  }
+  document.querySelectorAll('.admin-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.admin-tab').forEach(b => {
+        b.classList.remove('bg-[#164B8C]','text-white');
+        b.classList.add('border','border-[#164B8C]/30','text-[#164B8C]');
+      });
+      btn.classList.add('bg-[#164B8C]','text-white');
+      btn.classList.remove('border','border-[#164B8C]/30','text-[#164B8C]');
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.admin-content').forEach(c => c.classList.add('hidden'));
+      document.querySelector(`.admin-content[data-content="${tab}"]`).classList.remove('hidden');
+    });
+  });
+
+  // Close modals on Esc
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeLightbox(); closeVideoModal(); closeAdmin(); }
+  });
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(l => {
+      l.classList.toggle('bg-[#164B8C]/10', l.getAttribute('href') === '#'+current);
+    });
+  });
+
+  // News render
+  const newsGrid = document.getElementById('newsGrid');
+  const newsItems = [
+    { date:'12 Apr 2025', tag:'Event', title:'Annual Madhubani Festival Concludes', excerpt:'Placeholder story — a celebration of folk art, music and community, with over [N] visitors.' },
+    { date:'28 Mar 2025', tag:'Update', title:'New Learning Centre Inaugurated', excerpt:'Placeholder story — a new centre opens in [village name], serving [N] children.' },
+    { date:'15 Mar 2025', tag:'Press', title:'Foundation Featured in Regional Daily', excerpt:'Placeholder coverage of our women empowerment program.' },
+  ];
+  newsItems.forEach(n => {
+    const card = document.createElement('article');
+    card.className = 'reveal soft-card overflow-hidden card-hover';
+    card.innerHTML = `
+      <div class="h-44 overflow-hidden">
+        <img src="https://picsum.photos/seed/${n.title.replace(/\s/g,'')}/600/400" class="w-full h-full object-cover"/>
+      </div>
+      <div class="p-5">
+        <div class="flex items-center gap-3 text-xs">
+          <span class="px-2.5 py-1 rounded-full bg-[#C97B5C]/15 text-[#C97B5C] font-medium">${n.tag}</span>
+          <span class="text-[#6B7280]">${n.date}</span>
+        </div>
+        <h3 class="font-display text-lg font-semibold mt-3 text-[#1B2A3A]">${n.title}</h3>
+        <p class="text-sm text-[#6B7280] mt-2">${n.excerpt}</p>
+        <a href="#" class="mt-3 inline-flex items-center gap-2 text-sm text-[#164B8C] font-medium hover:gap-3 transition-all">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>`;
+    newsGrid.appendChild(card);
+  });
+  // Re-observe newly added reveals
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

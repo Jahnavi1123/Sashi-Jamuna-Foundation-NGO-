@@ -1,0 +1,65 @@
+
+/* One continuous website, with the demo portal as its own view. */
+:root { --header-height: 122px; }
+.page { scroll-margin-top: var(--header-height); outline: none; }
+.page[tabindex="-1"]:focus { outline: none; }
+.skip-link { position: fixed; z-index: 100; top: 8px; left: 8px; padding: 12px 18px; background: #fff8e7; color: #164b8c; border-radius: 12px; transform: translateY(-160%); }
+.skip-link:focus { transform: none; }
+:focus-visible { outline: 3px solid #ffc53d; outline-offset: 4px; }
+.section-announcement { position: relative; display: flex; align-items: stretch; width: 100%; overflow: hidden; background: #164b8c; color: #fff8e7; border-block: 1px solid rgba(255,248,231,.16); }
+.announcement-window { overflow: hidden; flex: 1; padding-block: 9px; }
+.announcement-track { display: flex; width: max-content; animation: announcement-scroll 40s linear infinite; }
+.announcement-group { display: flex; align-items: center; flex: 0 0 auto; gap: 40px; padding-inline: 20px; white-space: nowrap; font-size: 13px; line-height: 1.5; }
+.announcement-toggle { flex: 0 0 44px; border-left: 1px solid #ffffff24; background: #164b8c; color: inherit; font-size: 16px; cursor: pointer; }
+.announcement-toggle:hover { background: #0b2c57; }
+.section-announcement:hover .announcement-track, .section-announcement:focus-within .announcement-track, .announcements-paused .announcement-track { animation-play-state: paused; }
+@keyframes announcement-scroll { to { transform: translateX(-50%); } }
+.admin-mode #admin > .relative.bg-deep { display: none; }
+.admin-mode #admin > .divider-band { display: none; }
+.admin-demo-note { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border: 1px solid #164b8c20; border-radius: 12px; padding: 12px 16px; margin-bottom: 24px; color: #164b8c; background: #e8eef6; font-size: 12px; }
+.admin-demo-note a { text-decoration: underline; font-weight: 600; }
+.admin-home-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.admin-home-preview { border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px -28px #0b2c5770; }
+.admin-home-preview #adminHero > .grid { padding: 48px 32px 64px; }
+.admin-quick-actions { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; margin-top: 24px; }
+.admin-quick-actions > * { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #164b8c25; border-radius: 14px; background: #fff; color: #164b8c; padding: 20px; font-size: 13px; font-weight: 600; text-align: left; }
+.admin-quick-actions > *:hover { background: #e8eef6; }
+.inbox-message { padding: 16px; border: 1px solid #164b8c20; border-radius: 12px; overflow-wrap: anywhere; }
+.form-demo-note { grid-column: 1 / -1; font-size: 11px; opacity: .7; }
+
+/* Footer taken from 1.html, including its original typography and motifs. */
+#footerRoot .reference-footer { font-family: Mukta, sans-serif; color: #fff8e7; font-size: 16px; line-height: 1.6; }
+#footerRoot .g-navy { background: linear-gradient(135deg,#1e5aa6 0%,#164b8c 55%,#0e3262 100%); }
+#footerRoot .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem,4vw,1.5rem); }
+#footerRoot .font-disp { font-family: 'Yatra One', cursive; }
+#footerRoot .text-gold { color: #f2a93b; }
+#footerRoot .text-ver { color: #d64550; }
+#footerRoot .ic { width: 1.15em; height: 1.15em; flex: none; }
+#footerRoot .dia { width: 9px; height: 9px; background: #f2a93b; transform: rotate(45deg); display: inline-block; flex: none; }
+#footerRoot .ph { font-family: Kalam, cursive; }
+#footerRoot .footer-email { min-width: 0; width: 100%; border: 1.5px solid #fff8e733; border-radius: .7rem; padding: .68rem 1rem; color: #fff8e7; background: #0a254766; font: inherit; }
+#footerRoot .footer-email::placeholder { color: #fff8e766; }
+#footerRoot .btn-gold { background: #f2a93b; color: #0a2547; box-shadow: 0 12px 26px -10px #f2a93b8c; border-radius: 9999px; padding: .55rem 1rem; font-size: .82rem; font-weight: 800; }
+#footerRoot .btn-gold:hover { transform: translateY(-3px); }
+#footerRoot [class*="hover:text-gold"]:hover { color: #f2a93b; }
+#footerRoot [class*="hover:bg-gold"]:hover { background: #f2a93b; color: #0a2547; }
+@media (max-width: 640px) {
+  .admin-quick-actions { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .admin-quick-actions > * { padding: 14px; font-size: 12px; }
+  .admin-home-preview #adminHero > .grid { padding: 36px 20px 48px; }
+  #siteHeader #navShell > div { gap: 8px; }
+}
+@media (max-width: 400px) {
+  #navShell > div { padding-inline: 16px; }
+  #navShell a[href="#home"] { gap: 8px; }
+  #navShell a[href="#home"] > span > svg { width: 36px; height: 36px; }
+  #navShell a[href="#home"] .font-display { font-size: 1rem; }
+  #navShell a[href="#donate"] { padding-inline: 12px !important; font-size: .78rem !important; }
+  #navShell a[href="#donate"] > svg { display: none; }
+  #menuBtn { flex-shrink: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .announcement-track { animation: none; }
+  .announcement-toggle { display: none; }
+  .announcement-window { overflow-x: auto; }
+}

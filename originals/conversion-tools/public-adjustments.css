@@ -1,0 +1,41 @@
+
+/* Single-page behavior added to the original 1.html visual design. */
+:root { --public-header-height: 80px; }
+body { overflow-x: hidden; }
+.site-section { scroll-margin-top: var(--public-header-height); outline: none; }
+.site-section:focus { outline: none; }
+#publicHero { min-height: calc(100svh - var(--public-header-height) - 40px); padding-top: 3.5rem; }
+.site-section > section:first-of-type:not(#publicHero) { padding-top: 4.5rem; }
+.skip-link { position: fixed; z-index: 150; top: 8px; left: 8px; padding: 12px 18px; border-radius: 12px; background: #fff8e7; color: #164b8c; transform: translateY(-150%); }
+.skip-link:focus { transform: none; }
+.section-announcement { display: flex; width: 100%; overflow: hidden; background: #164b8c; color: #fff8e7; border-block: 1px solid #fff8e726; }
+.announcement-window { flex: 1; overflow: hidden; padding-block: 8px; }
+.announcement-track { display: flex; width: max-content; animation: announcement-scroll 40s linear infinite; }
+.announcement-group { display: flex; flex: 0 0 auto; align-items: center; gap: 40px; padding-inline: 20px; white-space: nowrap; font-size: 14px; }
+.announcement-toggle { flex: 0 0 42px; background: #164b8c; color: inherit; border-left: 1px solid #fff8e729; cursor: pointer; }
+.announcement-toggle:hover { background: #0e3262; }
+.section-announcement:hover .announcement-track,.section-announcement:focus-within .announcement-track,.announcements-paused .announcement-track { animation-play-state: paused; }
+@keyframes announcement-scroll { to { transform: translateX(-50%); } }
+.demo-form-note { grid-column: 1 / -1; color: #61718a; font-size: 12px; margin-top: 10px; }
+footer .demo-form-note { color: #fff8e79a; flex-basis: 100%; }
+footer form[data-form="f-news"] { flex-wrap: wrap; }
+footer form[data-form="f-news"] input { flex: 1; min-width: 0; width: auto; }
+#publicHero > .wrap { width: 100%; }
+@media (max-width: 640px) {
+  #publicHero { padding-top: 3rem; min-height: auto; }
+  #site-head .wrap { padding-inline: 14px; }
+  #site-head a[aria-label] > span:last-child > span:first-child { font-size: 1.1rem; }
+  #site-head .btn-sm { padding-inline: 13px; }
+}
+@media (max-width: 360px) {
+  #site-head .btn-fire .ic { display: none; }
+  #site-head a[aria-label] svg { width: 32px; }
+  #site-head .wrap > div:last-child { gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .announcement-track { animation: none; }
+  .announcement-toggle { display: none; }
+  .announcement-window { overflow-x: auto; }
+  .rv { opacity: 1; transform: none; }
+}
