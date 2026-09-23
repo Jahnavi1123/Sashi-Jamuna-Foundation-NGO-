@@ -171,7 +171,7 @@ const secHead=(eyebrow,title,sub='',dark=false)=>`<div class="text-center max-w-
   ${sub?`<p class="mt-3 ${dark?'text-cream/75':'text-ink/70'}">${sub}</p>`:''}
   <div class="mt-5">${miniRule(dark)}</div></div>`;
 function pageHero(title,sub=''){return `<section class="relative overflow-hidden bg-cream pt-32 pb-14 md:pt-40 md:pb-16">
-  <div class="absolute -right-24 -top-24 w-[340px] opacity-[.12] pointer-events-none" aria-hidden="true">${medallion({spin:false})}</div>
+  <div class="absolute -right-24 -top-24 w-[340px] opacity-[.12] pointer-events-none" aria-hidden="true">${medallion()}</div>
   <div class="wrap relative text-center rv in">
     <nav class="text-xs font-bold tracking-widest uppercase text-ink/45 flex items-center justify-center gap-2" aria-label="Breadcrumb"><a href="#home" class="hover:text-ver">Home</a>${ic('chevR','w-3 h-3')}<span class="text-ver">${title}</span></nav>
     <h2 class="font-disp text-[clamp(2.3rem,5.5vw,3.8rem)] text-navy mt-3">${title}</h2>
@@ -198,7 +198,9 @@ function heroSection(){return `<section id="publicHero" class="relative min-h-[9
       <div class="relative mx-auto w-[min(84vw,520px)]">
         <div class="absolute -top-8 -left-10 w-24 fl opacity-90 hidden md:block" aria-hidden="true">${fish('#F15A24')}</div>
         <div class="absolute -bottom-6 -right-6 w-20 fl opacity-90 hidden md:block" style="animation-delay:-3s" aria-hidden="true">${fish()}</div>
-        ${medallion()}
+        <div class="hero-kids-frame">
+          <img src="assets/images/video-posters/sjf-video-01.jpg" alt="Children taking part in a Sashi Jamuna Foundation activity">
+        </div>
         <div class="chip -left-2 top-8" style="animation-delay:-1s">${ic('palette')} Culture-Rooted</div>
         <div class="chip right-0 bottom-28" style="animation-delay:-3.5s">${ic('heart')} Community-First</div>
         <div class="chip left-4 -bottom-2" style="animation-delay:-2s">${ic('shield')} Transparent</div>
