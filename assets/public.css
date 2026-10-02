@@ -236,6 +236,7 @@ footer .demo-form-note { color: #fff8e79a; flex-basis: 100%; }
 footer form[data-form="f-news"] { flex-wrap: wrap; }
 footer form[data-form="f-news"] input { flex: 1; min-width: 0; width: auto; }
 #publicHero > .wrap { width: 100%; }
+#site-head .brand-lockup { font-family:'Playfair Display',Georgia,serif; font-size:1.12rem !important; font-weight:700; letter-spacing:-.025em; }
 @media (max-width: 640px) {
   #publicHero:not(.sjf-blue-hero) { padding-top: 3rem; min-height: auto; }
   #site-head .wrap { padding-inline: 14px; }
