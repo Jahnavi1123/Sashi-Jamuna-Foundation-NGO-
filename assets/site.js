@@ -1673,19 +1673,9 @@ function footer(){
   }
 
   function renderAdminHome(container) {
-    container.innerHTML = '<div class="admin-home-heading"><div><span class="eyebrow left">Admin Portal</span><h2 class="font-display text-3xl text-deep font-bold mt-2">Welcome to your foundation</h2></div><button type="button" class="btn btn-blue" data-admin-go="home-editor">Edit Hero</button></div><div id="adminHomePreview" class="admin-home-preview"></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">' +
+    container.innerHTML = '<div class="admin-home-heading"><div><span class="eyebrow left">Admin Portal</span><h2 class="font-display text-3xl text-deep font-bold mt-2">Welcome to your foundation</h2></div><button type="button" class="btn btn-blue" data-admin-go="home-editor">Edit Hero</button></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4">' +
       statCard('Photos', get('photos').length) + statCard('Videos', get('videos').length, 'text-magenta') + statCard('Daily Updates', get('updates').length, 'text-teal') + statCard('Volunteers', get('volunteers').length, 'text-leaf') + '</div>' +
       '<div class="admin-quick-actions"><button type="button" data-admin-go="photos">Upload photos <span>↗</span></button><button type="button" data-admin-go="updates">Publish an update <span>↗</span></button><button type="button" data-admin-go="inbox">Open inbox <span>↗</span></button><a href="3.html#home">View website <span>↗</span></a></div>';
-    var hero = $('#homeHero').cloneNode(true);
-    hero.id = 'adminHero';
-    // Repaint generated SVGs to avoid reusing gradient IDs in the same document.
-    $$('[data-art]', hero).forEach(function (el) { el.innerHTML = ''; delete el.dataset.painted; });
-    $$('[id]', hero).forEach(function (el) { el.id = 'admin-preview-' + el.id; });
-    $$('.reveal', hero).forEach(function (el) { el.classList.add('in'); });
-    var heading = $('h1', hero);
-    if (heading) { var h2 = document.createElement('h2'); h2.className = heading.className; h2.innerHTML = heading.innerHTML; heading.replaceWith(h2); }
-    $('#adminHomePreview').appendChild(hero);
-    paintArtFrames();
   }
 
   function renderHomeEditor(container) { container.innerHTML = window.SJFEditors.hero(); }
