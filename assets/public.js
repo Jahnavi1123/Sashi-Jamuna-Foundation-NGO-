@@ -127,7 +127,7 @@ function header(){const links=NAV.map(([r,l])=>`<a class="nlink" data-nav="${r}"
       <a href="${routeHref('donate')}" class="btn btn-fire btn-sm">${ic('heart')} Donate</a>
       <button class="lg:hidden w-11 h-11 grid place-items-center rounded-xl border-2 border-navy/20 text-navy" data-act="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mnav">${ic('menu','w-6 h-6')}</button>
     </div></div></div>
-  <div id="mnav" class="lg:hidden absolute top-full inset-x-0 bg-cream/98 backdrop-blur border-b-2 border-navy/10 shadow-xl">
+  <div id="mnav" class="lg:hidden absolute top-full inset-x-0 border-b-2 border-navy/10 shadow-xl">
     <nav class="wrap py-4 flex flex-col gap-1" aria-label="Mobile">${NAV.map(([r,l])=>`<a class="px-3 py-3 rounded-xl font-bold text-navy hover:bg-navy/5 flex items-center justify-between" data-nav="${r}" href="${routeHref(r)}">${l}${ic('chevR','w-4 h-4 opacity-40')}</a>`).join('')}
     <div class="flex gap-3 px-3 py-3"><a href="${routeHref('donate')}" class="btn btn-fire btn-sm flex-1">${ic('heart')} Donate</a><a href="${routeHref('volunteer')}" class="btn btn-ghost btn-sm flex-1">${ic('sparkle')} Volunteer</a></div></nav></div>
  </header>`;}
@@ -972,17 +972,13 @@ window.addEventListener('storage',e => {
   if (!e.key || e.key.startsWith('sjf_')) render();
 });
 window.addEventListener('pageshow',e => { if (e.persisted) render(); });
-let scrollFrame = false, previousScrollY = Math.max(0, scrollY);
+let scrollFrame = false;
 window.addEventListener('scroll',() => {
   if (scrollFrame) return; scrollFrame = true;
   requestAnimationFrame(() => {
     scrollFrame = false;
     const y = Math.max(0, scrollY), header = $('#site-head');
     header.classList.toggle('scrolled', y > 30);
-    if (Math.abs(y - previousScrollY) >= 4 || y === 0) {
-      header.classList.toggle('sjf-header-hidden', y < previousScrollY);
-      previousScrollY = y;
-    }
     activeNav(currentPage());
   });
 },{passive:true});

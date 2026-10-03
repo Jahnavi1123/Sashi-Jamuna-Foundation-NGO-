@@ -127,9 +127,7 @@ html[lang=hi] #site-head .brand-lockup,html[lang=hi] .sjf-hero-slogans{font-fami
 @media(max-width:640px){#site-head .wrap>div:last-child{gap:6px}.sjf-language-switch{padding-inline:6px;font-size:.74rem}#site-head .btn-sm{padding-inline:10px}}
 #site-head .bar nav{gap:clamp(.5rem,1.1vw,1.4rem)}
 @media(max-width:480px){#site-head .bar .brand-lockup{font-size:.95rem!important}#site-head .bar .sjf-logo{width:32px;height:32px}#site-head .btn-fire .ic{display:none}}
-#site-head{position:sticky;top:0;transition:transform .3s ease}
-#site-head.sjf-header-hidden{transform:translateY(-100%)}
-#site-head:focus-within{transform:translateY(0)}
+#site-head{position:sticky;top:0}
 #site-head .bar{background:rgba(255,248,231,.88);backdrop-filter:blur(12px);border-bottom:1.5px solid rgba(22,75,140,.12);transition:.3s}
 #site-head.scrolled .bar{box-shadow:0 10px 30px -12px rgba(22,75,140,.28);background:rgba(255,248,231,.97)}
 .nlink{position:relative;padding:.35rem .1rem;font-weight:700;color:#2c4a77;transition:.25s;font-size:.95rem}
@@ -137,8 +135,12 @@ html[lang=hi] #site-head .brand-lockup,html[lang=hi] .sjf-hero-slogans{font-fami
 .nlink::after{content:'';position:absolute;left:50%;bottom:-5px;width:7px;height:7px;background:#F15A24;transform:translateX(-50%) rotate(45deg) scale(0);transition:.25s}
 .nlink.active{color:#164B8C}
 .nlink.active::after{transform:translateX(-50%) rotate(45deg) scale(1)}
-#mnav{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.7,.2,1)}
-#mnav.open{max-height:86vh}
+#site-head [data-act="nav-toggle"]{background:#164B8C;color:#fff;border-color:#164B8C}
+#mnav{background:#164B8C;color:#fff;max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.2,.7,.2,1)}
+#mnav.open{max-height:calc(100dvh - var(--public-header-height,80px));overflow-y:auto}
+#mnav [data-nav],#mnav .btn-ghost{color:#fff}
+#mnav .btn-ghost{border-color:#ffffff80}
+#mnav [data-nav]:is(:hover,:focus-visible),#mnav .btn-ghost:hover{background:#0E3262}
 
 /* animation */
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -358,7 +360,7 @@ html.sjf-loading-visible .sjf-hero-sketch :is(.sjf-sketch-part,.sjf-pencil-ring)
 
 /* Single-page behavior added to the original 1.html visual design. */
 :root { --public-header-height: 80px; }
-body { overflow-x: hidden; }
+body { overflow-x: clip; }
 .site-section { scroll-margin-top: var(--public-header-height); outline: none; }
 .site-section:focus { outline: none; }
 #publicHero:not(.sjf-blue-hero) { min-height: calc(100svh - var(--public-header-height) - 40px); padding-top: 3.5rem; }
