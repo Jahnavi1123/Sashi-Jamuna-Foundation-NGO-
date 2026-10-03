@@ -563,11 +563,14 @@ function viewDonate(){const s=DB.data.settings;const amts=[500,1000,2500,5000];
   </div></div></section>`;}
 
 /* ---------------- VOLUNTEER ---------------- */
-function viewVolunteer(){const ins=DB.data.initiatives;
+function viewVolunteer(){const ins=DB.data.initiatives, photos=DATA.defaults.photos.filter(p=>/^sjf-photo-[1-8]$/.test(p.id));
  return `${pageHero('Volunteer With Us','Give a few hours. Gain a family. Change many lives — including your own.')}
  <section class="pb-24"><div class="wrap grid lg:grid-cols-2 gap-10 items-start">
   <div class="rv"><div class="card !p-3 rotate-1 hover:rotate-0 transition-transform duration-500">${crn()}
-    <img src="https://picsum.photos/seed/sjf-vol/720/480.jpg" alt="Volunteers placeholder photo" class="rounded-xl w-full" loading="lazy"></div>
+    <div id="volunteer-slideshow" data-motion-static role="region" aria-label="Volunteer photo slideshow">
+      <div class="volunteer-slides">${photos.map((p,i)=>`<img src="${p.src}" alt="${esc(p.caption)}" width="${p.width}" height="${p.height}" decoding="async" class="${i===0?'is-active':''}" aria-hidden="${i!==0}">`).join('')}</div>
+      <div class="volunteer-slide-controls"><button type="button" data-slide="prev" aria-label="Previous photo">${ic('chevL')}</button><span data-slide-count>1 / 8</span><button type="button" data-slide="next" aria-label="Next photo">${ic('chevR')}</button><button type="button" data-slide="pause" aria-label="Pause slideshow" aria-pressed="false">?</button></div>
+    </div></div>
    <div class="grid grid-cols-2 gap-4 mt-8">
     ${[['clock','Flexible commitments','Weekdays, weekends or remote — every hour counts.'],['users','Choose your cause','Pick the initiative that speaks to you.'],['sparkle','Learn &amp; grow','Grassroots skills no classroom teaches.'],['heart','A community','Of doers who quickly feel like family.']].map((v,i)=>`<div class="card p-5 rv" style="--d:${i*80}ms">${ic(v[0],'w-6 h-6 text-ver')}<b class="block text-navy mt-2">${v[1]}</b><span class="text-sm text-ink/60">${v[2]}</span></div>`).join('')}</div>
    <div class="card p-6 mt-6 bg-white/70">${crn()}<p class="ph">[Editable placeholder] Add volunteer policy details — recognition, certificates, safety guidelines and expectations here.</p></div></div>
@@ -588,6 +591,35 @@ function viewVolunteer(){const ins=DB.data.initiatives;
    <button class="btn btn-fire w-full mt-6 !py-4" type="submit">${ic('sparkle')} Submit Registration</button>
    <p class="text-xs text-ink/45 text-center mt-3">Applications appear instantly in the Admin &rarr; Volunteers dashboard.</p>
   </form></div></section>`;}
+
+let volunteerSlideTimer;
+function initVolunteerSlideshow() {
+  clearInterval(volunteerSlideTimer);
+  const root = $('#volunteer-slideshow');
+  if (!root) return;
+  const slides = $$('.volunteer-slides img', root), pause = $('[data-slide="pause"]', root);
+  let index = 0, paused = motionPreference.matches;
+  const syncPause = () => {
+    pause.textContent = paused ? '?' : '?';
+    pause.setAttribute('aria-pressed', String(paused));
+    pause.setAttribute('aria-label', window.SJFLocale?.translate(paused ? 'Play slideshow' : 'Pause slideshow') || (paused ? 'Play slideshow' : 'Pause slideshow'));
+  };
+  const step = direction => {
+    index = (index + direction + slides.length) % slides.length;
+    slides.forEach((img,i) => { img.classList.toggle('is-active',i===index); img.setAttribute('aria-hidden',String(i!==index)); });
+    $('[data-slide-count]',root).textContent = `${index + 1} / ${slides.length}`;
+  };
+  root.addEventListener('click', event => {
+    const action = event.target.closest('[data-slide]')?.dataset.slide;
+    if (action === 'pause') { paused = !paused; syncPause(); }
+    else if (action) step(action === 'next' ? 1 : -1);
+  });
+  syncPause();
+  volunteerSlideTimer = setInterval(() => {
+    if (!paused && !document.hidden && !root.matches(':hover,:focus-within')) step(1);
+  }, 4500);
+}
+window.addEventListener('pagehide', () => clearInterval(volunteerSlideTimer));
 
 /* ---------------- CONTACT ---------------- */
 function viewContact(){const s=DB.data.settings;
@@ -867,7 +899,7 @@ function render() {
   $$('form[data-form]').forEach(form => {
     const note = document.createElement('p'); note.className = 'demo-form-note'; note.textContent = 'Demo: saved in this browser only.'; form.appendChild(note);
   });
-  initCounters(); window.SJFLocale?.apply($('#app')); initReveal(); initHeroSketch();
+  initCounters(); window.SJFLocale?.apply($('#app')); initReveal(); initHeroSketch(); initVolunteerSlideshow();
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
   activeNav(name);
 }

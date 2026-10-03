@@ -77,7 +77,15 @@
     ['hero1','Children enjoying a water park outing','community',1402,1122],
     ['c4','Volunteers with supplies at a classroom gathering','community',4096,2304],
     ['c5','Volunteers distributing supplies to children','community',2304,4096],
-    ['c3','Children gathered for a foundation learning programme','education',4096,2304]
+    ['c3','Children gathered for a foundation learning programme','education',4096,2304],
+    ['1','Volunteers leading a classroom activity','education',4096,2304],
+    ['2','Volunteers sharing treats with children','community',1280,720],
+    ['3','A guest receiving a traditional welcome','community',960,1280],
+    ['4','Guests at a foundation gathering','community',960,1280],
+    ['5','A guest being welcomed with a shawl','community',960,1280],
+    ['6','Community members in conversation at the foundation','community',1280,720],
+    ['7','Guests sharing a discussion at the foundation','community',1280,720],
+    ['8','Volunteers and guests meeting together','community',1280,720]
   ].map(([name,caption,cat,width,height]) => ({id:'sjf-photo-'+name,src:'assets/images/'+name+'.jpeg',caption,cat,width,height}));
   const clone = value => JSON.parse(JSON.stringify(value));
   function importPhotos(saved) {

@@ -401,3 +401,10 @@ footer form[data-form="f-news"] input { flex: 1; min-width: 0; width: auto; }
   .announcement-window { overflow-x: auto; }
   .rv { opacity: 1; transform: none; }
 }
+
+.volunteer-slides{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:12px;background:#fff8e7}
+.volunteer-slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .8s ease}
+.volunteer-slides img.is-active{opacity:1}
+.volunteer-slide-controls{display:flex;align-items:center;justify-content:center;gap:16px;padding-top:12px;color:#164b8c;font-weight:700}
+.volunteer-slide-controls button{display:grid;place-items:center;width:40px;height:40px;border:1px solid #164b8c40;border-radius:50%;background:#fff8e7}
+.volunteer-slide-controls button:is(:hover,:focus-visible){background:#164b8c;color:#fff}
