@@ -236,6 +236,8 @@ footer .demo-form-note { color: #fff8e79a; flex-basis: 100%; }
 footer form[data-form="f-news"] { flex-wrap: wrap; }
 footer form[data-form="f-news"] input { flex: 1; min-width: 0; width: auto; }
 #publicHero > .wrap { width: 100%; }
+#publicHero.sjf-madhubani-photo-hero { isolation:isolate; background-image:linear-gradient(90deg,rgba(255,248,231,.94),rgba(255,248,231,.74) 52%,rgba(255,248,231,.34)),var(--sjf-hero-photo); background-position:center; background-size:cover; }
+#publicHero.sjf-madhubani-photo-hero > .wrap { z-index:1; }
 #site-head .brand-lockup { font-family:'Playfair Display',Georgia,serif; font-size:1.12rem !important; font-weight:700; letter-spacing:-.025em; }
 @media (max-width: 640px) {
   #publicHero:not(.sjf-blue-hero) { padding-top: 3rem; min-height: auto; }

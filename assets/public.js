@@ -180,7 +180,12 @@ function pageHero(title,sub=''){return `<section class="relative overflow-hidden
 const statTile=(label,value,suffix,note,dark)=>({label,value,suffix,note,dark});
 
 /* ---------------- HOME ---------------- */
-function heroSection(){return `<section id="publicHero" class="relative min-h-[94vh] flex items-center overflow-hidden pt-28 pb-16">
+function heroBackground(){
+  const allowed = ['assets/images/hero1.jpeg','assets/images/k1.jpeg','assets/images/r3.jpeg','assets/images/c3.jpeg'];
+  let image = ''; try { image = localStorage.getItem('sjf_madhubani_hero_background') || ''; } catch (_) {}
+  return allowed.includes(image) ? image : '';
+}
+function heroSection(){const background = heroBackground(); return `<section id="publicHero" class="relative min-h-[94vh] flex items-center overflow-hidden pt-28 pb-16 ${background ? 'sjf-madhubani-photo-hero' : ''}"${background ? ` style="--sjf-hero-photo:url('${background}')"` : ''}>
   <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full blur-3xl opacity-30 pointer-events-none" style="background:radial-gradient(circle,#168A4566,transparent 70%)" aria-hidden="true"></div>
   <div class="absolute -bottom-32 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl opacity-25 pointer-events-none" style="background:radial-gradient(circle,#16864277,transparent 70%)" aria-hidden="true"></div>
   <div class="wrap relative grid lg:grid-cols-[1.05fr_.95fr] gap-14 items-center">
@@ -741,10 +746,10 @@ document.addEventListener('click', e => {
       const image = el.dataset.image;
       const hero = $('#publicHero.sjf-blue-hero');
       if (!hero || !allowed.includes(image)) break;
-      hero.classList.add('sbh-photo-background');
-      hero.style.setProperty('--sbh-photo', `url('${image}')`);
-      $$('.sbh-art[data-act="hero-background"]', hero).forEach(card => card.setAttribute('aria-pressed', String(card === el)));
-      try { localStorage.setItem('sjf_blue_hero_background', image); } catch (_) {}
+      try { localStorage.setItem('sjf_madhubani_hero_background', image); } catch (_) {}
+      const config = window.SJFHero.read();
+      window.SJFData.write('hero', {...config, layout:'madhubani'});
+      refreshHero();
       break;
     }
     case 'amt': {
