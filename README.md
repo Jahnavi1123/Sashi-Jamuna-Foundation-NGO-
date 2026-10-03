@@ -1,6 +1,6 @@
 # Sashi Jamuna Foundation
 
-`3.html` is the public homepage, using the cream background, Madhubani illustration, typography, buttons and footer from the original `1.html`. `index.html` forwards to it while preserving section links. Apache also uses `3.html` first through `.htaccess`.
+`3.html` is the public homepage, using the cream background, decorative illustrations, typography, buttons and footer from the original `1.html`. `index.html` forwards to it while preserving section links. Apache also uses `3.html` first through `.htaccess`.
 
 `admin.html` is the separate demo portal. It keeps the previous website's dark-blue design and artwork. Public pages retain the blue running announcement strip.
 
@@ -33,7 +33,7 @@ Open `admin.html`, or use the Admin link in the website.
 - Username: `admin`
 - Password: `sjf@admin`
 - Admin Home provides dashboard totals and shortcuts to editing tools.
-- Edit Hero edits the headline and introduction of the single Madhubani hero. It changes only the public hero; other sections, the footer, admin design and in-progress forms stay unchanged.
+- Edit Hero edits the headline and introduction of the single homepage hero. It changes only the public hero; other sections, the footer, admin design and in-progress forms stay unchanged.
 - Impact Figures edits the separate impact section.
 - Account changes the username and/or password after verifying the current password. Default credentials above apply until changed. Password fields start empty; no credentials hint is shown on the login page. Changed passwords are stored as salted PBKDF2 hashes in this browser.
 - Photos, videos, initiatives and daily updates feed the public sections.

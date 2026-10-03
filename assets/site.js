@@ -129,7 +129,7 @@
       dots += '<circle cx="' + dx + '" cy="' + dy + '" r="3.4" fill="' + (q % 2 ? p.accent : p.ink) + '"/>';
     }
     return '<svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="' +
-      escapeAttr(label || 'Madhubani inspired artwork') + '">' +
+      escapeAttr(label || 'Foundation decorative artwork') + '">' +
       '<defs><linearGradient id="' + uid + '" x1="0" y1="0" x2="1" y2="1">' +
       '<stop offset="0" stop-color="' + p.a + '"/><stop offset="1" stop-color="' + p.b + '"/></linearGradient></defs>' +
       '<rect width="200" height="200" fill="url(#' + uid + ')"/>' +
@@ -143,7 +143,7 @@
   }
 
   function artThumb(item, cls, extraAttrs) {
-    var label = item.caption || item.title || 'Madhubani artwork';
+    var label = item.caption || item.title || 'Foundation decorative artwork';
     if (item.src) {
       return '<img src="' + escapeAttr(safeImageURL(item.src)) + '" alt="' + escapeAttr(label) + '" loading="lazy" class="' + cls + '" ' + (extraAttrs || '') + '>';
     }
@@ -1088,7 +1088,7 @@ function footer(){
   <div class="pat-dark" aria-hidden="true"></div>
   <div class="wrap relative py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
     <div><div class="flex items-center gap-3">${foundationLogo(64)}<span class="brand-lockup font-disp text-2xl"><span class="brand-line"><span class="brand-sashi">SASHI</span> <span class="brand-jamuna">Jamuna</span></span><span class="brand-foundation">Foundation</span></span></div>
-      <p class="mt-4 text-cream/70 text-[15px] max-w-sm">A community-driven foundation carrying the colours of Mithila into modern service — rooted in culture, growing hope.</p>
+      <p class="mt-4 text-cream/70 text-[15px] max-w-sm">A community-led foundation in Rosera, Bihar, supporting children through learning, care and shared opportunity.</p>
       <div class="mt-5 flex gap-3">${soc('instaUrl',BRAND.ig,'Instagram')}${soc('fbUrl',BRAND.fb,'Facebook')}${soc('ytUrl',BRAND.yt,'YouTube')}</div></div>
     <div><h4 class="font-disp text-lg text-gold">Quick Links</h4><ul class="mt-4 space-y-2.5 text-cream/75">${NAV.map(([r,l])=>`<li><a class="hover:text-gold transition flex items-center gap-2" href="#${r}"><i class="dia" style="width:6px;height:6px"></i>${l}</a></li>`).join('')}
       <li><a class="hover:text-gold transition flex items-center gap-2" href="#donate"><i class="dia" style="width:6px;height:6px"></i>Donate</a></li><li><a class="hover:text-gold transition flex items-center gap-2" href="#volunteer"><i class="dia" style="width:6px;height:6px"></i>Volunteer</a></li></ul></div>

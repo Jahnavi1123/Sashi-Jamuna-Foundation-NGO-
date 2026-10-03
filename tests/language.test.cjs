@@ -18,6 +18,8 @@ async function page(file,language,blocked=false) {
   if(blocked){w.Storage.prototype.getItem=()=>{throw new Error('Storage blocked')};w.Storage.prototype.setItem=()=>{throw new Error('Storage blocked')};}
   await new Promise(resolve=>w.addEventListener('load',resolve,{once:true}));
   for(const s of d.querySelectorAll('script[src^="assets/"]'))w.eval(fs.readFileSync(path.join(root,s.getAttribute('src')),'utf8'));
+  const publicCopy = d.querySelector('#app').textContent + [...d.querySelectorAll('[alt],[aria-label],[placeholder],meta[content],script[type="application/ld+json"]')].map(el=>el.getAttribute('alt')||el.getAttribute('aria-label')||el.getAttribute('placeholder')||el.getAttribute('content')||el.textContent).join(' ');
+  assert(!/madhubani|mithila|mithala|मधुबनी|मिथिला|painting|paintbrush/i.test(publicCopy),file+' has no retired art copy or metadata');
   return {w,d,errors};
 }
 const settle=()=>new Promise(resolve=>setTimeout(resolve,0));
@@ -28,15 +30,16 @@ const settle=()=>new Promise(resolve=>setTimeout(resolve,0));
     first.d.querySelector('[data-language="hi"]').click();await settle();
     assert.equal(first.w.localStorage.getItem('sjf_language'),'hi');
     assert.equal(first.d.documentElement.lang,'hi');
-    assert(first.d.querySelector('#who-we-are').textContent.includes('क्षेत्रीय गैर-लाभकारी संस्था'));
+    assert(first.d.querySelector('#who-we-are').textContent.includes('समुदाय द्वारा संचालित एक गैर-लाभकारी संस्था'));
     assert(first.d.querySelector('.sjf-hero-slogans').textContent.includes('ज्ञान अवसर पैदा करता है।'));
     assert.equal(first.d.querySelector('.hero-kids-frame video source').getAttribute('src'),'assets/videos/1003.mp4');
     assert(!first.d.querySelector('#sjf-language-picker'));
     first.d.querySelector('[data-act="language"]').click();first.d.querySelector('[data-language="en"]').click();await settle();
     assert.equal(first.d.querySelector('[data-nav="home"]').textContent,'Home');
-    assert(first.d.querySelector('#who-we-are').textContent.includes('regional non-profit organization'));
+    assert(first.d.querySelector('#who-we-are').textContent.includes('community-led non-profit based in Rosera'));
     const expected={'3.html':'हम कौन हैं','about.html':'हमारा मिशन','initiatives.html':'हमारी पहल','gallery.html':'चित्र दीर्घा','videos.html':'वीडियो','updates.html':'समाचार और दैनिक जानकारी','donate.html':'अपना योगदान दें','volunteer.html':'स्वयंसेवक पंजीकरण','contact.html':'संदेश भेजें'};
     for(const [file,text] of Object.entries(expected)){
+      await page(file,'en');
       const p=await page(file,'hi');await settle();
       assert(!p.d.querySelector('#sjf-language-picker'),file+' keeps saved choice');
       assert(p.d.querySelector('#main').textContent.includes(text),file+' translated');

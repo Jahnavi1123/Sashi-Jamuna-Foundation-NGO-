@@ -14,7 +14,6 @@
       { id: 'i2', icon: 'heart',  title: 'Healthcare & Camps',   tag: 'Swasthya',  stat: '[Add verified figure]', desc: 'Free health check-up camps, maternal care awareness, blood donation drives and referrals to district hospitals.' },
       { id: 'i3', icon: 'users',  title: 'Women Empowerment',    tag: 'Shakti',    stat: '[Add verified figure]', desc: 'Self-help group formation, financial literacy, legal awareness and leadership training for women.' },
       { id: 'i4', icon: 'brief',  title: 'Skill Development',    tag: 'Kaushal',   stat: '[Add verified figure]', desc: 'Vocational courses in tailoring, computers, handicrafts and retail readiness linked to local employment.' },
-      { id: 'i5', icon: 'palette',title: 'Madhubani Art & Culture', tag: 'Kala',   stat: '[Add verified figure]', desc: 'Preserving Bihar\u2019s Madhubani painting heritage through artisan training, fair-price markets and school workshops.' },
       { id: 'i6', icon: 'leaf',   title: 'Environment & Relief', tag: 'Prakriti',  stat: '[Add verified figure]', desc: 'Tree plantation, cleanliness drives, water conservation and rapid relief support during floods and disasters.' }
     ],
     photos: [
@@ -35,7 +34,6 @@
     updates: [
       { id: 'u1', date: '', cat: 'Education',  title: 'Learning centre session held',        body: '[Editable placeholder — add the daily update text here from the admin dashboard.]' },
       { id: 'u2', date: '', cat: 'Health',     title: 'Free health camp conducted',           body: '[Editable placeholder — add the daily update text here from the admin dashboard.]' },
-      { id: 'u3', date: '', cat: 'Culture',    title: 'Madhubani workshop with artisans',     body: '[Editable placeholder — add the daily update text here from the admin dashboard.]' },
       { id: 'u4', date: '', cat: 'Community',  title: 'Volunteer orientation programme',      body: '[Editable placeholder — add the daily update text here from the admin dashboard.]' },
       { id: 'u5', date: '', cat: 'Environment',title: 'Plantation drive in nearby villages',  body: '[Editable placeholder — add the daily update text here from the admin dashboard.]' },
       { id: 'u6', date: '', cat: 'Skills',     title: 'Vocational batch graduation',          body: '[Editable placeholder — add the daily update text here from the admin dashboard.]' }
@@ -133,7 +131,12 @@
       try {
         const raw = localStorage.getItem('sjf_' + key);
         const value = raw ? JSON.parse(raw) : clone(defaults[key]);
-        return key === 'videos' ? importVideos(value) : key === 'photos' ? importPhotos(value) : value;
+        const records = key === 'videos' ? importVideos(value) : key === 'photos' ? importPhotos(value) : value;
+        // Retired art content must not reappear from an older browser's saved data.
+        if (['initiatives','updates','photos','videos'].includes(key) && Array.isArray(records)) {
+          return records.filter(record => !/madhubani|mithila|mithala|मधुबनी|मिथिला|folk art|traditional painting/i.test([record.title,record.caption,record.desc,record.body].filter(Boolean).join(' ')));
+        }
+        return records;
       }
       catch (_) { return clone(defaults[key]); }
     },

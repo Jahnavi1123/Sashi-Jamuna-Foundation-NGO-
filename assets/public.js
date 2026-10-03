@@ -53,7 +53,7 @@ fb:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:1.2em;height:1.2em
 ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:1.2em;height:1.2em"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.3" fill="currentColor" stroke="none"/></svg>',
 yt:'<svg viewBox="0 0 24 24" fill="currentColor" style="width:1.2em;height:1.2em"><path d="M23 12s0-3.9-.5-5.6a2.9 2.9 0 0 0-2-2C18.7 4 12 4 12 4s-6.7 0-8.5.4a2.9 2.9 0 0 0-2 2C1 8.1 1 12 1 12s0 3.9.5 5.6a2.9 2.9 0 0 0 2 2c1.8.4 8.5.4 8.5.4s6.7 0 8.5-.4a2.9 2.9 0 0 0 2-2c.5-1.7.5-5.6.5-5.6ZM9.8 15.5v-7l6 3.5-6 3.5Z"/></svg>'};
 
-/* ---------------- Madhubani artwork (hand-drawn SVG generators) ---------------- */
+/* ---------------- Foundation decorative artwork (hand-drawn SVG generators) ---------------- */
 const fish=(fill='#168A45',stroke='#164B8C')=>`<svg viewBox="0 0 116 64" fill="none" aria-hidden="true">
 <path d="M6 32 Q30 8 66 20 Q78 24 80 32 Q78 40 66 44 Q30 56 6 32 Z" fill="${fill}" stroke="${stroke}" stroke-width="2.4" stroke-linejoin="round"/>
 <path d="M78 28 L108 12 L99 32 L108 52 L78 36 Z" fill="${fill}" stroke="${stroke}" stroke-width="2.4" stroke-linejoin="round"/>
@@ -80,7 +80,7 @@ function medallion({spin=true}={}){ /* hero sun medallion with rays, dots & peta
   for(let i=0;i<24;i++)rays+=`<path d="M0 -126 L9 -152 L-9 -152 Z" fill="${i%2?G:V}" stroke="${S}" stroke-width="1.4" transform="rotate(${i*15})"/>`;
   for(let i=0;i<28;i++){const a=i*(360/28)*Math.PI/180;dots+=`<circle cx="${(112*Math.cos(a)).toFixed(1)}" cy="${(112*Math.sin(a)).toFixed(1)}" r="2.5" fill="${i%2?T:S}"/>`;}
   for(let i=0;i<16;i++)petals+=`<g transform="rotate(${i*22.5})"><path d="M0 -60 C -11 -72 -11 -92 0 -102 C 11 -92 11 -72 0 -60 Z" fill="${i%2?C:'#FBEBCB'}" stroke="${S}" stroke-width="2.2" stroke-linejoin="round"/><path d="M0 -66 L0 -96" stroke="${S}" stroke-width="1.1" opacity=".45"/></g>`;
-  return `<svg viewBox="-160 -160 320 320" class="w-full h-auto drop-shadow-xl" role="img" aria-label="Madhubani sun medallion">
+  return `<svg viewBox="-160 -160 320 320" class="w-full h-auto drop-shadow-xl" role="img" aria-label="Decorative sun emblem">
   <g class="${spin?'rot':''}">${rays}</g>
   <circle r="124" fill="${C}" stroke="${S}" stroke-width="3"/>
   ${dots}
@@ -141,7 +141,7 @@ function footer(){const s=DB.data.settings;
   <div class="pat-dark" aria-hidden="true"></div>
   <div class="wrap relative py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
     <div><div class="flex items-center gap-3">${foundationLogo(64)}<span class="brand-lockup font-disp text-2xl"><span class="brand-line"><span class="brand-sashi">SASHI</span> <span class="brand-jamuna">Jamuna</span></span><span class="brand-foundation">Foundation</span></span></div>
-      <p class="mt-4 text-cream/70 text-[15px] max-w-sm">A community-driven foundation carrying the colours of Mithila into modern service — rooted in culture, growing hope.</p>
+      <p class="mt-4 text-cream/70 text-[15px] max-w-sm">A community-led foundation in Rosera, Bihar, supporting children through learning, care and shared opportunity.</p>
       <div class="mt-5 flex gap-3">${soc('instaUrl',BRAND.ig,'Instagram')}${soc('fbUrl',BRAND.fb,'Facebook')}${soc('ytUrl',BRAND.yt,'YouTube')}</div></div>
     <div><h4 class="font-disp text-lg text-gold">Quick Links</h4><ul class="mt-4 space-y-2.5 text-cream/75">${NAV.map(([r,l])=>`<li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref(r)}"><i class="dia" style="width:6px;height:6px"></i>${l}</a></li>`).join('')}
       <li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref('donate')}"><i class="dia" style="width:6px;height:6px"></i>Donate</a></li><li><a class="hover:text-gold transition flex items-center gap-2" href="${routeHref('volunteer')}"><i class="dia" style="width:6px;height:6px"></i>Volunteer</a></li></ul></div>
@@ -273,7 +273,7 @@ function socialWall(){const s=DB.data.settings;
   ${card(BRAND.fb,'Facebook',s.fbUrl?'Facebook Page':'/yourfoundation',s.fbUrl,'bg-[#1877F2]',Array(6).fill(tile('bg-[#1877F2]/5',BRAND.fb,'POST')).join(''))}
   ${card(BRAND.yt,'YouTube',DB.data.videos.filter(v=>v.youtube).length?DB.data.videos.filter(v=>v.youtube).length+' YouTube videos':'YouTube Channel',s.ytUrl,'bg-[#CD201F]',Array(6).fill(tile('bg-[#CD201F]/5',BRAND.yt,'VIDEO')).join(''))}
   </div></div></section>`;}
-function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB.data.gallery.slice(0,6),ups=DB.data.updates.slice(0,3);
+function viewHome(){const ins=DB.data.initiatives,gals=DB.data.gallery.slice(0,6),ups=DB.data.updates.slice(0,3);
  return `<div id="publicHeroSlot">${heroSection()}</div>
  ${marquee()}
  ${videoSection()}
@@ -287,13 +287,13 @@ function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB
      </div>
    <div class="sjf-about-copy">
      <div class="rv"><span class="eyebrow">Who We Are</span>
-       <h2 class="font-disp text-[clamp(1.9rem,4vw,2.9rem)] leading-tight text-navy mt-3">A promise painted in<br>every shade of care.</h2></div>
-     <p class="mt-5 text-ink/75 text-lg rv text-center" style="--d:100ms">The Shashi Jamuna Foundation is a regional non-profit organization based in Rosera, Bihar, India. It actively engages in community development and promotes local art, culture, and youth achievement, including honoring international performers and preserving traditional folk arts such as the Jhijhiya dance.</p>
+       <h2 class="font-disp text-[clamp(1.9rem,4vw,2.9rem)] leading-tight text-navy mt-3">A shared commitment to<br>every child’s future.</h2></div>
+     <p class="mt-5 text-ink/75 text-lg rv text-center" style="--d:100ms">Sashi Jamuna Foundation is a community-led non-profit based in Rosera, Bihar. Supervised by Gaurav Thakur, it brings children, families and volunteers together to support learning, personal growth and a sense of belonging.</p>
     <p class="mt-5 text-ink/75 text-lg rv">The minimum donation to support children at the foundation is just Rs. 11/-, a small amount that makes it easier for everyone to contribute.</p>
-     <p class="mt-6 text-ink/70 text-[15px] rv text-center" style="--d:160ms">Rosera, Bihar, India — a grassroots foundation rooted in local action, heritage preservation, youth growth and community care.</p>
+     <p class="mt-6 text-ink/70 text-[15px] rv text-center" style="--d:160ms">Rooted in Rosera, Bihar, our work centres on children, youth development and community care.</p>
      <ul class="mt-6 space-y-3.5 rv" style="--d:220ms">
        <li class="flex gap-3 items-start">${ic('users','text-ver mt-0.5')}<span class="font-bold text-navy">Community-first</span><span class="text-ink/65">— programs shaped with the people we serve</span></li>
-       <li class="flex gap-3 items-start">${ic('palette','text-ver mt-0.5')}<span class="font-bold text-navy">Culture-inspired</span><span class="text-ink/65">— Mithila's art in everything we do</span></li>
+       <li class="flex gap-3 items-start">${ic('palette','text-ver mt-0.5')}<span class="font-bold text-navy">Child-focused</span><span class="text-ink/65">— children's learning and wellbeing come first</span></li>
        <li class="flex gap-3 items-start">${ic('shield','text-ver mt-0.5')}<span class="font-bold text-navy">Transparent by design</span><span class="text-ink/65">— verified numbers, open books</span></li></ul>
      <div class="text-center"><a href="#about" class="btn btn-navy mt-8 rv" style="--d:280ms">Read Our Story ${ic('arrowR')}</a></div>
    </div></div></section>
@@ -333,18 +333,18 @@ function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB
   <div class="mt-4 text-xs text-ink/45 flex items-center gap-2">${ic('calendar','w-3.5 h-3.5')} ${fmtDate(u.date)}</div></article>`;}
 
 /* ---------------- ABOUT ---------------- */
-function viewAbout(){const vals=[['heart','Compassion','Every decision begins with kindness.'],['users','Inclusion','No one left on the margins.'],['shield','Integrity','Honest work, honest books.'],['palette','Culture','Heritage as our compass.']];
- return `${pageHero('About Us','The people, the purpose and the paintbrush behind Sashi Jamuna Foundation.')}
+function viewAbout(){const vals=[['heart','Compassion','Every decision begins with kindness.'],['users','Inclusion','No one left on the margins.'],['shield','Integrity','Honest work, honest books.'],['book','Opportunity','A chance to learn and grow.']];
+ return `${pageHero('About Us','The people, purpose and community behind Sashi Jamuna Foundation.')}
  <section class="py-16 md:py-20"><div class="wrap grid lg:grid-cols-2 gap-14 items-center">
   <div class="relative rv"><div class="card !p-3 rotate-[-1.5deg] hover:rotate-0 transition-transform duration-500">${crn()}
     ${photoSlideshow('about-slideshow','Foundation photo slideshow')}</div>
     <div class="absolute -top-6 -left-5 w-16 fl" aria-hidden="true">${fish()}</div></div>
   <div class="rv" style="--d:120ms"><span class="eyebrow">Our Story</span>
     <h2 class="font-disp text-[clamp(1.8rem,3.6vw,2.6rem)] text-navy mt-3 leading-tight">Born from a simple belief:<br>together, we rise.</h2>
-    <p class="mt-5 text-ink/75 text-lg">The Shashi Jamuna Foundation is a regional non-profit organization based in Rosera, Bihar, India. It actively engages in community development and promotes local art, culture, and youth achievement, including honoring international performers and preserving traditional folk arts such as the Jhijhiya dance.</p>
+    <p class="mt-5 text-ink/75 text-lg">Sashi Jamuna Foundation is a community-led non-profit based in Rosera, Bihar. Supervised by Gaurav Thakur, it brings children, families and volunteers together to support learning, personal growth and a sense of belonging.</p>
     <p class="mt-5 text-ink/75 text-lg rv">The minimum donation to support children at the foundation is just Rs. 11/-, a small amount that makes it easier for everyone to contribute.</p>
-    <div class="card p-5 mt-6">${crn()}<p class="ph text-[15px]">Based in Rosera, Bihar, the foundation brings people together around education, cultural pride, community care and opportunity. It stands as a local platform for youth, families and artists to grow with dignity and purpose.</p></div>
-    <div class="flex flex-wrap gap-3 mt-6">${['Rosera, Bihar','Volunteer-powered','Culture-led'].map(t=>`<span class="px-4 py-2 rounded-full bg-navy/5 text-navy font-bold text-sm border-1.5 border-navy/15">${t}</span>`).join('')}</div></div>
+    <div class="card p-5 mt-6">${crn()}<p class="ph text-[15px]">The foundation brings people together around education, community care and opportunity. Children can learn, volunteers can share their time, and families can take part in building a supportive community.</p></div>
+    <div class="flex flex-wrap gap-3 mt-6">${['Rosera, Bihar','Volunteer-powered','Community-led'].map(t=>`<span class="px-4 py-2 rounded-full bg-navy/5 text-navy font-bold text-sm border-1.5 border-navy/15">${t}</span>`).join('')}</div></div>
  </div></section>
  <section class="py-16 md:py-20 bg-white/70"><div class="wrap">
   ${secHead('Why &amp; How','Mission, Vision &amp; Values')}
@@ -358,13 +358,13 @@ function viewAbout(){const vals=[['heart','Compassion','Every decision begins wi
   </div></div></section>
  <section class="relative g-navy py-16 md:py-20 text-cream overflow-hidden"><div class="pat-dark" aria-hidden="true"></div>
   <div class="wrap grid lg:grid-cols-[.8fr_1.2fr] gap-12 items-center relative">
-   <div class="rv mx-auto w-[min(80vw,320px)]">${medallion({spin:false})}</div>
-   <div class="rv" style="--d:120ms"><span class="eyebrow gold">The Madhubani Connection</span>
-    <h2 class="font-disp text-3xl md:text-4xl mt-3">Art from the heart<br>of Mithila.</h2>
-    <p class="mt-4 text-cream/80 leading-relaxed">Madhubani — or Mithila painting — is a folk art tradition from the Mithala region of Bihar, historically painted by women on walls and floors for weddings and festivals. Artists draw bold outlines and fill figures with intricate patterns of lines, dots and hatching, using natural pigments. Its motifs — fish, lotus, peacocks, the sun, the tree of life — speak of prosperity, purity and harmony.</p>
-    <p class="mt-3 text-cream/70">Our design carries this heritage in every border, corner and illustration on the site — hand-styled after the tradition, made with respect.</p>
+   <div class="rv mx-auto">${foundationLogo(220)}</div>
+   <div class="rv" style="--d:120ms"><span class="eyebrow gold">Sashi Jamuna Foundation</span>
+    <h2 class="font-disp text-3xl md:text-4xl mt-3">Every child deserves a chance.</h2>
+    <p class="mt-4 text-cream/80 leading-relaxed">In Rosera, Bihar, Sashi Jamuna Foundation creates spaces where children can learn, grow and feel supported. Families and volunteers are part of this shared effort, with Gaurav Thakur supervising the foundation.</p>
+    <p class="mt-3 text-cream/70">Support for children starts with a minimum donation of just Rs. 11/-. This small contribution lets more people take part in the foundation's work.</p>
     <div class="flex flex-wrap gap-3 mt-6">
-     ${[[fish('#168A45'),'Fish','Prosperity'],[lotusFan(),'Lotus','Purity'],['<span class="w-10 h-10 grid place-items-center text-gold">'+ic('sun','w-8 h-8')+'</span>','Sun','Energy &amp; Life']].map(m=>`<span class="flex items-center gap-2 bg-cream/10 rounded-2xl px-4 py-2 text-sm font-bold"><span class="w-10 h-10 grid place-items-center">${m[0]}</span>${m[1]} <span class="text-cream/55 font-normal">· ${m[2]}</span></span>`).join('')}</div></div>
+     ${[['book','Education'],['heart','Care'],['users','Community']].map(([icon,label])=>`<span class="flex items-center gap-2 bg-cream/10 rounded-2xl px-4 py-2 text-sm font-bold">${ic(icon)}${label}</span>`).join('')}</div></div>
   </div></section>
  <section class="py-16 md:py-20"><div class="wrap">
   ${secHead('The People','Our Team','The hands and hearts behind the foundation.')}
@@ -379,7 +379,7 @@ function viewAbout(){const vals=[['heart','Compassion','Every decision begins wi
  </div></section>`;}
 
 /* ---------------- INITIATIVES ---------------- */
-function viewInitiatives(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5');
+function viewInitiatives(){const ins=DB.data.initiatives;
  return `${pageHero('Our Initiatives','Streams of steady, grassroots work — each one shaped with the communities it serves.')}
  <section class="py-16 md:py-20"><div class="wrap grid md:grid-cols-2 gap-6">
   ${ins.map((x,i)=>{const c=ICOL[x.color]||ICOL.navy;return `<article class="card p-8 rv" style="--d:${i*80}ms">${crn()}
@@ -579,7 +579,7 @@ function viewVolunteer(){const ins=DB.data.initiatives;
     <div><label class="lb" for="v-name">Full Name *</label><input id="v-name" name="name" required placeholder="Your name"></div>
     <div><label class="lb" for="v-phone">Phone *</label><input id="v-phone" name="phone" required inputmode="tel" placeholder="+91 ..."></div>
     <div><label class="lb" for="v-email">Email *</label><input id="v-email" name="email" type="email" name="email" required placeholder="you@email.com"></div>
-    <div><label class="lb" for="v-city">City / District</label><input id="v-city" name="city" placeholder="e.g., Madhubani"></div></div>
+    <div><label class="lb" for="v-city">City / District</label><input id="v-city" name="city" placeholder="e.g., Rosera"></div></div>
    <fieldset class="mt-5"><legend class="lb">Areas of interest</legend>
     <div class="grid sm:grid-cols-2 gap-2">${ins.map((x,i)=>`<label class="flex gap-2.5 items-center text-sm bg-navy/[.04] rounded-xl px-4 py-2.5 cursor-pointer hover:bg-navy/10 transition"><input type="checkbox" name="interest" value="${esc(x.title)}" ${i===0?'checked':''}>${esc(x.title)}</label>`).join('')}</div></fieldset>
    <div class="grid sm:grid-cols-2 gap-4 mt-5">

@@ -62,12 +62,18 @@ function sync(source, target) {
   check(d.querySelector('#publicHero .grad-teal').textContent === 'Communities','Public site preserves original accent text');
   check(d.querySelector('#publicHero svg'),'Public hero has original Madhubani illustration');
   check(d.querySelector('link[href="assets/public.css"]'),'Public site loads original visual design styles');
-  const homeHero=d.querySelector('#publicHero'), stories=d.querySelector('#homeFeaturedVideo')?.closest('section'), whoWeAre=[...d.querySelectorAll('#home h2')].find(h=>h.textContent.includes('A promise painted'))?.closest('section');
+  const homeHero=d.querySelector('#publicHero'), stories=d.querySelector('#homeFeaturedVideo')?.closest('section'), whoWeAre=d.querySelector('#who-we-are');
   check(homeHero && stories && whoWeAre && (homeHero.compareDocumentPosition(stories)&w.Node.DOCUMENT_POSITION_FOLLOWING) && (stories.compareDocumentPosition(whoWeAre)&w.Node.DOCUMENT_POSITION_FOLLOWING),'Stories that move us appears after the hero and before Who We Are');
   check(!d.querySelector('#home .rot-badge, #home .cph'),'Who We Are has no spinning badge or framed collage');
   check(!d.querySelector('#home').textContent.includes('Initiative cards are editable'),'Home page hides the initiative editor note');
   const homeInitiatives=[...d.querySelectorAll('#home h2')].find(h=>h.textContent.trim()==='Our Initiatives')?.closest('section');
   check(homeInitiatives && ![...homeInitiatives.querySelectorAll('h3')].some(h=>h.textContent.trim()==='Madhubani Art & Culture'),'Home initiatives omit the Madhubani Art & Culture card');
+  const retired = await page('initiatives.html', {
+    sjf_initiatives:JSON.stringify([{id:'i5',title:'Madhubani Art & Culture',desc:'Old art programme'},{id:'custom',title:'Custom education programme',desc:'Keep this programme'}]),
+    sjf_updates:JSON.stringify([{id:'u3',title:'Madhubani workshop with artisans',body:'Old copy'},{id:'custom-update',title:'Community update',body:'Keep this update'}])
+  });
+  check(retired.w.SJFData.read('initiatives').length===1 && retired.d.querySelector('#main').textContent.includes('Custom education programme'),'Retired saved initiative is hidden while unrelated custom content survives');
+  check(retired.w.SJFData.read('updates').length===1 && retired.w.SJFData.read('updates')[0].id==='custom-update','Saved art update does not return');
   const impactSection=[...d.querySelectorAll('#home h2')].find(h=>h.textContent.trim()==='Impact You Can Verify')?.closest('section');
   check(impactSection && !impactSection.textContent.includes('Add verified figure in Admin') && !impactSection.textContent.includes('Villages Reached'),'Impact section omits the admin prompt and Villages Reached metric');
   check(d.querySelectorAll('.site-section').length === 1,'Public page renders its own route');
