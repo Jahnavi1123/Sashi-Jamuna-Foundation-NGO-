@@ -9,6 +9,7 @@
   let language = choice || 'en';
   const originalTitle = document.title;
   const dictionary = {
+    'Foundation photo slideshow':'फाउंडेशन की तस्वीरों का स्लाइडशो',
     'The minimum donation to support children at the foundation is just Rs. 11/-, a small amount that makes it easier for everyone to contribute.':'फाउंडेशन में बच्चों की मदद के लिए न्यूनतम दान केवल ₹11/- है — इतनी छोटी राशि से हर कोई आसानी से अपना योगदान दे सकता है।',
     'Volunteer photo slideshow':'स्वयंसेवा की तस्वीरों का स्लाइडशो','Previous photo':'पिछली तस्वीर','Next photo':'अगली तस्वीर','Pause slideshow':'स्लाइडशो रोकें','Play slideshow':'स्लाइडशो चलाएँ',
     'Volunteers leading a classroom activity':'कक्षा की गतिविधि का संचालन करते स्वयंसेवक','Volunteers sharing treats with children':'बच्चों को मिठाइयाँ बाँटते स्वयंसेवक','A guest receiving a traditional welcome':'अतिथि का पारंपरिक स्वागत','Guests at a foundation gathering':'फाउंडेशन के कार्यक्रम में अतिथि','A guest being welcomed with a shawl':'शॉल देकर अतिथि का स्वागत','Community members in conversation at the foundation':'फाउंडेशन में बातचीत करते समुदाय के सदस्य','Guests sharing a discussion at the foundation':'फाउंडेशन में चर्चा करते अतिथि','Volunteers and guests meeting together':'स्वयंसेवकों और अतिथियों की बैठक',

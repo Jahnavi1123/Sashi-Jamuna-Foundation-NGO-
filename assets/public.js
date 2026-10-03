@@ -337,8 +337,7 @@ function viewAbout(){const vals=[['heart','Compassion','Every decision begins wi
  return `${pageHero('About Us','The people, the purpose and the paintbrush behind Sashi Jamuna Foundation.')}
  <section class="py-16 md:py-20"><div class="wrap grid lg:grid-cols-2 gap-14 items-center">
   <div class="relative rv"><div class="card !p-3 rotate-[-1.5deg] hover:rotate-0 transition-transform duration-500">${crn()}
-    <img src="https://picsum.photos/seed/sjf-about/720/540.jpg" alt="Foundation community placeholder photo" class="rounded-xl w-full" loading="lazy"></div>
-    <div class="card !p-2 absolute -bottom-8 -right-4 w-44 rotate-3 hidden sm:block">${crn()}<img src="https://picsum.photos/seed/sjf-about2/360/280.jpg" alt="Foundation activity placeholder photo" class="rounded-lg w-full" loading="lazy"></div>
+    ${photoSlideshow('about-slideshow','Foundation photo slideshow')}</div>
     <div class="absolute -top-6 -left-5 w-16 fl" aria-hidden="true">${fish()}</div></div>
   <div class="rv" style="--d:120ms"><span class="eyebrow">Our Story</span>
     <h2 class="font-disp text-[clamp(1.8rem,3.6vw,2.6rem)] text-navy mt-3 leading-tight">Born from a simple belief:<br>together, we rise.</h2>
@@ -565,14 +564,11 @@ function viewDonate(){const s=DB.data.settings;const amts=[500,1000,2500,5000];
   </div></div></section>`;}
 
 /* ---------------- VOLUNTEER ---------------- */
-function viewVolunteer(){const ins=DB.data.initiatives, photos=DATA.defaults.photos.filter(p=>/^sjf-photo-[1-8]$/.test(p.id));
+function viewVolunteer(){const ins=DB.data.initiatives;
  return `${pageHero('Volunteer With Us','Give a few hours. Gain a family. Change many lives — including your own.')}
  <section class="pb-24"><div class="wrap grid lg:grid-cols-2 gap-10 items-start">
   <div class="rv"><div class="card !p-3 rotate-1 hover:rotate-0 transition-transform duration-500">${crn()}
-    <div id="volunteer-slideshow" data-motion-static role="region" aria-label="Volunteer photo slideshow">
-      <div class="volunteer-slides">${photos.map((p,i)=>`<img src="${p.src}" alt="${esc(p.caption)}" width="${p.width}" height="${p.height}" decoding="async" class="${i===0?'is-active':''}" aria-hidden="${i!==0}">`).join('')}</div>
-      <div class="volunteer-slide-controls"><button type="button" data-slide="prev" aria-label="Previous photo">${ic('chevL')}</button><span data-slide-count>1 / 8</span><button type="button" data-slide="next" aria-label="Next photo">${ic('chevR')}</button><button type="button" data-slide="pause" aria-label="Pause slideshow" aria-pressed="false">Ⅱ</button></div>
-    </div></div>
+    ${photoSlideshow('volunteer-slideshow','Volunteer photo slideshow')}</div>
    <div class="grid grid-cols-2 gap-4 mt-8">
     ${[['clock','Flexible commitments','Weekdays, weekends or remote — every hour counts.'],['users','Choose your cause','Pick the initiative that speaks to you.'],['sparkle','Learn &amp; grow','Grassroots skills no classroom teaches.'],['heart','A community','Of doers who quickly feel like family.']].map((v,i)=>`<div class="card p-5 rv" style="--d:${i*80}ms">${ic(v[0],'w-6 h-6 text-ver')}<b class="block text-navy mt-2">${v[1]}</b><span class="text-sm text-ink/60">${v[2]}</span></div>`).join('')}</div>
    <div class="card p-6 mt-6 bg-white/70">${crn()}<p class="ph">[Editable placeholder] Add volunteer policy details — recognition, certificates, safety guidelines and expectations here.</p></div></div>
@@ -594,10 +590,17 @@ function viewVolunteer(){const ins=DB.data.initiatives, photos=DATA.defaults.pho
    <p class="text-xs text-ink/45 text-center mt-3">Applications appear instantly in the Admin &rarr; Volunteers dashboard.</p>
   </form></div></section>`;}
 
-let volunteerSlideTimer;
-function initVolunteerSlideshow() {
-  clearInterval(volunteerSlideTimer);
-  const root = $('#volunteer-slideshow');
+function photoSlideshow(id,label) {
+  const photos=DATA.defaults.photos.filter(p=>/^sjf-photo-[1-8]$/.test(p.id));
+  return `<div id="${id}" data-photo-slideshow data-motion-static role="region" aria-label="${label}">
+      <div class="volunteer-slides">${photos.map((p,i)=>`<img src="${p.src}" alt="${esc(p.caption)}" width="${p.width}" height="${p.height}" decoding="async" class="${i===0?'is-active':''}" aria-hidden="${i!==0}">`).join('')}</div>
+      <div class="volunteer-slide-controls"><button type="button" data-slide="prev" aria-label="Previous photo">${ic('chevL')}</button><span data-slide-count>1 / 8</span><button type="button" data-slide="next" aria-label="Next photo">${ic('chevR')}</button><button type="button" data-slide="pause" aria-label="Pause slideshow" aria-pressed="false">Ⅱ</button></div>
+    </div>`;
+}
+let photoSlideTimer;
+function initPhotoSlideshow() {
+  clearInterval(photoSlideTimer);
+  const root = $('[data-photo-slideshow]');
   if (!root) return;
   const slides = $$('.volunteer-slides img', root), pause = $('[data-slide="pause"]', root);
   let index = 0, paused = motionPreference.matches;
@@ -617,11 +620,11 @@ function initVolunteerSlideshow() {
     else if (action) step(action === 'next' ? 1 : -1);
   });
   syncPause();
-  volunteerSlideTimer = setInterval(() => {
+  photoSlideTimer = setInterval(() => {
     if (!paused && !document.hidden && !root.matches(':hover,:focus-within')) step(1);
   }, 4500);
 }
-window.addEventListener('pagehide', () => clearInterval(volunteerSlideTimer));
+window.addEventListener('pagehide', () => clearInterval(photoSlideTimer));
 
 /* ---------------- CONTACT ---------------- */
 function viewContact(){const s=DB.data.settings;
@@ -907,7 +910,7 @@ function render() {
   $$('form[data-form]').forEach(form => {
     const note = document.createElement('p'); note.className = 'demo-form-note'; note.textContent = 'Demo: saved in this browser only.'; form.appendChild(note);
   });
-  initCounters(); window.SJFLocale?.apply($('#app')); initReveal(); initHeroSketch(); initVolunteerSlideshow();
+  initCounters(); window.SJFLocale?.apply($('#app')); initReveal(); initHeroSketch(); initPhotoSlideshow();
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
   activeNav(name);
 }

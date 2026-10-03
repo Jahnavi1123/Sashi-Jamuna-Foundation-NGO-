@@ -33,7 +33,7 @@ async function run(){
     assert(!upgraded.some(p=>p.id==='sjf-photo-r4'),'Previously deleted photo stays deleted on upgrade');
     assert.equal(upgraded.filter(p=>/^sjf-photo-[1-8]$/.test(p.id)).length,8);
   } finally {data.window.close();}
-  for(const file of ['3.html','gallery.html','volunteer.html']) {
+  for(const file of ['3.html','gallery.html','volunteer.html','about.html']) {
     const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
     const dom=new JSDOM(fs.readFileSync(path.join(root,file),'utf8'),{url:'http://localhost/'+file,runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc});
     try {
@@ -46,8 +46,8 @@ async function run(){
       w.localStorage.setItem('sjf_language','en');
       await new Promise(resolve=>w.addEventListener('load',resolve,{once:true}));
       for(const s of d.querySelectorAll('script[src^="assets/"]'))w.eval(fs.readFileSync(path.join(root,s.getAttribute('src')),'utf8'));
-      if(file==='volunteer.html') {
-        const root=d.querySelector('#volunteer-slideshow');
+      if(file==='volunteer.html' || file==='about.html') {
+        const root=d.querySelector('[data-photo-slideshow]');
         assert.deepEqual([...root.querySelectorAll('img')].map(img=>img.getAttribute('src')),expected.slice(-8));
         const current=()=>root.querySelector('img.is-active').getAttribute('src');
         const tick=[...timers.values()].find(t=>t.delay===4500).callback;
@@ -82,6 +82,6 @@ async function run(){
       assert.deepEqual(errors,[]);
     } finally {dom.window.close();}
   }
-  console.log('PASS: 38 matched assets, six home previews, full gallery, volunteer slideshow controls/autoplay, lightbox navigation, legacy migration, preserved uploads and deletions.');
+  console.log('PASS: 38 matched assets, six home previews, full gallery, About/Volunteer slideshow controls/autoplay, lightbox navigation, legacy migration, preserved uploads and deletions.');
 }
 run().catch(e=>{console.error(e);process.exitCode=1;});
