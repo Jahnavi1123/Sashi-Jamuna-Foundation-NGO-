@@ -5,10 +5,11 @@ const {JSDOM, VirtualConsole} = require('jsdom');
 const root = path.resolve(__dirname, '..');
 
 (async () => {
+  for (const file of ['videos.html','3.html']) {
   const errors = [], virtualConsole = new VirtualConsole();
   virtualConsole.on('jsdomError', error => errors.push(error.message));
-  const dom = new JSDOM(fs.readFileSync(path.join(root,'videos.html'),'utf8'), {
-    url:'http://localhost/videos.html',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole
+  const dom = new JSDOM(fs.readFileSync(path.join(root,file),'utf8'), {
+    url:'http://localhost/'+file,runScripts:'outside-only',pretendToBeVisual:true,virtualConsole
   });
   const w = dom.window, d = w.document;
   try {
@@ -32,6 +33,27 @@ const root = path.resolve(__dirname, '..');
     for(const script of d.querySelectorAll('script[src^="assets/"]')) w.eval(fs.readFileSync(path.join(root,script.getAttribute('src')),'utf8'));
     const click = selector => { const el=d.querySelector(selector); assert(el,selector); el.click(); };
     const source = () => d.querySelector('#sjf-video-viewer video source').getAttribute('src');
+    if (file === '3.html') {
+      for (const network of ['Instagram','Facebook']) {
+        const feed = d.querySelector('[data-social-feed="'+network+'"]');
+        const buttons = [...feed.querySelectorAll('[data-act="play-video"]')];
+        assert.deepEqual(buttons.map(button=>button.dataset.id),[1,2,3,4,5,6].map(n=>'sjf-video-0'+n));
+        assert.equal(feed.querySelectorAll('video').length,0,'Feed videos load only on click');
+        buttons[0].click(); await Promise.resolve();
+        assert.equal(source(),'assets/videos/sjf-video-01.mp4');
+        assert.equal(d.querySelector('#sjf-video-viewer-count').textContent,'1 / 6');
+        click('[data-act="video-prev"]'); assert.equal(source(),'assets/videos/sjf-video-06.mp4');
+        click('[data-act="video-next"]'); assert.equal(source(),'assets/videos/sjf-video-01.mp4');
+        const player = d.querySelector('#sjf-video-viewer video');
+        click('[data-act="video-close"]');
+        assert.equal(player.dataset.released,'true');
+        assert.equal(d.activeElement,buttons[0]);
+      }
+      assert(d.querySelector('.hero-kids-frame video[autoplay][loop]'),'Hero video remains intact');
+      assert.deepEqual(errors,[]);
+      console.log('PASS: Instagram/Facebook videos 1-6, click-to-load, viewer navigation and close cleanup.');
+      continue;
+    }
     const trigger = d.querySelector('[data-act="play-video"][data-id="sjf-day-15"]');
     trigger.click(); await Promise.resolve(); await Promise.resolve();
     assert(d.querySelector('#sjf-video-viewer[open]'),'Full-viewport fallback opens when native fullscreen is blocked');
@@ -61,4 +83,5 @@ const root = path.resolve(__dirname, '..');
     assert.deepEqual(errors,[]);
     console.log('PASS: clicked video, previous/next and wraparound, keyboard, close cleanup/focus, fullscreen and fallback.');
   } finally { dom.window.close(); }
+  }
 })().catch(error=>{console.error(error);process.exitCode=1;});

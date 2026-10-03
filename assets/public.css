@@ -321,6 +321,9 @@ html.sjf-loading-visible [data-scroll-effect="hero-ink"],body:has(#sjf-language-
 .vframe img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82}
 .vframe iframe{width:100%;height:100%;border:0}
 .vframe.local-video img{object-fit:contain;opacity:1}
+[data-social-feed] .vframe{aspect-ratio:4/5;border-radius:.65rem}
+[data-social-feed] .playbtn{width:36px;height:36px;box-shadow:0 0 0 4px #fff8e740}
+[data-social-feed] .playbtn svg{width:18px;height:18px}
 .video-duration{position:absolute;right:12px;bottom:12px;padding:3px 8px;background:#0a2547e6;color:#fff8e7;border-radius:6px;font-size:12px;pointer-events:none}
 .home-video-row{width:100%;text-align:left;cursor:pointer}
 .home-video-row:hover{border-color:#164b8c}

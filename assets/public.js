@@ -259,18 +259,19 @@ function videoSection(){const stories=['sjf-day-13','sjf-day-15','sjf-day-16'].m
     <div class="sjf-story-rows">${rows}</div>
     <a href="#videos" class="btn btn-navy">${ic('play')} Watch All Videos</a>
   </div></div></section>`;}
-function socialWall(){const s=DB.data.settings;
+function socialVideos(){return DB.data.videos.filter(video=>/^sjf-video-0[1-6]$/.test(video.id)).sort((a,b)=>a.id.localeCompare(b.id));}
+function socialWall(){const s=DB.data.settings, videos=socialVideos().map(videoFrame).join('');
  const tile=(cls,icon,label)=>`<div class="rounded-xl border-2 border-dashed border-navy/20 ${cls} grid place-items-center py-7 text-navy/40">${icon}<span class="text-[10px] font-bold tracking-widest mt-1">${label}</span></div>`;
  const card=(brand,name,handle,url,cls,tiles)=>`<div class="card overflow-hidden rv">
    <div class="flex items-center gap-3 p-4 border-b-2 border-navy/10"><span class="w-11 h-11 rounded-xl grid place-items-center text-white ${cls}">${brand}</span>
    <div class="flex-1 min-w-0"><b class="text-navy">${name}</b><span class="block text-xs text-ink/50 truncate">${handle}</span></div>
    ${url?`<a href="${esc(url)}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">${ic('external','w-3.5 h-3.5')} Follow</a>`:`<button class="btn btn-ghost btn-sm" data-act="soc">${ic('plus','w-3.5 h-3.5')} Connect</button>`}</div>
-   <div class="grid grid-cols-3 gap-1.5 p-3">${tiles}</div>
+   <div class="grid grid-cols-3 gap-1.5 p-3" ${name==='YouTube'?'':'data-social-feed="'+name+'"'}>${tiles}</div>
    ${url?'':'<p class="text-center text-[11px] text-ink/45 pb-3 px-3">Paste your official links in Admin &rarr; Settings to activate feeds &amp; embeds.</p>'}</div>`;
  return `<section class="py-20 md:py-24"><div class="wrap">${secHead('Stay Connected','Follow the Journey','Daily moments from the field — pick your favourite window into our world.')}
   <div class="grid md:grid-cols-3 gap-6 mt-12">
-  ${card(BRAND.ig,'Instagram',s.instaUrl?'@'+new URL(s.instaUrl).pathname.split('/').filter(Boolean).pop():'@yourfoundation',s.instaUrl,'g-fire',Array(6).fill(tile('bg-gradient-to-br from-ver/5 to-gold/10',BRAND.ig,'FEED')).join(''))}
-  ${card(BRAND.fb,'Facebook',s.fbUrl?'Facebook Page':'/yourfoundation',s.fbUrl,'bg-[#1877F2]',Array(6).fill(tile('bg-[#1877F2]/5',BRAND.fb,'POST')).join(''))}
+  ${card(BRAND.ig,'Instagram',s.instaUrl?'@'+new URL(s.instaUrl).pathname.split('/').filter(Boolean).pop():'@yourfoundation',s.instaUrl,'g-fire',videos)}
+  ${card(BRAND.fb,'Facebook',s.fbUrl?'Facebook Page':'/yourfoundation',s.fbUrl,'bg-[#1877F2]',videos)}
   ${card(BRAND.yt,'YouTube',DB.data.videos.filter(v=>v.youtube).length?DB.data.videos.filter(v=>v.youtube).length+' YouTube videos':'YouTube Channel',s.ytUrl,'bg-[#CD201F]',Array(6).fill(tile('bg-[#CD201F]/5',BRAND.yt,'VIDEO')).join(''))}
   </div></div></section>`;}
 function viewHome(){const ins=DB.data.initiatives,gals=DB.data.gallery.slice(0,6),ups=DB.data.updates.slice(0,3);
@@ -471,8 +472,8 @@ function closeVideoViewer() {
   document.body.style.overflow = state.overflow;
   state.trigger?.focus({preventScroll:true});
 }
-function openVideoViewer(id,trigger) {
-  const items = galleryVideos(), index = items.findIndex(item => item.id === id);
+function openVideoViewer(id,trigger,items=galleryVideos()) {
+  const index = items.findIndex(item => item.id === id);
   if (index < 0) return;
   closeModal();
   videoViewer = {items,index,trigger,overflow:document.body.style.overflow,wasFullscreen:false};
@@ -939,6 +940,7 @@ document.addEventListener('click', e => {
       gfilter = el.dataset.cat; const grid = $('#g-grid'); if (grid) { grid.parentElement.innerHTML = galleryGrid(); initReveal(); } break;
     }
     case 'play-video': {
+      if (el.closest('[data-social-feed]')) { openVideoViewer(el.dataset.id,el,socialVideos()); break; }
       if (el.closest('#videos')) { openVideoViewer(el.dataset.id,el); break; }
       const v = DB.data.videos.find(v => v.id === el.dataset.id), frame = el.closest('.vframe') || $('#homeFeaturedVideo .vframe');
       if (v && frame) {
