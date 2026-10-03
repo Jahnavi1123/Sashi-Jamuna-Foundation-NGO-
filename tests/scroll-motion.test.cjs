@@ -66,7 +66,7 @@ async function check(file, reduced = false, observerAvailable = true) {
       assert.equal(inkTargets.length,8,'Headline, description and six slogan lines have repeatable ink reveals');
       assert(inkTargets.every(el=>el.dataset.scrollEffect==='hero-ink'),'Only hero text repeats on scroll');
       assert(inkTargets.every(el=>!el.classList.contains('sjf-sketch-part') && !el.closest('.sjf-sketch-part')),'Ink and sketch animations do not overlap');
-      assert(hero.querySelector('.sjf-hero-values-photo.sjf-sketch-part'));
+      assert(hero.querySelector('.sjf-hero-scrapbook.sjf-sketch-part .sjf-hero-values-photo'));
       assert(hero.querySelector('.hero-kids-frame.sjf-sketch-part video[autoplay][loop]'),'Sketch keeps continuous video');
       const done = new w.Event('animationend',{bubbles:true});
       Object.defineProperty(done,'animationName',{value:'sjf-hero-sketch'});

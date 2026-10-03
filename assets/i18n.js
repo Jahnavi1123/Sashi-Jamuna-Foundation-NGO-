@@ -46,6 +46,7 @@
     'A group portrait of children at the foundation':'फाउंडेशन के बच्चों की सामूहिक तस्वीर',
     'Guests on stage at the foundation recognition ceremony':'फाउंडेशन के सम्मान समारोह में मंच पर अतिथि',
     'Children enjoying a water park outing':'वॉटर पार्क में सैर का आनंद लेते बच्चे',
+    'Portrait with folded hands':'हाथ जोड़कर अभिवादन करता हुआ व्यक्ति',
     'Volunteers with supplies at a classroom gathering':'कक्षा के कार्यक्रम में सामग्री के साथ स्वयंसेवक',
     'Volunteers distributing supplies to children':'बच्चों को सामग्री बाँटते स्वयंसेवक',
     'Children gathered for a foundation learning programme':'फाउंडेशन के शिक्षण कार्यक्रम में एकत्र बच्चे',

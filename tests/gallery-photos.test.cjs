@@ -67,7 +67,7 @@ async function run(){
       const home=file==='3.html', visible=home?container.querySelector('.sjf-gallery-group'):container;
       assert.deepEqual([...visible.querySelectorAll('img')].map(img=>img.getAttribute('src')),home?expected.slice(0,6):expected,'Six home previews; complete gallery retained');
       if(home) {
-        assert.equal(d.querySelector('.sjf-hero-values-photo').getAttribute('src'),'assets/images/hero1.jpeg');
+        assert.equal(d.querySelector('.sjf-hero-scrapbook .sjf-hero-values-photo').getAttribute('src'),'assets/images/hero1a.jpeg');
         assert.equal(container.querySelectorAll('[aria-hidden="true"] button[tabindex="-1"]').length,6,'Loop copies are excluded from keyboard navigation');
       }
       const buttons=visible.querySelectorAll('[data-act="lb"]');

@@ -196,7 +196,7 @@ function heroSection(){const background = heroBackground(); return `<section id=
         <div><dt>EDUCATION</dt><dd>Knowledge creates opportunity.</dd></div>
         <div><dt>EMPOWERMENT</dt><dd>Every individual deserves a chance.</dd></div>
         <div><dt>PROGRESS</dt><dd>Together, we build a better tomorrow.</dd></div>
-      </dl><img class="sjf-hero-values-photo" src="assets/images/hero1.jpeg" width="1402" height="1122" alt="Children enjoying a water park outing" decoding="async"></div>
+      </dl><figure class="sjf-hero-scrapbook"><img class="sjf-hero-values-photo" src="assets/images/hero1a.jpeg" width="1024" height="1536" alt="Portrait with folded hands" decoding="async"></figure></div>
       <div class="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start rv" style="--d:240ms">
         <a href="#donate" class="btn btn-fire">${ic('heart')} Donate Now</a>
         <a href="#volunteer" class="btn btn-ghost">${ic('sparkle')} Become a Volunteer</a></div>
@@ -712,7 +712,7 @@ let heroSketchPlayed = false;
 function initHeroSketch() {
   const hero = $('#publicHero');
   if (!hero || heroSketchPlayed || motionPreference.matches) return;
-  const targets = $$('.hero-kids-frame,.sjf-home-hero-copy > .rv:not(h1):not([data-home-copy]),.sjf-hero-values-photo,.chip,.hero-fish-track > svg', hero);
+  const targets = $$('.hero-kids-frame,.sjf-home-hero-copy > .rv:not(h1):not([data-home-copy]),.sjf-hero-scrapbook,.chip,.hero-fish-track > svg', hero);
   hero.classList.add('sjf-hero-sketch');
   targets.forEach((el,i) => {
     el.classList.add('sjf-sketch-part');
