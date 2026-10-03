@@ -29,6 +29,17 @@ async function check(file, reduced = false, observerAvailable = true) {
     for(const script of d.querySelectorAll('script[src^="assets/"]')) {
       w.eval(fs.readFileSync(path.join(root,script.getAttribute('src')),'utf8'));
     }
+    const scrollToY = y => {
+      w.requestAnimationFrame = callback => { callback(); return 1; };
+      w.scrollY = y; w.dispatchEvent(new w.Event('scroll'));
+    };
+    scrollToY(160);
+    assert(!d.querySelector('#site-head').classList.contains('sjf-header-hidden'),'Down scroll shows menu');
+    scrollToY(80);
+    assert(d.querySelector('#site-head').classList.contains('sjf-header-hidden'),'Up scroll hides menu');
+    scrollToY(100);
+    assert(!d.querySelector('#site-head').classList.contains('sjf-header-hidden'),'Direction reversal shows menu again');
+    w.requestAnimationFrame = () => 1;
     if(reduced || !observerAvailable) {
       assert(!d.body.classList.contains('sjf-scroll-motion'),'Fallback never hides content');
       assert(d.querySelector('#main h1'),'Page content rendered');

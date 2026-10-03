@@ -192,11 +192,11 @@ function heroSection(){const background = heroBackground(); return `<section id=
       <span class="eyebrow rv">Sashi Jamuna Foundation</span>
       <h1 class="font-disp leading-[1.06] text-navy mt-4 rv" style="--d:80ms"><span data-home-copy="heroLead1">Rooted in</span> <span class="grad-fire" data-home-copy="heroAccent1">Culture</span>,<br><span data-home-copy="heroLead2">Empowering</span> <span class="grad-teal" data-home-copy="heroAccent2">Communities</span>.</h1>
       <p data-home-copy="heroDescription" class="mt-5 text-lg text-ink/75 max-w-xl mx-auto lg:mx-0 rv" style="--d:160ms">A community-led foundation creating spaces where children learn, grow and belong.</p>
-      <dl class="sjf-hero-slogans" aria-label="Foundation values">
+      <div class="sjf-hero-values"><dl class="sjf-hero-slogans" aria-label="Foundation values">
         <div><dt>EDUCATION</dt><dd>Knowledge creates opportunity.</dd></div>
         <div><dt>EMPOWERMENT</dt><dd>Every individual deserves a chance.</dd></div>
         <div><dt>PROGRESS</dt><dd>Together, we build a better tomorrow.</dd></div>
-      </dl>
+      </dl><img class="sjf-hero-values-photo" src="assets/images/hero1.jpeg" width="1402" height="1122" alt="Children enjoying a water park outing" decoding="async"></div>
       <div class="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start rv" style="--d:240ms">
         <a href="#donate" class="btn btn-fire">${ic('heart')} Donate Now</a>
         <a href="#volunteer" class="btn btn-ghost">${ic('sparkle')} Become a Volunteer</a></div>
@@ -273,7 +273,7 @@ function socialWall(){const s=DB.data.settings;
   ${card(BRAND.fb,'Facebook',s.fbUrl?'Facebook Page':'/yourfoundation',s.fbUrl,'bg-[#1877F2]',Array(6).fill(tile('bg-[#1877F2]/5',BRAND.fb,'POST')).join(''))}
   ${card(BRAND.yt,'YouTube',DB.data.videos.filter(v=>v.youtube).length?DB.data.videos.filter(v=>v.youtube).length+' YouTube videos':'YouTube Channel',s.ytUrl,'bg-[#CD201F]',Array(6).fill(tile('bg-[#CD201F]/5',BRAND.yt,'VIDEO')).join(''))}
   </div></div></section>`;}
-function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB.data.gallery,ups=DB.data.updates.slice(0,3);
+function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB.data.gallery.slice(0,6),ups=DB.data.updates.slice(0,3);
  return `<div id="publicHeroSlot">${heroSection()}</div>
  ${marquee()}
  ${videoSection()}
@@ -311,8 +311,8 @@ function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB
  ${statsBand()}
  <section class="py-20 md:py-24 bg-white/70"><div class="wrap">
    ${secHead('Moments &amp; Memories','From Our Gallery','Glimpses of the work, the people and the joy in between.')}
-   <div class="masonry mt-12" id="home-gallery">
-   ${gals.map((g,i)=>`<button class="g-item rv" data-act="lb" data-scope="home" data-idx="${i}" aria-label="Open photo: ${esc(g.title)}"><img src="${esc(g.src)}" alt="${esc(g.title)}" ${g.width && g.height ? `width="${g.width}" height="${g.height}"` : ''} loading="lazy" decoding="async"><span class="g-ov text-xs">${ic('image','w-4 h-4 mb-1')} View</span></button>`).join('')}
+   <div class="sjf-gallery-marquee mt-12" id="home-gallery" data-motion-static>
+     <div class="sjf-gallery-track">${[false,true].map(copy=>`<div class="sjf-gallery-group"${copy?' aria-hidden="true"':''}>${gals.map((g,i)=>`<button class="g-item" data-act="lb" data-scope="home" data-idx="${i}"${copy?' tabindex="-1"':''} aria-label="Open photo: ${esc(g.title)}"><img src="${esc(g.src)}" alt="${copy?'':esc(g.title)}" ${g.width && g.height ? `width="${g.width}" height="${g.height}"` : ''} loading="lazy" decoding="async"><span class="g-ov text-xs">${ic('image','w-4 h-4 mb-1')} View</span></button>`).join('')}</div>`).join('')}</div>
    </div>
    <div class="text-center mt-8 rv"><a href="#gallery" class="btn btn-ghost">${ic('camera')} View Full Gallery</a>
    </div>
@@ -951,11 +951,17 @@ window.addEventListener('storage',e => {
   if (!e.key || e.key.startsWith('sjf_')) render();
 });
 window.addEventListener('pageshow',e => { if (e.persisted) render(); });
-let scrollFrame = false;
+let scrollFrame = false, previousScrollY = Math.max(0, scrollY);
 window.addEventListener('scroll',() => {
   if (scrollFrame) return; scrollFrame = true;
   requestAnimationFrame(() => {
-    scrollFrame = false; $('#site-head').classList.toggle('scrolled',scrollY > 30);
+    scrollFrame = false;
+    const y = Math.max(0, scrollY), header = $('#site-head');
+    header.classList.toggle('scrolled', y > 30);
+    if (Math.abs(y - previousScrollY) >= 4 || y === 0) {
+      header.classList.toggle('sjf-header-hidden', y < previousScrollY);
+      previousScrollY = y;
+    }
     activeNav(currentPage());
   });
 },{passive:true});

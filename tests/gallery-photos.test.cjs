@@ -37,19 +37,24 @@ async function run(){
       await new Promise(resolve=>w.addEventListener('load',resolve,{once:true}));
       for(const s of d.querySelectorAll('script[src^="assets/"]'))w.eval(fs.readFileSync(path.join(root,s.getAttribute('src')),'utf8'));
       const container=d.querySelector(file==='3.html'?'#home-gallery':'#g-grid');
-      assert.deepEqual([...container.querySelectorAll('img')].map(img=>img.getAttribute('src')),expected,'All requested images render');
-      const buttons=container.querySelectorAll('[data-act="lb"]');
-      buttons[29].click();
-      assert.equal(d.querySelector('#modal-root img').getAttribute('src'),expected[29],'Last photo opens correctly');
-      d.querySelector('[data-act="lb-next"]').click();
-      assert.equal(d.querySelector('#modal-root img').getAttribute('src'),expected[0],'Viewer wraps all 30 photos');
+      const home=file==='3.html', visible=home?container.querySelector('.sjf-gallery-group'):container;
+      assert.deepEqual([...visible.querySelectorAll('img')].map(img=>img.getAttribute('src')),home?expected.slice(0,6):expected,'Six home previews; complete gallery retained');
+      if(home) {
+        assert.equal(d.querySelector('.sjf-hero-values-photo').getAttribute('src'),'assets/images/hero1.jpeg');
+        assert.equal(container.querySelectorAll('[aria-hidden="true"] button[tabindex="-1"]').length,6,'Loop copies are excluded from keyboard navigation');
+      }
+      const buttons=visible.querySelectorAll('[data-act="lb"]');
+      buttons[0].click();
+      assert.equal(d.querySelector('#modal-root img').getAttribute('src'),expected[0],'Preview opens correct photo');
       d.querySelector('[data-act="lb-prev"]').click();
-      assert.equal(d.querySelector('#modal-root img').getAttribute('src'),expected[29]);
+      assert.equal(d.querySelector('#modal-root img').getAttribute('src'),expected[29],'Viewer retains all 30 photos');
+      d.querySelector('[data-act="lb-next"]').click();
+      assert.equal(d.querySelector('#modal-root img').getAttribute('src'),expected[0],'Viewer wraps');
       d.querySelector('#modal-root button[data-act="modal-x"]').click();
       assert(!d.querySelector('#modal-root img'));
       assert.deepEqual(errors,[]);
     } finally {dom.window.close();}
   }
-  console.log('PASS: 30 matched assets, home/full gallery, lightbox navigation, legacy migration, preserved uploads and deletions.');
+  console.log('PASS: 30 matched assets, six home previews, full gallery, lightbox navigation, legacy migration, preserved uploads and deletions.');
 }
 run().catch(e=>{console.error(e);process.exitCode=1;});
