@@ -58,6 +58,14 @@ function sync(source, target) {
 
 (async () => {
   const pub = await page('3.html'), {w,d} = pub;
+  for (const [name,url] of [['Instagram','https://www.instagram.com/shashijamuna_foundation?stkn=MWFzanJ3dDJzYzdwdA=='],['Facebook','https://www.facebook.com/share/19m9F6RnY1/']]) {
+    check(d.querySelector('footer a[aria-label="'+name+'"]').href===url,name+' footer uses the supplied official link');
+    check([...d.querySelectorAll('#home a')].some(a=>a.href===url && a.textContent.includes('Follow')),name+' section links to the supplied profile');
+  }
+  check(d.querySelector('#home').textContent.includes('@shashijamuna_foundation') && !d.querySelector('#home').textContent.includes('stkn='),'Instagram label excludes sharing parameters');
+  const savedSocial = await page('contact.html',{sjf_settings:JSON.stringify({instagram:'[ @your-handle ]',facebook:'[ /your-page ]',address:'Saved office'})});
+  check(savedSocial.w.SJFData.read('settings').instagram===w.SJFData.defaults.settings.instagram && savedSocial.w.SJFData.read('settings').facebook===w.SJFData.defaults.settings.facebook,'Existing placeholder social settings use the official links');
+  check(savedSocial.w.SJFData.read('settings').address==='Saved office','Social link upgrade preserves other saved settings');
   check(d.querySelector('#publicHero h1').textContent.includes('Rooted in Culture'),'Public site uses the original 1.html headline');
   check(d.querySelector('#publicHero .grad-teal').textContent === 'Communities','Public site preserves original accent text');
   check(d.querySelector('#publicHero svg'),'Public hero has original Madhubani illustration');

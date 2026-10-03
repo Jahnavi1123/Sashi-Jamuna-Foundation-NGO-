@@ -266,10 +266,10 @@ function socialWall(){const s=DB.data.settings;
    <div class="flex-1 min-w-0"><b class="text-navy">${name}</b><span class="block text-xs text-ink/50 truncate">${handle}</span></div>
    ${url?`<a href="${esc(url)}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">${ic('external','w-3.5 h-3.5')} Follow</a>`:`<button class="btn btn-ghost btn-sm" data-act="soc">${ic('plus','w-3.5 h-3.5')} Connect</button>`}</div>
    <div class="grid grid-cols-3 gap-1.5 p-3">${tiles}</div>
-   <p class="text-center text-[11px] text-ink/45 pb-3 px-3">Paste your official links in Admin &rarr; Settings to activate feeds &amp; embeds.</p></div>`;
+   ${url?'':'<p class="text-center text-[11px] text-ink/45 pb-3 px-3">Paste your official links in Admin &rarr; Settings to activate feeds &amp; embeds.</p>'}</div>`;
  return `<section class="py-20 md:py-24"><div class="wrap">${secHead('Stay Connected','Follow the Journey','Daily moments from the field — pick your favourite window into our world.')}
   <div class="grid md:grid-cols-3 gap-6 mt-12">
-  ${card(BRAND.ig,'Instagram',s.instaUrl?'@'+s.instaUrl.split('/').filter(Boolean).pop():'@yourfoundation',s.instaUrl,'g-fire',Array(6).fill(tile('bg-gradient-to-br from-ver/5 to-gold/10',BRAND.ig,'FEED')).join(''))}
+  ${card(BRAND.ig,'Instagram',s.instaUrl?'@'+new URL(s.instaUrl).pathname.split('/').filter(Boolean).pop():'@yourfoundation',s.instaUrl,'g-fire',Array(6).fill(tile('bg-gradient-to-br from-ver/5 to-gold/10',BRAND.ig,'FEED')).join(''))}
   ${card(BRAND.fb,'Facebook',s.fbUrl?'Facebook Page':'/yourfoundation',s.fbUrl,'bg-[#1877F2]',Array(6).fill(tile('bg-[#1877F2]/5',BRAND.fb,'POST')).join(''))}
   ${card(BRAND.yt,'YouTube',DB.data.videos.filter(v=>v.youtube).length?DB.data.videos.filter(v=>v.youtube).length+' YouTube videos':'YouTube Channel',s.ytUrl,'bg-[#CD201F]',Array(6).fill(tile('bg-[#CD201F]/5',BRAND.yt,'VIDEO')).join(''))}
   </div></div></section>`;}

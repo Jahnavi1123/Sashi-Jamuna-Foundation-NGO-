@@ -4,8 +4,8 @@
     hero: {},
     settings: {
       address: 'Rosera, Bihar, India',
-      instagram: '[ @your-handle ]',
-      facebook: '[ /your-page ]',
+      instagram: 'https://www.instagram.com/shashijamuna_foundation?stkn=MWFzanJ3dDJzYzdwdA==',
+      facebook: 'https://www.facebook.com/share/19m9F6RnY1/',
       youtube: '[ @your-channel ]',
       razorpayKey: ''
     },
@@ -131,6 +131,11 @@
       try {
         const raw = localStorage.getItem('sjf_' + key);
         const value = raw ? JSON.parse(raw) : clone(defaults[key]);
+        if (key === 'settings') {
+          for (const network of ['instagram','facebook']) {
+            if (!value[network] || value[network].includes('[')) value[network] = defaults.settings[network];
+          }
+        }
         const records = key === 'videos' ? importVideos(value) : key === 'photos' ? importPhotos(value) : value;
         // Retired art content must not reappear from an older browser's saved data.
         if (['initiatives','updates','photos','videos'].includes(key) && Array.isArray(records)) {
