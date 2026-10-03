@@ -21,5 +21,6 @@
 .brand-sashi { color:#F15A24; }
 .brand-jamuna { color:#164B8C; }
 .brand-foundation { display:block; margin-top:.16em; color:#168642; font-family:Poppins,Mukta,sans-serif; font-size:.48em; font-weight:800; letter-spacing:.34em; text-transform:uppercase; }
+#site-head .brand-foundation, #navShell .brand-foundation { margin-top:.03em; line-height:1; }
 .g-navy .brand-jamuna, .reference-footer .brand-jamuna { color:#77B2FF; }
 .g-navy .brand-foundation, .reference-footer .brand-foundation { color:#58D17D; }
