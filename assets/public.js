@@ -663,7 +663,7 @@ const DB = {data:null,load() {
   };
 }};
 
-const ANNOUNCEMENTS = ['◆ Together we nurture roots and reach skies.','◆ Empowering Bihar, preserving heritage.','◆ Madhubani art — our living tradition.','◆ Volunteer with Sashi Jamuna Foundation today.'];
+const ANNOUNCEMENTS = ['◆ Empowering Bihar — Preserving Innocence.','◆ Together we nurture roots and reach skies.','◆ Join us with a donation of Rs. 11/- only.'];
 let paused = false;
 function announcement() {
   const group = '<div class="announcement-group">' + ANNOUNCEMENTS.map(t => '<span>' + t + '</span>').join('') + '</div>';
