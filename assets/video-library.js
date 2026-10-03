@@ -1,12 +1,39 @@
 /* Generated from supplied SJF videos; no video bytes go into browser storage. */
 window.SJFVideoLibrary = [
   {
+    "id": "sjf-day-11",
+    "title": "SJF — Day 11",
+    "desc": "A video from Sashi Jamuna Foundation.",
+    "src": "assets/videos/sjf-day-11.mp4",
+    "poster": "assets/images/video-posters/sjf-day-11.jpg",
+    "duration": 91.21,
+    "youtube": ""
+  },
+  {
+    "id": "sjf-day-12",
+    "title": "SJF — Day 12",
+    "desc": "A video from Sashi Jamuna Foundation.",
+    "src": "assets/videos/sjf-day-12.mp4",
+    "poster": "assets/images/video-posters/sjf-day-12.jpg",
+    "duration": 84.12,
+    "youtube": ""
+  },
+  {
     "id": "sjf-day-13",
     "title": "SJF — Day 13",
     "desc": "A video from Sashi Jamuna Foundation.",
     "src": "assets/videos/sjf-day-13.mp4",
     "poster": "assets/images/video-posters/sjf-day-13.jpg",
     "duration": 28.07,
+    "youtube": ""
+  },
+  {
+    "id": "sjf-day-14",
+    "title": "SJF — Day 14",
+    "desc": "A video from Sashi Jamuna Foundation.",
+    "src": "assets/videos/sjf-day-14.mp4",
+    "poster": "assets/images/video-posters/sjf-day-14.jpg",
+    "duration": 152.0,
     "youtube": ""
   },
   {
@@ -34,6 +61,15 @@ window.SJFVideoLibrary = [
     "src": "assets/videos/sjf-day-17.mp4",
     "poster": "assets/images/video-posters/sjf-day-17.jpg",
     "duration": 42.68,
+    "youtube": ""
+  },
+  {
+    "id": "sjf-day-19",
+    "title": "SJF — Day 19",
+    "desc": "A video from Sashi Jamuna Foundation.",
+    "src": "assets/videos/sjf-day-19.mp4",
+    "poster": "assets/images/video-posters/sjf-day-19.jpg",
+    "duration": 34.92,
     "youtube": ""
   },
   {
@@ -223,6 +259,15 @@ window.SJFVideoLibrary = [
     "src": "assets/videos/sjf-video-21.mp4",
     "poster": "assets/images/video-posters/sjf-video-21.jpg",
     "duration": 14.5,
+    "youtube": ""
+  },
+  {
+    "id": "sjf-video-1003",
+    "title": "1003.mp4",
+    "desc": "A video from Sashi Jamuna Foundation.",
+    "src": "assets/videos/1003.mp4",
+    "poster": "assets/images/video-posters/1003.jpg",
+    "duration": 10.01,
     "youtube": ""
   }
 ];

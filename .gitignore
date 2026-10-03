@@ -1,4 +1,5 @@
 node_modules/
+.tmp/
 __pycache__/
 # Keep the full-size source footage local; the site uses optimized assets/videos copies.
 sjf videos/

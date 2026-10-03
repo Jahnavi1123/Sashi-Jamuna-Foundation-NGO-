@@ -200,35 +200,6 @@
 #footerRoot .pat-dark{position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23FFF8E7' stroke-width='1.5' opacity='.06'%3E%3Cg transform='translate(58 66)'%3E%3Cpath d='M0 0C-9-11-9-26 0-35C9-26 9-11 0 0Z'/%3E%3Cpath d='M0 0C-9-11-9-26 0-35C9-26 9-11 0 0Z' transform='rotate(-32)'/%3E%3Cpath d='M0 0C-9-11-9-26 0-35C9-26 9-11 0 0Z' transform='rotate(32)'/%3E%3C/g%3E%3Cg transform='translate(86 128) rotate(-14)'%3E%3Cpath d='M6 32Q30 8 66 20Q78 24 80 32Q78 40 66 44Q30 56 6 32Z'/%3E%3Cpath d='M78 28L108 12L99 32L108 52L78 36Z'/%3E%3C/g%3E%3Cpath d='M40 170l8 8-8 8-8-8z'/%3E%3C/g%3E%3Cg fill='%23FFF8E7' opacity='.1'%3E%3Ccircle cx='128' cy='40' r='2.6'/%3E%3Ccircle cx='140' cy='46' r='2.6'/%3E%3Ccircle cx='134' cy='30' r='2.6'/%3E%3C/g%3E%3C/svg%3E")}
 
 /* One continuous website, with the demo portal as its own view. */
-/* Hero editor choices stay inside the admin interface. */
-.hero-layout-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; margin-top: 28px; }
-.hero-layout-options legend { margin-bottom: 12px; }
-.hero-layout-choice { position: relative; display: block; cursor: pointer; min-width: 0; }
-.hero-layout-choice > input { position: absolute; top: 12px; right: 12px; width: 18px; height: 18px; accent-color: #164b8c; z-index: 1; }
-.hero-choice-body { display: flex; flex-direction: column; gap: 5px; padding: 10px 10px 16px; border: 2px solid #164b8c26; border-radius: 18px; color: #164b8c; background: #fff; }
-.hero-layout-choice input:checked + .hero-choice-body { border-color: #164b8c; box-shadow: 0 0 0 3px #164b8c15; }
-.hero-layout-choice input:focus-visible + .hero-choice-body { outline: 3px solid #168a45; outline-offset: 3px; }
-.hero-choice-body > strong,.hero-choice-body > span:last-child { padding-inline: 7px; }
-.hero-choice-body > strong { font-size: 15px; margin-top: 6px; }
-.hero-choice-body > span:last-child { font-size: 12px; color: #12203a99; }
-.hero-choice-picture { display: flex; align-items: center; gap: 10px; padding: 32px 16px; border-radius: 10px; min-height: 160px; overflow: hidden; }
-.hero-choice-cream { background: #fff8e7; color: #164b8c; }
-.hero-choice-blue { background: radial-gradient(ellipse at top left,#804a41,transparent 70%),#0b2c57; color: #fff8e7; }
-.hero-choice-heritage { justify-content:space-between; background:linear-gradient(135deg,#0a2547,#164b8c); color:#fff8e7; }
-.hero-choice-heritage i { display:grid;place-items:center;width:54px;height:54px;border:2px dashed #ff9933;border-radius:50%;color:#ff9933;font-style:normal;font-size:28px;animation:spin 14s linear infinite; }
-.hero-choice-heritage b { color:#ff9933; }
-.hero-choice-community { position:relative;align-items:flex-end;background:linear-gradient(90deg,rgba(10,37,71,.88),rgba(10,37,71,.18)),url('images/video-posters/sjf-video-01.jpg') center/cover; color:#fff8e7; }
-.hero-choice-community b { color:#ff9933; }
-.hero-choice-copy { flex: 1; font: 700 clamp(16px,2vw,24px)/1.15 Georgia,serif; }
-.hero-choice-cream b { color: #f15a24; }
-.hero-choice-blue b { color: #ff8a00; }
-.hero-choice-picture svg { width: 34%; min-width: 56px; flex: none; }
-.hero-choice-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; width: 34%; min-width: 56px; transform: rotate(-5deg); }
-.hero-choice-tiles i { font-style: normal; display: grid; place-items: center; color: #fff8e7; background: #164b8c; border: 1px solid #168a45; border-radius: 5px; aspect-ratio: 1; font-size: 24px; }
-.hero-choice-tiles i:nth-child(2) { background: #f15a24; }
-.hero-choice-tiles i:nth-child(3) { background: #ff8a00; }
-.hero-choice-tiles i:nth-child(4) { background: #168642; }
-@media (max-width: 600px) { .hero-layout-options { grid-template-columns: 1fr; } }
 :root { --header-height: 122px; }
 .page { scroll-margin-top: var(--header-height); outline: none; }
 .page[tabindex="-1"]:focus { outline: none; }

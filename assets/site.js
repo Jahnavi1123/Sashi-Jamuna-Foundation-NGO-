@@ -242,301 +242,6 @@
   /* ------------------------------------------------------------------
      6. RENDERERS
      ------------------------------------------------------------------ */
-  function initiativeCard(item, compact) {
-    return '<article class="card p-6 reveal">' +
-      '<span class="card-topline"></span>' +
-      '<div class="flex items-start justify-between gap-4">' +
-        '<span class="w-12 h-12 rounded-2xl flex items-center justify-center text-white shrink-0" ' +
-          'style="background:linear-gradient(135deg,#164B8C,#F15A24)">' + icon(item.icon, 22, '#FFF8E7') + '</span>' +
-        '<span class="chip chip-gold !text-[.66rem]">' + escapeHtml(item.tag) + '</span>' +
-      '</div>' +
-      '<h3 class="font-display text-xl font-bold text-deep mt-5">' + escapeHtml(item.title) + '</h3>' +
-      '<p class="text-ink/65 text-[.87rem] mt-2.5 leading-relaxed">' + escapeHtml(item.desc) + '</p>' +
-      (compact ? '' : '<p class="mt-4 text-[.72rem] text-magenta/70 italic">Impact: ' + escapeHtml(item.stat) + '</p>') +
-      '<a href="#donate" class="inline-flex items-center gap-2 text-royal font-semibold text-[.82rem] mt-5 hover:gap-3 transition-all">' +
-        'Support this initiative ' + icon('arrow', 14) + '</a>' +
-      '</article>';
-  }
-
-  function renderInitiatives() {
-    var list = get('initiatives');
-    var grid = $('#homeInitiatives');
-    if (grid) grid.innerHTML = list.slice(0, 6).map(function (i) { return initiativeCard(i, false); }).join('');
-
-    var all = $('#allInitiatives');
-    if (all) {
-      all.innerHTML = list.map(function (item, idx) {
-        var reverse = idx % 2 === 1;
-        return '<article class="grid lg:grid-cols-2 gap-8 items-center rounded-3xl bg-white border border-royal/10 p-6 sm:p-8 shadow-soft reveal ' +
-          (reverse ? 'lg:[&>*:first-child]:order-2' : '') + '">' +
-          '<div class="art-frame h-60 sm:h-72">' + artSVG(idx + 3, item.title) + '</div>' +
-          '<div>' +
-            '<span class="chip chip-magenta">' + escapeHtml(item.tag) + '</span>' +
-            '<h3 class="font-display text-2xl sm:text-3xl font-bold text-deep mt-4">' + escapeHtml(item.title) + '</h3>' +
-            '<p class="text-ink/70 mt-4 leading-relaxed text-[.92rem]">' + escapeHtml(item.desc) + '</p>' +
-            '<div class="flex flex-wrap gap-3 mt-6">' +
-              '<span class="chip chip-soft">Impact: ' + escapeHtml(item.stat) + '</span>' +
-              '<span class="chip chip-teal">Ongoing programme</span>' +
-            '</div>' +
-            '<div class="flex flex-wrap gap-3 mt-6">' +
-              '<a href="#donate" class="btn btn-primary !py-2.5 !px-5 !text-[.85rem]">Support</a>' +
-              '<a href="#volunteer" class="btn btn-outline !py-2.5 !px-5 !text-[.85rem]">Volunteer</a>' +
-            '</div>' +
-          '</div>' +
-        '</article>';
-      }).join('');
-    }
-  }
-
-  function renderStats() {
-    var stats = [
-      { label: 'Villages Reached',     icon: 'leaf',  value: null },
-      { label: 'Lives Impacted',       icon: 'users', value: null },
-      { label: 'Programmes Running',   icon: 'book',  value: null },
-      { label: 'Active Volunteers',    icon: 'heart', value: null }
-    ];
-    var savedStats = get('settings').impact || [];
-    stats.forEach(function (s, i) { s.value = savedStats[i] == null ? '' : String(savedStats[i]); });
-    var wrap = $('#homeStats');
-    if (!wrap) return;
-    wrap.innerHTML = stats.map(function (s) {
-      return '<div class="reveal rounded-2xl bg-cream/8 border border-cream/15 backdrop-blur p-6 text-center hover:bg-cream/12 transition">' +
-        '<div class="w-12 h-12 mx-auto rounded-2xl flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(22,138,69,.28),rgba(241,90,36,.28))">' +
-          icon(s.icon, 22, '#168A45') + '</div>' +
-        '<p class="font-display text-4xl sm:text-5xl font-bold text-gold leading-none">' + escapeHtml(s.value || '—') + '</p>' +
-        '<p class="text-cream/85 text-[.82rem] font-medium mt-3">' + s.label + '</p>' +
-        '<p class="text-cream/40 text-[.66rem] mt-1.5">' + (s.value ? 'Foundation impact' : 'Awaiting verified data') + '</p>' +
-      '</div>';
-    }).join('');
-  }
-
-  function renderVideos() {
-    var list = get('videos').map(window.SJFMedia.normalize).filter(Boolean);
-
-    function card(v, i) {
-      var thumb = '<img src="' + escapeAttr(window.SJFMedia.poster(v)) + '" alt="' + escapeAttr(v.title) + '" loading="lazy" class="w-full h-full object-contain bg-deep">';
-      return '<article class="card overflow-hidden reveal cursor-pointer group video-card" data-video="' + escapeAttr(v.id) + '">' +
-        '<div class="relative h-48 sm:h-52 overflow-hidden">' + thumb +
-          '<div class="absolute inset-0 bg-gradient-to-t from-deep/80 via-deep/10 to-transparent"></div>' +
-          '<div class="absolute inset-0 flex items-center justify-center">' +
-            '<span class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-gradient-to-br group-hover:from-saffron group-hover:to-magenta flex items-center justify-center transition-all duration-300 group-hover:scale-110">' +
-              icon('play', 20, '#164B8C') + '</span>' +
-          '</div>' +
-          '<span class="absolute bottom-3 left-4 chip bg-cream/20 backdrop-blur text-cream !text-[.64rem]">' +
-            (v.youtube ? 'YouTube' : 'SJF Video') + '</span>' +
-        '</div>' +
-        '<div class="p-5">' +
-          '<h3 class="font-display text-lg font-bold text-deep leading-snug">' + escapeHtml(v.title) + '</h3>' +
-          '<p class="text-ink/60 text-[.83rem] mt-2 line-clamp-2">' + escapeHtml(v.desc) + '</p>' +
-        '</div>' +
-      '</article>';
-    }
-
-    var hv = $('#homeVideos');
-    if (hv) hv.innerHTML = list.slice(0, 3).map(function (v, i) { return card(v, i); }).join('');
-    var av = $('#videosGrid');
-    if (av) av.innerHTML = list.map(function (v, i) { return card(v, i); }).join('');
-  }
-
-  function renderGalleryPage(filter) {
-    var list = get('photos');
-    var grid = $('#galleryGrid');
-    if (!grid) return;
-    var items = (filter && filter !== 'all')
-      ? list.filter(function (p) { return p.cat === filter; })
-      : list;
-
-    if (!items.length) {
-      grid.innerHTML = '<p class="col-span-full text-center text-ink/50 py-10">No media in this category yet.</p>';
-      return;
-    }
-
-    grid.innerHTML = items.map(function (p) {
-      return '<button type="button" class="art-tile group relative text-left w-full aspect-[4/5] border border-royal/10 shadow-soft hover:shadow-card transition-shadow gallery-item" ' +
-        'data-full="' + escapeAttr(p.id) + '">' +
-        artThumb(p, 'w-full h-full object-cover') +
-        '<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/90 to-transparent p-3 pt-8">' +
-          '<span class="block text-cream text-[.76rem] font-medium leading-snug">' + escapeHtml(p.caption) + '</span>' +
-          '<span class="block text-gold/90 text-[.62rem] uppercase tracking-wider mt-1">' + escapeHtml(p.cat) + '</span>' +
-        '</span>' +
-      '</button>';
-    }).join('');
-  }
-
-  function renderHomeGallery() {
-    var list = get('photos');
-    var grid = $('#homeGallery');
-    if (!grid) return;
-    grid.innerHTML = list.slice(0, 8).map(function (p, i) {
-      var span = (i === 0 || i === 5) ? 'sm:col-span-1' : '';
-      return '<button type="button" class="art-tile group relative text-left w-full aspect-square border border-royal/10 shadow-soft hover:shadow-card transition-shadow ' + span + ' gallery-item" ' +
-        'data-full="' + escapeAttr(p.id) + '">' +
-        artThumb(p, 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-700') +
-        '<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/85 to-transparent p-2.5 pt-7 opacity-0 group-hover:opacity-100 transition-opacity">' +
-          '<span class="block text-cream text-[.7rem] leading-snug line-clamp-2">' + escapeHtml(p.caption) + '</span>' +
-        '</span>' +
-      '</button>';
-    }).join('');
-  }
-
-  function renderUpdates() {
-    var list = get('updates');
-    var nl = $('#newsList');
-    if (nl) {
-      nl.innerHTML = list.map(function (u, i) {
-        return '<article class="card p-6 reveal">' +
-          '<span class="card-topline"></span>' +
-          '<div class="flex flex-wrap items-center gap-3">' +
-            '<span class="chip chip-soft">' + escapeHtml(u.cat || 'Update') + '</span>' +
-            '<span class="text-[.74rem] text-ink/50">' + escapeHtml(formatDate(u.date)) + '</span>' +
-            '<span class="chip chip-gold !text-[.64rem]">Editable</span>' +
-          '</div>' +
-          '<h3 class="font-display text-xl font-bold text-deep mt-4">' + escapeHtml(u.title) + '</h3>' +
-          '<p class="text-ink/65 text-[.88rem] mt-2.5 leading-relaxed">' + escapeHtml(u.body) + '</p>' +
-        '</article>';
-      }).join('');
-    }
-
-    // home preview of 3 updates if a container exists
-    var hp = $('#homeUpdates');
-    if (hp) {
-      hp.innerHTML = list.slice(0, 3).map(function (u) {
-        return '<article class="card p-6 reveal"><span class="card-topline"></span>' +
-          '<span class="chip chip-soft">' + escapeHtml(u.cat) + '</span>' +
-          '<h3 class="font-display text-lg font-bold text-deep mt-3">' + escapeHtml(u.title) + '</h3>' +
-          '<p class="text-ink/60 text-[.85rem] mt-2 line-clamp-3">' + escapeHtml(u.body) + '</p></article>';
-      }).join('');
-    }
-
-    var cats = {};
-    list.forEach(function (u) { cats[u.cat] = (cats[u.cat] || 0) + 1; });
-    var cc = $('#newsCategories');
-    if (cc) {
-      cc.innerHTML = Object.keys(cats).map(function (c) {
-        return '<span class="chip chip-soft">' + escapeHtml(c) + ' <span class="opacity-60">' + cats[c] + '</span></span>';
-      }).join('');
-    }
-  }
-
-  function renderSocialFeeds() {
-    var s = get('settings');
-    $$('[data-social-handle]').forEach(function (el) {
-      var key = el.getAttribute('data-social-handle');
-      if (s[key]) el.textContent = s[key];
-    });
-
-    var ig = $('[data-feed="instagram"]');
-    if (ig) {
-      ig.innerHTML = Array.from({ length: 9 }).map(function (_, i) {
-        return '<div class="aspect-square art-tile">' + artSVG(i + 4, 'Instagram placeholder tile') + '</div>';
-      }).join('');
-    }
-    var fb = $('[data-feed="facebook"]');
-    if (fb) {
-      fb.innerHTML = Array.from({ length: 3 }).map(function (_, i) {
-        return '<div class="flex gap-3 items-center rounded-xl border border-royal/10 p-2.5">' +
-          '<div class="w-14 h-14 rounded-lg overflow-hidden shrink-0 art-tile">' + artSVG(i + 7, 'Facebook placeholder') + '</div>' +
-          '<div class="min-w-0"><div class="h-2.5 w-3/4 bg-royal/12 rounded-full"></div>' +
-          '<div class="h-2.5 w-1/2 bg-royal/8 rounded-full mt-2"></div></div></div>';
-      }).join('');
-    }
-    var yt = $('[data-feed="youtube"]');
-    if (yt) {
-      yt.innerHTML = Array.from({ length: 3 }).map(function (_, i) {
-        return '<div class="flex gap-3 items-center rounded-xl border border-royal/10 p-2.5">' +
-          '<div class="w-20 h-12 rounded-lg overflow-hidden shrink-0 art-tile">' + artSVG(i + 9, 'YouTube placeholder') + '</div>' +
-          '<div class="min-w-0 flex-1"><div class="h-2.5 w-full bg-royal/12 rounded-full"></div>' +
-          '<div class="h-2.5 w-2/3 bg-royal/8 rounded-full mt-2"></div></div></div>';
-      }).join('');
-    }
-  }
-
-  function renderAboutExtras() {
-    var values = [
-      { t: 'Dignity', d: 'Every person we serve is treated with respect, agency and voice.', c: 'from-royal to-royalLight' },
-      { t: 'Transparency', d: 'Open books, documented outcomes and honest reporting.', c: 'from-saffron to-magenta' },
-      { t: 'Community First', d: 'Programmes designed with the community, never imposed on it.', c: 'from-teal to-leaf' },
-      { t: 'Cultural Pride', d: 'Celebrating and preserving Bihar\u2019s Madhubani heritage.', c: 'from-gold to-saffron' }
-    ];
-    var vg = $('#valuesGrid');
-    if (vg) {
-      vg.innerHTML = values.map(function (v) {
-        return '<div class="rounded-2xl bg-white border border-royal/10 p-5 hover:shadow-soft transition">' +
-          '<span class="block w-9 h-9 rounded-xl bg-gradient-to-br ' + v.c + ' mb-3"></span>' +
-          '<h4 class="font-semibold text-deep text-[.95rem]">' + v.t + '</h4>' +
-          '<p class="text-ink/60 text-[.82rem] mt-1.5">' + v.d + '</p></div>';
-      }).join('');
-    }
-
-    var milestones = [
-      { y: '[YYYY]', t: 'Foundation established', d: '[Editable placeholder — describe the founding milestone.]' },
-      { y: '[YYYY]', t: 'First programme launched', d: '[Editable placeholder — describe the first programme.]' },
-      { y: '[YYYY]', t: 'Partnerships expanded', d: '[Editable placeholder — describe collaborations.]' },
-      { y: '[YYYY]', t: 'Today', d: '[Editable placeholder — describe where the foundation stands today.]' }
-    ];
-    var tl = $('#timeline');
-    if (tl) {
-      tl.innerHTML = '<div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-saffron via-magenta to-royal rounded-full"></div>' +
-        milestones.map(function (m, i) {
-          var right = i % 2 === 0;
-          return '<div class="relative pl-12 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-10 mb-10 reveal">' +
-            (right ? '' : '<div class="hidden sm:block"></div>') +
-            '<div class="' + (right ? 'sm:text-right sm:pr-4' : 'sm:order-2 sm:pl-4') + '">' +
-              '<span class="chip chip-gold">' + m.y + '</span>' +
-              '<h3 class="font-display text-lg font-bold text-deep mt-3">' + m.t + '</h3>' +
-              '<p class="text-ink/60 text-[.85rem] mt-1.5">' + m.d + '</p>' +
-            '</div>' +
-            (right ? '<div class="hidden sm:block"></div>' : '') +
-            '<span class="absolute left-[9px] sm:left-1/2 sm:-translate-x-1/2 top-1.5 w-4 h-4 rounded-full bg-cream border-[3px] border-magenta"></span>' +
-          '</div>';
-        }).join('');
-    }
-
-    var team = [
-      { n: '[Name]', r: 'Founder & Chairperson' },
-      { n: '[Name]', r: 'Managing Trustee' },
-      { n: '[Name]', r: 'Programme Director' },
-      { n: '[Name]', r: 'Field Coordinator' }
-    ];
-    var tg = $('#teamGrid');
-    if (tg) {
-      tg.innerHTML = team.map(function (t, i) {
-        return '<div class="text-center reveal">' +
-          '<div class="art-frame aspect-square mx-auto mb-4">' + artSVG(i + 2, 'Team member placeholder') + '</div>' +
-          '<h4 class="font-semibold text-deep text-[.9rem]">' + t.n + '</h4>' +
-          '<p class="text-ink/50 text-[.76rem] mt-0.5">' + t.r + '</p></div>';
-      }).join('');
-    }
-
-    var steps = [
-      { n: '01', t: 'Listen', d: 'We begin with community meetings to understand real needs.' },
-      { n: '02', t: 'Design', d: 'Programmes are co-designed with local leaders and volunteers.' },
-      { n: '03', t: 'Deliver', d: 'Field teams implement with measurable milestones and reporting.' },
-      { n: '04', t: 'Review', d: 'Outcomes are reviewed openly and published for accountability.' }
-    ];
-    var hw = $('#howWeWork');
-    if (hw) {
-      hw.innerHTML = steps.map(function (s) {
-        return '<div class="card p-6 reveal"><span class="card-topline"></span>' +
-          '<span class="font-display text-3xl font-bold grad-text-blue">' + s.n + '</span>' +
-          '<h3 class="font-display text-lg font-bold text-deep mt-3">' + s.t + '</h3>' +
-          '<p class="text-ink/60 text-[.85rem] mt-2">' + s.d + '</p></div>';
-      }).join('');
-    }
-  }
-
-  /* ------------------------------------------------------------------
-     7. ART PLACEHOLDERS INTO THE DOM
-     ------------------------------------------------------------------ */
-  function paintArtFrames() {
-    $$('[data-art]').forEach(function (el) {
-      if (el.dataset.painted === '1') return;
-      var i = parseInt(el.getAttribute('data-art'), 10) || 0;
-      el.innerHTML = artSVG(i, el.getAttribute('data-label') || 'Madhubani inspired artwork');
-      el.dataset.painted = '1';
-    });
-  }
-
   /* ------------------------------------------------------------------
      8. ROUTER
      ------------------------------------------------------------------ */
@@ -978,11 +683,6 @@
   /* ------------------------------------------------------------------
      13. RAZORPAY
      ------------------------------------------------------------------ */
-  function getRazorpayKey() {
-    var s = get('settings');
-    return (s.razorpayKey || '').trim();
-  }
-
   function updateRazorpayStatus() {
     var el = $('#razorpayStatusText');
     if (el) el.textContent = 'Demo mode — no payments are processed.';
@@ -993,18 +693,8 @@
      ------------------------------------------------------------------ */
   function init() {
     renderReferenceFooter();
-    applyHomeSettings();
     initSinglePage();
 
-    paintArtFrames();
-    renderInitiatives();
-    renderStats();
-    renderVideos();
-    renderGalleryPage('all');
-    renderHomeGallery();
-    renderUpdates();
-    renderSocialFeeds();
-    renderAboutExtras();
     updateRazorpayStatus();
     observeReveals();
 
@@ -1013,9 +703,7 @@
 
     window.addEventListener('hashchange', function () {
       showPage(currentHash(), false);
-      paintArtFrames();
       // re-paint any newly visible page content
-      setTimeout(paintArtFrames, 40);
       setTimeout(observeReveals, 60);
     });
 
@@ -1050,40 +738,8 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    // Gallery filter
-    var filterWrap = $('#galleryFilters');
-    if (filterWrap) {
-      filterWrap.addEventListener('click', function (e) {
-        var btn = e.target.closest('.gallery-filter');
-        if (!btn) return;
-        $$('.gallery-filter').forEach(function (b) {
-          b.classList.remove('btn-blue', 'active');
-          b.classList.add('btn-outline');
-        });
-        btn.classList.remove('btn-outline');
-        btn.classList.add('btn-blue', 'active');
-        renderGalleryPage(btn.getAttribute('data-filter'));
-      });
-    }
-
     // Lightbox (delegated)
     document.addEventListener('click', function (e) {
-      var item = e.target.closest('.gallery-item');
-      if (item) {
-        var id = item.getAttribute('data-full');
-        var list = get('photos');
-        var p = list.filter(function (x) { return x.id === id; })[0];
-        if (!p) return;
-        var media = p.src
-          ? '<img src="' + escapeAttr(safeImageURL(p.src)) + '" alt="' + escapeAttr(p.caption) + '" class="w-full max-h-[70vh] object-contain bg-deep">'
-          : '<div class="w-full aspect-[4/3]">' + artSVG(p.art == null ? 0 : p.art, p.caption) + '</div>';
-        openModal(media +
-          '<div class="p-6"><span class="chip chip-soft">' + escapeHtml(p.cat) + '</span>' +
-          '<h3 class="font-display text-xl font-bold text-deep mt-3">' + escapeHtml(p.caption) + '</h3>' +
-          '<p class="text-ink/50 text-[.78rem] mt-2">Placeholder media — replace with a real photograph from the admin dashboard.</p></div>');
-        return;
-      }
-
       var vcard = e.target.closest('.video-card');
       if (vcard) {
         var vid = vcard.getAttribute('data-video');
@@ -1097,126 +753,6 @@
         return;
       }
     });
-
-    // Donation amount chips
-    var amountChips = $('#amountChips');
-    var selectedAmount = 1000;
-    if (amountChips) {
-      amountChips.addEventListener('click', function (e) {
-        var chip = e.target.closest('.amount-chip');
-        if (!chip) return;
-        $$('.amount-chip').forEach(function (c) { c.classList.remove('selected'); });
-        chip.classList.add('selected');
-        var val = chip.getAttribute('data-amount');
-        if (val === 'custom') {
-          $('#customAmountWrap').classList.remove('hidden');
-          $('#customAmount').focus();
-          selectedAmount = 0;
-        } else {
-          $('#customAmountWrap').classList.add('hidden');
-          selectedAmount = Number(val);
-        }
-      });
-    }
-
-    // Donation submit
-    var donateForm = $('#donateForm');
-    if (donateForm) {
-      donateForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var custom = $('#customAmount');
-        var amount = selectedAmount;
-        if (!amount && custom && custom.value) amount = Number(custom.value);
-        if (!amount || amount < 1) { toast('Please choose or enter a donation amount.', 'warn'); return; }
-
-        var donor = {
-          name: $('#dName').value.trim(),
-          email: $('#dEmail').value.trim(),
-          phone: $('#dPhone').value.trim(),
-          pan: $('#dPan').value.trim(),
-          purpose: $('#dPurpose').value
-        };
-
-        var donations = get('donations');
-        var ref = 'LOCAL-' + Date.now().toString(36).toUpperCase();
-        donations.unshift({
-          id: uid('d'), date: new Date().toISOString(), name: donor.name, email: donor.email,
-          phone: donor.phone, amount: amount, purpose: donor.purpose, status: 'pending', ref: ref
-        });
-        if (!set('donations', donations)) return;
-        toast('Donation interest saved in this browser. No payment was processed.', 'info');
-
-        donateForm.reset();
-        selectedAmount = 1000;
-        $$('.amount-chip').forEach(function (c) { c.classList.toggle('selected', c.dataset.amount === '1000'); });
-        $('#customAmountWrap').classList.add('hidden');
-      });
-    }
-
-    // Volunteer form
-    function handleVolunteer(fields) {
-      var vols = get('volunteers');
-      vols.unshift({
-        id: uid('v'), createdAt: new Date().toISOString(),
-        name: fields.name, email: fields.email, phone: fields.phone,
-        city: fields.city, age: fields.age, area: fields.area,
-        commit: fields.commit, mode: fields.mode, skills: fields.skills
-      });
-      if (set('volunteers', vols)) {
-        toast('Volunteer registration saved in this browser demo.', 'success');
-        return true;
-      }
-    }
-
-    var vForm = $('#volunteerForm');
-    if (vForm) {
-      vForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!handleVolunteer({
-          name: $('#vName').value.trim(), phone: $('#vPhone').value.trim(),
-          email: $('#vEmail').value.trim(), city: $('#vCity').value.trim(),
-          age: $('#vAge').value, area: $('#vArea').value,
-          commit: $('#vCommit').value, mode: $('#vMode').value,
-          skills: $('#vSkills').value.trim()
-        })) return;
-        vForm.reset();
-      });
-    }
-
-    var qvForm = $('#quickVolunteerForm');
-    if (qvForm) {
-      qvForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!handleVolunteer({
-          name: $('#qvName').value.trim(), phone: $('#qvPhone').value.trim(),
-          email: $('#qvEmail').value.trim(), city: '', age: '',
-          area: $('#qvArea').value, commit: '', mode: '', skills: ''
-        })) return;
-        qvForm.reset();
-      });
-    }
-
-    // Newsletter forms
-    ['#newsletterForm', '#newsSideForm'].forEach(function (sel) {
-      var f = $(sel);
-      if (f) {
-        f.addEventListener('submit', function (e) {
-          e.preventDefault();
-          if (saveSubscriber($('input[type=email]', f).value)) f.reset();
-        });
-      }
-    });
-
-    // Contact form
-    var cForm = $('#contactForm');
-    if (cForm) {
-      cForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var messages = get('messages');
-        messages.unshift({id:uid('m'),date:new Date().toISOString(),name:$('#cName').value.trim(),phone:$('#cPhone').value.trim(),email:$('#cEmail').value.trim(),subject:$('#cSubject').value,message:$('#cMessage').value.trim()});
-        if (set('messages', messages)) { toast('Message saved in the demo inbox on this browser.', 'success'); cForm.reset(); }
-      });
-    }
 
     // Admin login
     var loginForm = $('#adminLoginForm');
@@ -1304,8 +840,6 @@
           if (set('photos', photos)) {
             toast(added + ' photo(s) added.', 'success');
             renderAdminContent();
-            renderGalleryPage('all');
-            renderHomeGallery();
             observeReveals();
           }
           form.reset();
@@ -1328,7 +862,7 @@
           videos.unshift({ id: uid('v'), title: title, desc: desc, youtube: id });
           if (set('videos', videos)) {
             toast('Video added.', 'success');
-            renderAdminContent(); renderVideos(); observeReveals();
+            renderAdminContent(); observeReveals();
           }
           form.reset();
           return;
@@ -1347,7 +881,7 @@
           });
           if (set('updates', updates)) {
             toast('Update published.', 'success');
-            renderAdminContent(); renderUpdates(); observeReveals();
+            renderAdminContent(); observeReveals();
           }
           form.reset();
           return;
@@ -1367,7 +901,7 @@
           });
           if (set('initiatives', list)) {
             toast('Initiative added.', 'success');
-            renderAdminContent(); renderInitiatives(); renderReferenceFooter(); observeReveals();
+            renderAdminContent(); renderReferenceFooter(); observeReveals();
           }
           form.reset();
           return;
@@ -1386,7 +920,6 @@
           if (set('settings', s)) {
             toast('Settings saved.', 'success');
             updateRazorpayStatus();
-            renderSocialFeeds();
             renderReferenceFooter();
             renderAdminContent();
           }
@@ -1401,8 +934,7 @@
           var pid = delPhoto.getAttribute('data-del-photo');
           set('photos', get('photos').filter(function (p) { return p.id !== pid; }));
           toast('Photo removed.', 'info');
-          renderAdminContent(); renderGalleryPage('all'); renderHomeGallery();
-          return;
+          renderAdminContent(); return;
         }
 
         var delVideo = e.target.closest('[data-del-video]');
@@ -1410,8 +942,7 @@
           var vid = delVideo.getAttribute('data-del-video');
           set('videos', get('videos').filter(function (v) { return v.id !== vid; }));
           toast('Video removed.', 'info');
-          renderAdminContent(); renderVideos();
-          return;
+          renderAdminContent(); return;
         }
 
         var delUpdate = e.target.closest('[data-del-update]');
@@ -1419,8 +950,7 @@
           var uidv = delUpdate.getAttribute('data-del-update');
           set('updates', get('updates').filter(function (u) { return u.id !== uidv; }));
           toast('Update removed.', 'info');
-          renderAdminContent(); renderUpdates();
-          return;
+          renderAdminContent(); return;
         }
 
         var delInit = e.target.closest('[data-del-init]');
@@ -1428,7 +958,7 @@
           var iid = delInit.getAttribute('data-del-init');
           set('initiatives', get('initiatives').filter(function (x) { return x.id !== iid; }));
           toast('Initiative removed.', 'info');
-          renderAdminContent(); renderInitiatives(); renderReferenceFooter();
+          renderAdminContent(); renderReferenceFooter();
           return;
         }
 
@@ -1515,76 +1045,24 @@
             localStorage.removeItem(LS + k);
           });
           toast('All local data reset.', 'success');
-          applyHomeSettings(); renderStats(); renderReferenceFooter();
+          renderReferenceFooter();
           renderAdminContent();
-          renderInitiatives(); renderVideos(); renderUpdates();
-          renderGalleryPage('all'); renderHomeGallery(); renderSocialFeeds();
           updateRazorpayStatus();
           return;
         }
       });
     }
 
-    // Hero collage parallax (desktop only, subtle)
-    var collage = $('#heroCollage');
-    if (collage && window.matchMedia('(min-width: 1024px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      var hero = collage.closest('.bg-deep');
-      if (hero) {
-        hero.addEventListener('mousemove', function (ev) {
-          var r = hero.getBoundingClientRect();
-          var x = (ev.clientX - r.left) / r.width - 0.5;
-          var y = (ev.clientY - r.top) / r.height - 0.5;
-          $$('[data-art]', collage).forEach(function (el, i) {
-            var depth = (i + 1) * 6;
-            el.style.transform = 'translate3d(' + (-x * depth) + 'px,' + (-y * depth) + 'px,0)';
-          });
-        });
-        hero.addEventListener('mouseleave', function () {
-          $$('[data-art]', collage).forEach(function (el) { el.style.transform = ''; });
-        });
-      }
-    }
   }
 
 const FOOTER_ICONS={
 heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/>',
-users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>',
-pulse:'<path d="M3 12h4l3 8 4-16 3 8h4"/>',
-palette:'<circle cx="13.5" cy="6.5" r="1.2"/><circle cx="17.5" cy="10.5" r="1.2"/><circle cx="8.5" cy="7.5" r="1.2"/><circle cx="6.5" cy="12.5" r="1.2"/><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 1.8 1.8 0 0 0 1.3-3L12.5 18a2 2 0 0 1 1.4-3.4h2.6A5.5 5.5 0 0 0 22 9.2C22 5.2 17.5 2 12 2Z"/>',
-leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
-meal:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/>',
-sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
-play:'<circle cx="12" cy="12" r="10"/><path d="M10 8.5l6 3.5-6 3.5v-7Z"/>',
-camera:'<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2Z"/><circle cx="12" cy="13" r="4"/>',
-video:'<path d="M23 7l-7 5 7 5V7Z"/><rect x="1" y="5" width="15" height="14" rx="2"/>',
-image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
 mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/>',
 phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.5 2.8.6a2 2 0 0 1 1.7 2Z"/>',
 pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/>',
-clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
 arrowR:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
-menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
-x:'<path d="M18 6 6 18M6 6l12 12"/>',
-upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 9 5-5 5 5"/><path d="M12 4v12"/>',
-download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
-trash:'<path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
-edit:'<path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"/>',
-check:'<path d="M20 6 9 17l-5-5"/>',
-lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
-gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>',
-logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>',
-eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/>',
-calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
-megaphone:'<path d="m3 11 18-5v12L3 14v-3Z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
-trending:'<path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/>',
 sparkle:'<path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2Z"/>',
-shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>',
-key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="m21 2-2 2m-5.6 5.6a5.5 5.5 0 1 0-7.8 7.8 5.5 5.5 0 0 0 7.8-7.8Zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>',
-chevL:'<path d="m15 18-6-6 6-6"/>',chevR:'<path d="m9 18 6-6-6-6"/>',
-alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><circle cx="12" cy="16" r=".6" fill="currentColor"/>',
-plus:'<path d="M12 5v14M5 12h14"/>',
-external:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/>'
+key:'<circle cx="7.5" cy="15.5" r="4.5"/><path d="m21 2-2 2m-5.6 5.6a5.5 5.5 0 1 0-7.8 7.8 5.5 5.5 0 0 0 7.8-7.8Zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>'
 };
 const ic=(n,cls='')=>`<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${FOOTER_ICONS[n]||FOOTER_ICONS.sparkle}</svg>`;
 const BRAND={
@@ -1630,6 +1108,7 @@ function footer(){
 
 
   function safeImageURL(value) {
+    if (/^assets\/images\/[a-z0-9_-]+\.(?:jpe?g|png|webp)$/i.test(value || '')) return value;
     if (/^data:image\/(?:png|jpeg|gif|webp);base64,[a-z0-9+/=]+$/i.test(value)) return value;
     try { var u = new URL(value); return u.protocol === 'https:' ? u.href : ''; } catch (e) { return ''; }
   }
@@ -1651,17 +1130,6 @@ function footer(){
       a.href = url || '#contact';
       if (url) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
       else { a.removeAttribute('target'); a.removeAttribute('rel'); }
-    });
-  }
-
-  var originalHomeCopy = {};
-  function applyHomeSettings() {
-    var s = get('settings');
-    $$('#homeHero [data-home-copy]').forEach(function (el) {
-      var key = el.dataset.homeCopy;
-      if (!(key in originalHomeCopy)) originalHomeCopy[key] = el.innerHTML;
-      if (s[key]) el.textContent = s[key];
-      else el.innerHTML = originalHomeCopy[key];
     });
   }
 
@@ -1701,18 +1169,6 @@ function footer(){
   }
 
   function initSinglePage() {
-    var frame;
-    var publicSections = $$('.page:not([data-page="admin"])');
-    function onScroll() {
-      if (frame || currentPage === 'admin') return;
-      frame = requestAnimationFrame(function () {
-        frame = null;
-        var active = 'home', offset = $('#siteHeader').offsetHeight + 90;
-        publicSections.forEach(function (section) { if (section.getBoundingClientRect().top <= offset) active = section.dataset.page; });
-        updateActiveNav(active);
-      });
-    }
-    window.addEventListener('scroll', onScroll, {passive:true});
     function sizeHeader() { document.documentElement.style.setProperty('--header-height', $('#siteHeader').offsetHeight + 'px'); }
     if ('ResizeObserver' in window) new ResizeObserver(sizeHeader).observe($('#siteHeader'));
     sizeHeader();
@@ -1738,16 +1194,13 @@ function footer(){
         var a = document.createElement('a'); a.href = url; a.download = 'sjf-demo-backup.json'; a.click(); setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
       }
     });
-    document.addEventListener('change', function (e) {
-      if (e.target.name === 'heroLayout' && e.target.form) window.SJFEditors.updateHeroHints(e.target.form);
-    });
     document.addEventListener('submit', async function (e) {
       var form = e.target;
       if (form.id === 'footerNewsletterForm') { e.preventDefault(); if (saveSubscriber($('input[type=email]', form).value)) form.reset(); }
       if (form.id === 'homeEditorForm') {
         e.preventDefault(); if (!isAuthed()) return;
-        var heroData = new FormData(form), selectedHeroLayout = String(heroData.get('heroLayout') || '');
-        var heroSettings = {layout:window.SJFHero.defaults[selectedHeroLayout] ? selectedHeroLayout : 'madhubani'};
+        var heroData = new FormData(form);
+        var heroSettings = {layout:'madhubani'};
         window.SJFHero.fields.forEach(function (key) { heroSettings[key] = String(heroData.get(key) || '').trim(); });
         if (set('hero', heroSettings)) toast('Public website hero saved.', 'success');
       }
@@ -1755,7 +1208,7 @@ function footer(){
         e.preventDefault(); if (!isAuthed()) return;
         var data = new FormData(form), settings = get('settings');
         settings.impact = [0,1,2,3].map(function (i) { return String(data.get('impact' + i) || '').trim(); });
-        if (set('settings', settings)) { renderStats(); observeReveals(); toast('Impact figures saved.', 'success'); }
+        if (set('settings', settings)) { observeReveals(); toast('Impact figures saved.', 'success'); }
       }
       if (form.id === 'accountSettingsForm') {
         e.preventDefault(); if (!isAuthed() || !form.reportValidity()) return;
@@ -1779,11 +1232,8 @@ function footer(){
       if (e.key && e.key.indexOf(LS) !== 0) return;
       if (e.key === 'sjf_hero') return;
       if (e.key === 'sjf_admin_credentials') { renderAdmin(); return; }
-      applyHomeSettings(); renderStats(); renderInitiatives(); renderVideos(); renderUpdates(); renderGalleryPage('all'); renderHomeGallery(); renderReferenceFooter(); renderSocialFeeds(); observeReveals();
+      renderReferenceFooter(); observeReveals();
       if (currentPage === 'admin') renderAdmin();
-    });
-    $$('#volunteerForm, #quickVolunteerForm, #newsletterForm, #newsSideForm').forEach(function (form) {
-      var note = document.createElement('p'); note.className = 'form-demo-note'; note.textContent = 'Demo: saved in this browser only.'; form.appendChild(note);
     });
   }
 

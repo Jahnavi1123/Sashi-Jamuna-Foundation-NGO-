@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 FFMPEG = subprocess.check_output(
@@ -41,7 +42,11 @@ def duration(path):
 def prepare(source):
     day = re.match(r"day\D*(\d+)", source.stem, re.I)
     number = re.search(r"WA(\d+)$", source.stem, re.I)
-    if day:
+    if source.stem.casefold() == "1003":
+        slug = "sjf-video-1003"
+        title = "1003.mp4"
+        order = (2, 1003)
+    elif day:
         slug = "sjf-day-" + day.group(1)
         title = "SJF — Day " + day.group(1)
         order = (0, int(day.group(1)))
@@ -99,13 +104,40 @@ def prepare(source):
 
 
 if __name__ == "__main__":
-    sources = sorted(SOURCE.glob("*.mp4"))
+    if sys.argv[1:]:
+        sources = [SOURCE / name for name in sys.argv[1:]]
+        missing = [source.name for source in sources if not source.is_file()]
+        if missing:
+            raise SystemExit("Video source not found: " + ", ".join(missing))
+    else:
+        sources = sorted(
+            source for source in SOURCE.glob("*.mp4")
+            if re.match(r"day\D*\d+", source.stem, re.I)
+            or re.search(r"WA\d+$", source.stem, re.I)
+            or source.stem.casefold() == "1003"
+        )
     if not sources:
         raise SystemExit("No MP4 files found in sjf videos.")
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
         rows = list(pool.map(prepare, sources))
-    library = [entry for _, entry in sorted(rows)]
-    (ROOT / "assets/video-library.js").write_text(
+    library_path = ROOT / "assets/video-library.js"
+    existing_text = library_path.read_text(encoding="utf-8")
+    existing_match = re.search(r"window\.SJFVideoLibrary\s*=\s*(\[.*\]);\s*$", existing_text, re.S)
+    existing = json.loads(existing_match.group(1)) if existing_match else []
+    merged = {entry["id"]: entry for entry in existing}
+    merged.update({entry["id"]: entry for _, entry in rows})
+
+    def sort_key(entry):
+        day = re.fullmatch(r"sjf-day-(\d+)", entry["id"])
+        video = re.fullmatch(r"sjf-video-(\d+)", entry["id"])
+        if day:
+            return 0, int(day.group(1))
+        if video and entry["id"] != "sjf-video-1003":
+            return 1, int(video.group(1))
+        return 2, entry["id"]
+
+    library = sorted(merged.values(), key=sort_key)
+    library_path.write_text(
         "/* Generated from supplied SJF videos; no video bytes go into browser storage. */\n"
         "window.SJFVideoLibrary = " + json.dumps(library, ensure_ascii=False, indent=2) + ";\n",
         encoding="utf-8")

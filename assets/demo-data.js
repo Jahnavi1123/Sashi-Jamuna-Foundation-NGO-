@@ -45,7 +45,58 @@
     volunteers: [],
     donations: []
   };
+  // Retain the exact old seed records only to recognize untouched demo photos.
+  const legacyPhotos = defaults.photos;
+  defaults.photos = [
+    ['r4','Children holding saplings at a foundation gathering','community',1034,1280],
+    ['r1','Children and volunteers with saplings','community',1280,720],
+    ['indi3','Community members carrying the Indian flag in a procession','community',757,1280],
+    ['indi2','Community members saluting at the flag ceremony','community',720,1280],
+    ['t4','A student speaking into a microphone','education',720,1280],
+    ['t3','A student sharing her voice at a foundation event','education',720,1280],
+    ['t2','A student addressing her classmates','education',720,1280],
+    ['c8','Children learning together at the foundation','education',4096,2304],
+    ['r3','A community gathering with children and saplings','community',1080,1250],
+    ['indi','Children and volunteers gathered for the flag ceremony','community',2304,4096],
+    ['t1','A student speaking during the Independence Day programme','education',720,1280],
+    ['c7','Students taking part in a classroom discussion','education',4096,2304],
+    ['c6','Children attending a learning session','education',4096,2304],
+    ['c2','Children participating in a group learning activity','education',4096,2304],
+    ['c1','A classroom full of young learners','education',4096,2304],
+    ['p6','A student showing her flute drawing','culture',2304,4096],
+    ['p5','A student presenting his pencil artwork','culture',2304,4096],
+    ['p4','A student displaying an illustrated notebook page','culture',2304,4096],
+    ['p3','Pencil drawings made by the students','culture',2304,4096],
+    ['p2','A student presenting an environment-themed drawing','culture',2304,4096],
+    ['p1','A student showing her handmade card','culture',2304,4096],
+    ['hero4','Children and a volunteer celebrating together','community',4096,2304],
+    ['hero3','A group portrait of children at the foundation','community',4096,2304],
+    ['k2','Guests on stage at the foundation recognition ceremony','culture',1200,1600],
+    ['k1','A performer receiving flowers at a foundation recognition ceremony','culture',1600,900],
+    ['hero2','Guests and a performer seated at a foundation recognition ceremony','culture',1280,720],
+    ['hero1','Children enjoying a water park outing','community',1402,1122],
+    ['c4','Volunteers with supplies at a classroom gathering','community',4096,2304],
+    ['c5','Volunteers distributing supplies to children','community',2304,4096],
+    ['c3','Children gathered for a foundation learning programme','education',4096,2304]
+  ].map(([name,caption,cat,width,height]) => ({id:'sjf-photo-'+name,src:'assets/images/'+name+'.jpeg',caption,cat,width,height}));
   const clone = value => JSON.parse(JSON.stringify(value));
+  function importPhotos(saved) {
+    const existing = Array.isArray(saved) ? saved : [];
+    const key = 'sjf_photo_library_v1';
+    let imported = [];
+    try { const value = JSON.parse(localStorage.getItem(key) || '[]'); if (Array.isArray(value)) imported = value; } catch (_) {}
+    const pending = defaults.photos.filter(photo => !imported.includes(photo.id));
+    if (!pending.length) return existing;
+    const merged = existing.filter(photo => !legacyPhotos.some(old => old.id === photo.id && !photo.src && old.caption === photo.caption && old.cat === photo.cat && old.art === photo.art));
+    const ids = new Set(merged.map(photo => photo.id));
+    const sources = new Set(merged.map(photo => photo.src));
+    pending.forEach(photo => { if (!ids.has(photo.id) && !sources.has(photo.src)) { merged.push(clone(photo)); ids.add(photo.id); sources.add(photo.src); } });
+    try {
+      localStorage.setItem('sjf_photos',JSON.stringify(merged));
+      localStorage.setItem(key,JSON.stringify([...new Set([...imported,...defaults.photos.map(photo => photo.id)])]));
+    } catch (_) { /* Bundled photos remain usable without writable storage. */ }
+    return merged;
+  }
   const mediaImportKey = 'sjf_video_library_v1';
   const oldVideoTitles = ['A Day in the Life of a Learning Centre','Health Camp Diaries','The Art of Madhubani','Voices of the Community','Monsoon Relief Operations','Annual Impact Review'];
   function importVideos(saved) {
@@ -74,7 +125,7 @@
       try {
         const raw = localStorage.getItem('sjf_' + key);
         const value = raw ? JSON.parse(raw) : clone(defaults[key]);
-        return key === 'videos' ? importVideos(value) : value;
+        return key === 'videos' ? importVideos(value) : key === 'photos' ? importPhotos(value) : value;
       }
       catch (_) { return clone(defaults[key]); }
     },

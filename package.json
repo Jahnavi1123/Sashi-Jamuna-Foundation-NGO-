@@ -2,9 +2,9 @@
   "name": "sashi-jamuna-foundation",
   "version": "1.0.0",
   "private": true,
-  "description": "Single-page foundation website with a browser-local demo admin",
+  "description": "Foundation website with a browser-local demo admin",
   "scripts": {
-    "test": "node tests/designs.test.cjs && node tests/media.test.cjs",
+    "test": "node tests/designs.test.cjs && node tests/media.test.cjs && node tests/gallery-photos.test.cjs && node tests/language.test.cjs && node tests/scroll-motion.test.cjs && node tests/video-viewer.test.cjs",
     "preview": "node tools/preview.cjs",
     "prepare:videos": "python tools/prepare-videos.py"
   },

@@ -17,10 +17,12 @@
     const total = Math.round(Number(seconds) || 0);
     return Math.floor(total / 60) + ':' + String(total % 60).padStart(2, '0');
   }
-  function mount(container, item) {
+  function mount(container, item, options = {}) {
     const video = normalize(item);
     if (!container || !video) return;
-    document.querySelectorAll('video').forEach(function (player) { if (!player.paused) player.pause(); });
+    document.querySelectorAll('video').forEach(function (player) {
+      if (!player.matches('.hero-kids-frame video, .sjf-loading-video') && !player.paused) player.pause();
+    });
     container.replaceChildren();
     if (video.youtube) {
       const frame = document.createElement('iframe');
@@ -34,6 +36,10 @@
     }
     const player = document.createElement('video');
     player.controls = true;
+    player.autoplay = true;
+    player.muted = Boolean(options.muted);
+    player.defaultMuted = Boolean(options.muted);
+    player.loop = Boolean(options.loop);
     player.playsInline = true;
     player.tabIndex = 0;
     player.preload = 'none';
@@ -58,7 +64,7 @@
     player.addEventListener('error', showError);
     source.addEventListener('error', showError);
     container.append(player, error);
-    player.focus({preventScroll: true});
+    if (!options.background) player.focus({preventScroll: true});
     const playing = player.play();
     if (playing && playing.catch) playing.catch(function () { /* Native controls remain available if autoplay is blocked. */ });
   }

@@ -17,20 +17,13 @@
       position: relative; display: grid; place-items: center;
       width: 158px; height: 158px; margin: 0 auto 24px;
       border-radius: 50%;
-      transform-style: preserve-3d;
       background: conic-gradient(#FF9933 0 33.3%, #fff 33.3% 66.6%, #138A45 66.6% 100%);
       box-shadow: 0 0 0 3px #fff, 0 0 0 6px #138A45, 0 0 0 9px #fff, 0 0 0 12px #FF9933, 0 18px 50px -22px rgba(15,104,53,.55);
-      animation: sjf-coin-spin 3.5s linear infinite;
+      overflow: hidden;
     }
-    #sjf-page-loader .sjf-loading-mark::before {
-      content: ''; position: absolute; inset: 8px; border-radius: 50%;
-      background: rgba(255,255,255,.9);
-      box-shadow: inset 0 0 0 3px rgba(22,75,140,.18);
-    }
-    #sjf-page-loader .sjf-loading-mark img {
-      position: relative; z-index: 1; display: block; width: 110px; height: 110px; object-fit: contain;
-      background: rgba(255,255,255,.88); border-radius: 50%; padding: 8px;
-      border: 2px solid rgba(22,75,140,.12);
+    #sjf-page-loader .sjf-loading-video {
+      display: block; width: 100%; height: 100%; border: 7px solid #fff;
+      border-radius: 50%; object-fit: cover; background: #0a2547;
     }
     #sjf-page-loader .sjf-loading-name {
       margin: 0; color: #164b8c; font-size: clamp(18px, 4vw, 24px);
@@ -40,11 +33,6 @@
     #sjf-page-loader .brand-jamuna { color:#164B8C; }
     #sjf-page-loader .brand-foundation { color:#168642; }
     #sjf-page-loader .sjf-loading-caption { margin: 10px 0 0; color: #52637b; font-size: 14px; }
-    @keyframes sjf-loading-spin { to { transform: rotate(360deg); } }
-    @keyframes sjf-coin-spin { 0% { transform: rotateY(0deg) rotateZ(0deg); } 50% { transform: rotateY(180deg) rotateZ(180deg); } 100% { transform: rotateY(360deg) rotateZ(360deg); } }
-    @media (prefers-reduced-motion: reduce) {
-      #sjf-page-loader .sjf-loading-mark { animation: none; }
-    }
   `;
   document.head.appendChild(style);
 
@@ -54,7 +42,7 @@
   screen.setAttribute('role', 'status');
   screen.setAttribute('aria-live', 'polite');
   screen.setAttribute('aria-atomic', 'true');
-  screen.innerHTML = '<div><div class="sjf-loading-mark" aria-hidden="true"><img src="assets/images/sjf-logo.png" alt="" width="110" height="110" fetchpriority="high"></div>' +
+  screen.innerHTML = '<div><div class="sjf-loading-mark"><video class="sjf-loading-video" autoplay muted loop playsinline preload="none" poster="assets/images/video-posters/1003.jpg" aria-label="Sashi Jamuna Foundation loading video"><source src="assets/videos/1003.mp4" type="video/mp4"></video></div>' +
     '<p class="sjf-loading-name"><span class="brand-sashi">SASHI</span> <span class="brand-jamuna">Jamuna</span> <span class="brand-foundation">Foundation</span></p>' +
     '<p class="sjf-loading-caption">Loading, please wait…</p></div>';
 
@@ -67,7 +55,7 @@
   function lockContent() {
     if (!document.body || !active || screen.hidden) return;
     Array.from(document.body.children).forEach(function (element) {
-      if (element !== screen && !element.hasAttribute('inert')) {
+      if (element !== screen && element.id !== 'sjf-language-picker' && !element.hasAttribute('inert')) {
         element.setAttribute('inert', '');
         lockedElements.push(element);
       }
@@ -85,6 +73,8 @@
     else root.setAttribute('aria-busy', previousBusy);
     lockedElements.forEach(function (element) { element.removeAttribute('inert'); });
     lockedElements = [];
+    var loaderVideo = screen.querySelector('.sjf-loading-video');
+    if (loaderVideo && !loaderVideo.paused) loaderVideo.pause();
   }
 
   function begin() {
@@ -96,6 +86,14 @@
       root.classList.add('sjf-loading-visible');
       screen.hidden = false;
       lockContent();
+      var loaderVideo = screen.querySelector('.sjf-loading-video');
+      if (loaderVideo) {
+        loaderVideo.muted = true;
+        loaderVideo.defaultMuted = true;
+        loaderVideo.loop = true;
+        var playback = loaderVideo.play();
+        if (playback && playback.catch) playback.catch(function () {});
+      }
     }, 300);
     // An unavailable third-party asset must never lock the website indefinitely.
     safetyTimer = setTimeout(finish, 10000);

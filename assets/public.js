@@ -3,7 +3,7 @@
 const $=(s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);
-const fmtDate=d=>!d?'Date to be added':new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const fmtDate=d=>!d?'Date to be added':new Date(d).toLocaleDateString(window.SJFLocale?.locale || 'en-IN',{day:'numeric',month:'short',year:'numeric'});
 const inr=n=>(+n).toLocaleString('en-IN');
 
 /* ---------------- icons ---------------- */
@@ -108,26 +108,21 @@ function toast(msg,type='ok'){const t=document.createElement('div');t.className=
   t.innerHTML=`${ic(type==='ok'?'check':'alert','mt-0.5')}<span>${msg}</span>`;
   $('#toast-root').appendChild(t);setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),380)},3600);}
 function openModal(html,cls=''){ $('#modal-root').innerHTML=`<div class="modal-bg ${cls}" data-act="modal-x"><div class="modal-card ${cls==='lb-bg'?'!max-w-[96vw] !bg-transparent !border-0 !shadow-none':''}" onclick="event.stopPropagation()">${html}</div></div>`;document.body.style.overflow='hidden';}
-function closeModal(){$('#modal-root').innerHTML='';document.body.style.overflow='';}
-function confirmBox(msg,onYes){openModal(`<div class="p-8 text-center">
-  <div class="mx-auto w-16 h-16 rounded-full grid place-items-center bg-ver/10 text-ver">${ic('trash','w-7 h-7')}</div>
-  <h3 class="font-disp text-2xl text-navy mt-4">Are you sure?</h3><p class="text-ink/70 mt-2">${msg}</p>
-  <div class="flex gap-3 justify-center mt-6"><button id="cf-yes" class="btn btn-navy btn-sm">Yes, delete</button><button class="btn btn-ghost btn-sm" data-act="modal-x">Cancel</button></div></div>`);
-  $('#cf-yes').onclick=()=>{closeModal();onYes();};}
-
+function closeModal(){if ($('#sjf-video-viewer')) { closeVideoViewer(); return; } $('#modal-root').innerHTML='';document.body.style.overflow='';}
 /* ---------------- shell: header & footer ---------------- */
 const NAV=[['home','Home'],['about','About Us'],['initiatives','Initiatives'],['gallery','Gallery'],['videos','Videos'],['news','Updates'],['contact','Contact']];
 const ROUTES={home:'3.html',about:'about.html',initiatives:'initiatives.html',gallery:'gallery.html',videos:'videos.html',news:'updates.html',donate:'donate.html',volunteer:'volunteer.html',contact:'contact.html'};
 const routeHref=name=>ROUTES[name]||'#'+name;
 const currentPage=()=>document.body.dataset.page||'home';
 function header(){const links=NAV.map(([r,l])=>`<a class="nlink" data-nav="${r}" href="${routeHref(r)}">${l}</a>`).join('');
- return `<header id="site-head" class="sticky top-0 inset-x-0 z-50">
+ return `<header id="site-head" class="relative z-50">
   <div class="bar"><div class="wrap flex items-center justify-between h-16 md:h-20">
     <a href="${routeHref('home')}" class="flex items-center gap-2.5 group" aria-label="Sashi Jamuna Foundation home">
       ${foundationLogo(40)}
       <span class="brand-lockup font-disp text-xl md:text-[1.35rem]"><span class="brand-line"><span class="brand-sashi">SASHI</span> <span class="brand-jamuna">Jamuna</span></span><span class="brand-foundation">Foundation</span></span></a>
     <nav class="hidden lg:flex items-center gap-7" aria-label="Primary">${links}</nav>
     <div class="flex items-center gap-3">
+      <button type="button" class="sjf-language-switch" data-act="language" data-no-i18n aria-label="Change language / भाषा बदलें"><span lang="hi">हिंदी</span><span aria-hidden="true"> / </span><span lang="en">EN</span></button>
       <a href="${routeHref('volunteer')}" class="btn btn-ghost btn-sm hidden md:inline-flex">${ic('sparkle')} Volunteer</a>
       <a href="${routeHref('donate')}" class="btn btn-fire btn-sm">${ic('heart')} Donate</a>
       <button class="lg:hidden w-11 h-11 grid place-items-center rounded-xl border-2 border-navy/20 text-navy" data-act="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mnav">${ic('menu','w-6 h-6')}</button>
@@ -177,7 +172,6 @@ function pageHero(title,sub=''){return `<section class="relative overflow-hidden
     <h2 class="font-disp text-[clamp(2.3rem,5.5vw,3.8rem)] text-navy mt-3">${title}</h2>
     ${sub?`<p class="mt-3 text-ink/65 max-w-2xl mx-auto text-lg">${sub}</p>`:''}
     <div class="mt-5">${miniRule()}</div></div></section>`;}
-const statTile=(label,value,suffix,note,dark)=>({label,value,suffix,note,dark});
 
 /* ---------------- HOME ---------------- */
 function heroBackground(){
@@ -186,25 +180,33 @@ function heroBackground(){
   return allowed.includes(image) ? image : '';
 }
 function heroSection(){const background = heroBackground(); return `<section id="publicHero" class="relative min-h-[94vh] flex items-center overflow-hidden pt-28 pb-16 ${background ? 'sjf-madhubani-photo-hero' : ''}"${background ? ` style="--sjf-hero-photo:url('${background}')"` : ''}>
+  <div class="hero-fish-track hero-fish-right" aria-hidden="true">${fish('#F15A24')}</div>
+  <div class="hero-fish-track hero-fish-left" aria-hidden="true">${fish()}</div>
+  <div class="hero-fish-track hero-fish-mini hero-fish-mini-one" aria-hidden="true">${fish('#F15A24')}</div>
+  <div class="hero-fish-track hero-fish-mini hero-fish-mini-two" aria-hidden="true">${fish('#168A45')}</div>
+  <div class="hero-fish-track hero-fish-mini hero-fish-mini-three" aria-hidden="true">${fish('#164B8C','#F15A24')}</div>
   <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full blur-3xl opacity-30 pointer-events-none" style="background:radial-gradient(circle,#168A4566,transparent 70%)" aria-hidden="true"></div>
   <div class="absolute -bottom-32 -right-20 w-[28rem] h-[28rem] rounded-full blur-3xl opacity-25 pointer-events-none" style="background:radial-gradient(circle,#16864277,transparent 70%)" aria-hidden="true"></div>
-  <div class="wrap relative grid lg:grid-cols-[1.05fr_.95fr] gap-14 items-center">
-    <div class="text-center lg:text-left">
+  <div class="wrap relative sjf-home-hero-grid">
+    <div class="sjf-home-hero-copy text-center lg:text-left">
       <span class="eyebrow rv">Sashi Jamuna Foundation</span>
-      <h1 class="font-disp text-[clamp(2.7rem,6vw,4.5rem)] leading-[1.06] text-navy mt-4 rv" style="--d:80ms"><span data-home-copy="heroLead1">Rooted in</span> <span class="grad-fire" data-home-copy="heroAccent1">Culture</span>,<br><span data-home-copy="heroLead2">Growing</span> <span class="grad-teal" data-home-copy="heroAccent2">Hope</span>.</h1>
-      <p data-home-copy="heroDescription" class="mt-5 text-lg text-ink/75 max-w-xl mx-auto lg:mx-0 rv" style="--d:160ms">Carrying the colours of Mithila into modern service — we work hand-in-hand with communities so every life we touch can bloom with dignity, learning and opportunity.</p>
+      <h1 class="font-disp leading-[1.06] text-navy mt-4 rv" style="--d:80ms"><span data-home-copy="heroLead1">Rooted in</span> <span class="grad-fire" data-home-copy="heroAccent1">Culture</span>,<br><span data-home-copy="heroLead2">Empowering</span> <span class="grad-teal" data-home-copy="heroAccent2">Communities</span>.</h1>
+      <p data-home-copy="heroDescription" class="mt-5 text-lg text-ink/75 max-w-xl mx-auto lg:mx-0 rv" style="--d:160ms">A community-led foundation creating spaces where children learn, grow and belong.</p>
+      <dl class="sjf-hero-slogans" aria-label="Foundation values">
+        <div><dt>EDUCATION</dt><dd>Knowledge creates opportunity.</dd></div>
+        <div><dt>EMPOWERMENT</dt><dd>Every individual deserves a chance.</dd></div>
+        <div><dt>PROGRESS</dt><dd>Together, we build a better tomorrow.</dd></div>
+      </dl>
       <div class="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start rv" style="--d:240ms">
         <a href="#donate" class="btn btn-fire">${ic('heart')} Donate Now</a>
         <a href="#volunteer" class="btn btn-ghost">${ic('sparkle')} Become a Volunteer</a></div>
       <div class="mt-10 flex items-center gap-3 justify-center lg:justify-start rv" style="--d:320ms">
         ${foundationLogo(30)}<span class="text-sm font-bold text-navy/70">Inspired by Bihar's living Madhubani heritage</span></div>
     </div>
-    <div class="relative rv" style="--d:200ms">
-      <div class="relative mx-auto w-[min(84vw,520px)]">
-        <div class="absolute -top-8 -left-10 w-24 fl opacity-90 hidden md:block" aria-hidden="true">${fish('#F15A24')}</div>
-        <div class="absolute -bottom-6 -right-6 w-20 fl opacity-90 hidden md:block" style="animation-delay:-3s" aria-hidden="true">${fish()}</div>
+    <div class="sjf-home-hero-media relative rv" style="--d:200ms">
+      <div class="sjf-home-hero-circle relative mx-auto">
         <div class="hero-kids-frame">
-          <img src="assets/images/video-posters/sjf-video-01.jpg" alt="Children taking part in a Sashi Jamuna Foundation activity">
+          <video autoplay muted loop playsinline preload="auto" poster="assets/images/video-posters/1003.jpg" aria-label="1003.mp4 from Sashi Jamuna Foundation"><source src="assets/videos/1003.mp4" type="video/mp4"></video>
         </div>
         <div class="chip -left-2 top-8" style="animation-delay:-1s">${ic('palette')} Culture-Rooted</div>
         <div class="chip right-0 bottom-28" style="animation-delay:-3.5s">${ic('heart')} Community-First</div>
@@ -213,61 +215,31 @@ function heroSection(){const background = heroBackground(); return `<section id=
   </div>
   <div class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden lg:flex" aria-hidden="true"><div class="scroll-cue"><span></span></div></div>
 </section><div class="scallop" aria-hidden="true"></div>`;}
-function heritageHero(){return `<section id="publicHero" class="sjf-heritage-hero">
-  <div class="sjf-heritage-pattern" aria-hidden="true"></div>
-  <div class="wrap sjf-heritage-grid"><div class="sjf-heritage-copy">
-    <span class="eyebrow gold">Sashi Jamuna Foundation</span>
-    <h1><span data-home-copy="heroLead1">Heritage in</span> <em data-home-copy="heroAccent1">Every Heart</em>,<br><span data-home-copy="heroLead2">Hope in</span> <em data-home-copy="heroAccent2">Every Home</em>.</h1>
-    <p data-home-copy="heroDescription">Building stronger communities across Bihar through education, culture and shared opportunity.</p>
-    <div class="sjf-heritage-actions"><a href="#donate" class="btn btn-fire">${ic('heart')} Support Our Work</a><a href="#initiatives" class="btn btn-lite">Explore Initiatives ${ic('arrowR')}</a></div>
-  </div><div class="sjf-heritage-art" aria-label="Sashi Jamuna Foundation heritage emblem">
-    <div class="sjf-heritage-orbit"></div>${foundationLogo(150)}<span>Rosera · Bihar</span>
-  </div></div>
-</section>`;}
-function communityHero(){return `<section id="publicHero" class="sjf-community-hero">
-  <div class="sjf-community-photo" role="img" aria-label="Children taking part in a Sashi Jamuna Foundation activity"></div><div class="sjf-community-wash"></div>
-  <div class="wrap sjf-community-grid"><div class="sjf-community-card">
-    ${foundationLogo(62)}<span class="eyebrow">Together for Bihar</span>
-    <h1><span data-home-copy="heroLead1">Every Child.</span><br><em data-home-copy="heroAccent1">Every Chance.</em><br><span data-home-copy="heroLead2">Every</span> <em data-home-copy="heroAccent2">Future.</em></h1>
-    <p data-home-copy="heroDescription">A community-led foundation creating spaces where children learn, grow and belong.</p>
-    <div class="flex flex-wrap gap-3 mt-7"><a href="#volunteer" class="btn btn-fire">${ic('sparkle')} Join Us</a><a href="#donate" class="btn btn-ghost !bg-cream">Donate Now</a></div>
-  </div></div>
-</section>`;}
 function marquee(){const words=['SERVICE','COMPASSION','DIGNITY','COMMUNITY','CULTURE','HOPE'];
  const track=words.map(w=>`<span class="mq-it">${w}</span><i class="dia"></i>`).join('');
  return `<section class="g-navy relative overflow-hidden py-4 border-y-[3px] border-gold/80" aria-hidden="true"><div class="pat-dark"></div>
   <div class="relative flex overflow-hidden"><div class="marquee font-disp text-cream text-lg md:text-xl tracking-[.15em]"><div class="mq">${track}</div><div class="mq">${track}</div></div></div></section>`;}
-function collage(){return `
-  <div class="cph" style="--r:2deg;left:0;top:6%;width:56%;aspect-ratio:4/3;animation-delay:-1s"><img src="https://picsum.photos/seed/sjf-story1/640/480.jpg" alt="Foundation field work placeholder photo" loading="lazy"></div>
-  <div class="cph" style="--r:-3.5deg;right:1%;top:0;width:38%;aspect-ratio:4/5;animation-delay:-4s"><img src="https://picsum.photos/seed/sjf-story2/420/520.jpg" alt="Community gathering placeholder photo" loading="lazy"></div>
-  <div class="cph" style="--r:3deg;right:10%;bottom:0;width:46%;aspect-ratio:4/3;animation-delay:-2.5s"><img src="https://picsum.photos/seed/sjf-story3/520/390.jpg" alt="Volunteers at work placeholder photo" loading="lazy"></div>
-  <div class="rot-badge" style="top:-20px;right:6%;width:112px" aria-hidden="true">
-    <svg class="ring w-full" viewBox="0 0 120 120"><defs><path id="tcirc" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
-      <circle cx="60" cy="60" r="59" fill="#164B8C"/><text fill="#FFF8E7" font-size="10.5" font-weight="700" letter-spacing="2.5" font-family="Mukta"><textPath href="#tcirc">SASHI JAMUNA • FOUNDATION • SEVA • SAHYOG •</textPath></text></svg>
-    <svg class="w-full" viewBox="-40 -40 80 80" style="position:absolute;inset:0;padding:26px">${[-60,-30,0,30,60].map((a,i)=>`<path transform="translate(0 10) rotate(${a})" d="M0 -6 C -7 -16 -7 -28 0 -34 C 7 -28 7 -16 0 -6 Z" fill="${['#F15A24','#168A45','#168642','#168A45','#F15A24'][i]}"/>`).join('')}<circle cy="10" r="6" fill="#FFF8E7"/></svg>
-  </div>`;}
-function statsBand(){const st=DB.data.stats;
+function statsBand(){const st=DB.data.stats.filter(x=>x.label!=='Villages Reached');
  return `<section class="relative g-navy py-16 md:py-20 text-cream overflow-hidden"><div class="pat-dark" aria-hidden="true"></div>
   <div class="absolute -left-24 -bottom-24 w-80 opacity-[.09] pointer-events-none" aria-hidden="true">${medallion({spin:false})}</div>
   <div class="wrap relative">${secHead('Measurable Good','Impact You Can Verify','We publish nothing until it is verified — real numbers, real lives, real change.',true)}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mt-12">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mt-12">
     ${st.map((x,i)=>`<div class="text-center rv" style="--d:${i*90}ms">
       <div class="font-disp text-5xl md:text-6xl">${x.value?`<span data-count="${esc(x.value)}" data-suffix="${esc(x.suffix||'')}">0</span>`:'<span class="stat-x">—</span>'}</div>
       <div class="mt-3 font-extrabold tracking-wide">${esc(x.label)}</div>
-      <div class="text-cream/55 text-xs mt-1">${x.value?'Verified figure':'Add verified figure in Admin'}</div></div>`).join('')}
+      ${x.value?'<div class="text-cream/55 text-xs mt-1">Verified figure</div>':''}</div>`).join('')}
     </div>
     <p class="text-center text-cream/55 text-xs mt-10 rv">Placeholder dashes are intentional — replace with audited impact data from the Admin Dashboard.</p></div></section>`;}
 function videoFrame(v){return `<div class="vframe ${v.src?'local-video':''}" data-id="${esc(v.id)}"><img src="${esc(window.SJFMedia.poster(v))}" alt="${esc(v.title)}" loading="lazy" decoding="async"><button class="playbtn" data-act="play-video" data-id="${esc(v.id)}" aria-label="Play ${esc(v.title)}">${ic('play','w-7 h-7')}</button>${v.duration?`<span class="video-duration">${window.SJFMedia.duration(v.duration)}</span>`:''}</div>`;}
-function videoSection(){const v=DB.data.videos[0];
+function videoSection(){const stories=['sjf-day-13','sjf-day-15','sjf-day-16'].map(id=>DB.data.videos.find(video=>video.id===id)).filter(Boolean),v=stories[0];
  const main=v?videoFrame(v)
  :`<div class="vframe grid place-items-center"><div class="pat-dark" aria-hidden="true"></div>
     <div class="relative text-center px-6"><div class="mx-auto w-20 h-20 rounded-full border-2 border-dashed border-cream/40 grid place-items-center text-cream/50">${ic('video','w-8 h-8')}</div>
     <h3 class="font-disp text-2xl text-cream mt-4">Video stories coming soon</h3>
     <p class="ph !text-cream/60 mt-2 max-w-sm mx-auto">New video stories from the foundation will appear here.</p></div></div>`;
- const rows=DB.data.videos.length>1?DB.data.videos.slice(1,4).map(x=>`<button type="button" class="home-video-row flex gap-4 items-center card p-3" data-act="play-video" data-id="${esc(x.id)}" aria-label="Play ${esc(x.title)}"><span class="w-24 h-16 rounded-lg overflow-hidden flex-none bg-night"><img src="${esc(window.SJFMedia.poster(x))}" alt="" class="w-full h-full object-contain" loading="lazy" decoding="async"></span><span class="font-bold text-navy text-sm leading-snug">${esc(x.title)}${x.duration?`<span class="block text-xs font-normal text-ink/60 mt-1">${window.SJFMedia.duration(x.duration)}</span>`:''}</span>${ic('play','w-5 h-5 ml-auto')}</button>`).join('')
- :[1,2].map(()=>`<div class="flex gap-4 items-center card p-3 opacity-80"><span class="w-24 h-16 rounded-lg sk flex-none"></span><span class="flex-1 space-y-2"><span class="block h-3 rounded-full sk"></span><span class="block h-3 w-2/3 rounded-full sk"></span></span></div>`).join('');
+ const rows=stories.slice(1).map(x=>`<button type="button" class="home-video-row flex gap-4 items-center card p-3" data-act="play-video" data-id="${esc(x.id)}" aria-label="Play ${esc(x.title)}"><span class="w-24 h-16 rounded-lg overflow-hidden flex-none bg-night"><img src="${esc(window.SJFMedia.poster(x))}" alt="" class="w-full h-full object-contain" loading="lazy" decoding="async"></span><span class="font-bold text-navy text-sm leading-snug">${esc(x.title)}${x.duration?`<span class="block text-xs font-normal text-ink/60 mt-1">${window.SJFMedia.duration(x.duration)}</span>`:''}</span>${ic('play','w-5 h-5 ml-auto')}</button>`).join('');
  return `<section class="py-16 md:py-20">
-  <div class="wrap mb-9 text-center rv"><span class="eyebrow">From Rosera, Bihar</span><h2 class="font-disp text-[clamp(1.9rem,4vw,2.9rem)] leading-tight text-navy mt-3">Stories that move us.</h2></div>
+  <div class="wrap mb-9 text-center rv"><span class="eyebrow sjf-stories-label">Stories that moved us</span><h2 class="font-disp text-[clamp(1.9rem,4vw,2.9rem)] leading-tight text-navy mt-3">Stories that move us.</h2></div>
   <div class="sjf-story-showcase rv">
     <div class="sjf-story-panel sjf-story-panel-orange">
       <div class="sjf-story-badge">${foundationLogo(54,'sjf-story-logo')}</div>
@@ -301,25 +273,32 @@ function socialWall(){const s=DB.data.settings;
   ${card(BRAND.fb,'Facebook',s.fbUrl?'Facebook Page':'/yourfoundation',s.fbUrl,'bg-[#1877F2]',Array(6).fill(tile('bg-[#1877F2]/5',BRAND.fb,'POST')).join(''))}
   ${card(BRAND.yt,'YouTube',DB.data.videos.filter(v=>v.youtube).length?DB.data.videos.filter(v=>v.youtube).length+' YouTube videos':'YouTube Channel',s.ytUrl,'bg-[#CD201F]',Array(6).fill(tile('bg-[#CD201F]/5',BRAND.yt,'VIDEO')).join(''))}
   </div></div></section>`;}
-function viewHome(){const ins=DB.data.initiatives,gals=DB.data.gallery.slice(0,6),ups=DB.data.updates.slice(0,3);
- return `<div id="publicHeroSlot">${selectedHero()}</div>${marquee()}
- <section class="py-20 md:py-28 relative overflow-hidden"><div class="wrap grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
-   <div class="relative h-[440px] md:h-[500px] rv">${collage()}</div>
-   <div>
+function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB.data.gallery,ups=DB.data.updates.slice(0,3);
+ return `<div id="publicHeroSlot">${heroSection()}</div>
+ ${marquee()}
+ ${videoSection()}
+ <section id="who-we-are" class="py-20 md:py-28"><div class="wrap sjf-about-layout">
+     <div class="sjf-about-collage">
+       <figure class="sjf-about-photo sjf-about-class"><img src="assets/images/c8.jpeg" alt="Children learning together at the foundation" loading="lazy" decoding="async" width="4096" height="2304"></figure>
+       <figure class="sjf-about-photo sjf-about-plant"><img src="assets/images/r4.jpeg" alt="Children holding saplings at a foundation gathering" loading="lazy" decoding="async" width="1034" height="1280"></figure>
+       <figure class="sjf-about-photo sjf-about-march"><img src="assets/images/indi3.jpeg" alt="Community members carrying the Indian flag in a procession" loading="lazy" decoding="async" width="757" height="1280"></figure>
+       <figure class="sjf-about-photo sjf-about-award"><img src="assets/images/k1.jpeg" alt="A performer receiving flowers at a foundation recognition ceremony" loading="lazy" decoding="async" width="1600" height="900"></figure>
+       <figure class="sjf-about-photo sjf-about-group"><img src="assets/images/hero2.jpeg" alt="Guests and a performer seated at a foundation recognition ceremony" loading="lazy" decoding="async" width="1280" height="720"></figure>
+     </div>
+   <div class="sjf-about-copy">
      <div class="rv"><span class="eyebrow">Who We Are</span>
        <h2 class="font-disp text-[clamp(1.9rem,4vw,2.9rem)] leading-tight text-navy mt-3">A promise painted in<br>every shade of care.</h2></div>
-     <p class="mt-5 text-ink/75 text-lg rv" style="--d:100ms">The Shashi Jamuna Foundation is a regional non-profit organization based in Rosera, Bihar, India. It actively engages in community development and promotes local art, culture, and youth achievement, including honoring international performers and preserving traditional folk arts such as the Jhijhiya dance.</p>
-     <div class="mt-6 card p-5 rv" style="--d:160ms">${crn()}
-       <p class="ph text-[15px]">Rosera, Bihar, India — a grassroots foundation rooted in local action, heritage preservation, youth growth and community care.</p></div>
+     <p class="mt-5 text-ink/75 text-lg rv text-center" style="--d:100ms">The Shashi Jamuna Foundation is a regional non-profit organization based in Rosera, Bihar, India. It actively engages in community development and promotes local art, culture, and youth achievement, including honoring international performers and preserving traditional folk arts such as the Jhijhiya dance.</p>
+     <p class="mt-6 text-ink/70 text-[15px] rv text-center" style="--d:160ms">Rosera, Bihar, India — a grassroots foundation rooted in local action, heritage preservation, youth growth and community care.</p>
      <ul class="mt-6 space-y-3.5 rv" style="--d:220ms">
        <li class="flex gap-3 items-start">${ic('users','text-ver mt-0.5')}<span class="font-bold text-navy">Community-first</span><span class="text-ink/65">— programs shaped with the people we serve</span></li>
        <li class="flex gap-3 items-start">${ic('palette','text-ver mt-0.5')}<span class="font-bold text-navy">Culture-inspired</span><span class="text-ink/65">— Mithila's art in everything we do</span></li>
        <li class="flex gap-3 items-start">${ic('shield','text-ver mt-0.5')}<span class="font-bold text-navy">Transparent by design</span><span class="text-ink/65">— verified numbers, open books</span></li></ul>
-     <a href="#about" class="btn btn-navy mt-8 rv" style="--d:280ms">Read Our Story ${ic('arrowR')}</a>
+     <div class="text-center"><a href="#about" class="btn btn-navy mt-8 rv" style="--d:280ms">Read Our Story ${ic('arrowR')}</a></div>
    </div></div></section>
  ${divider()}
  <section class="py-20 md:py-24 bg-white/70"><div class="wrap">
-   ${secHead('What We Do','Our Initiatives','Six streams of steady, grassroots work — each one editable and expandable from the dashboard.')}
+   ${secHead('What We Do','Our Initiatives','Five streams of steady, grassroots work.')}
    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
    ${ins.map((x,i)=>{const c=ICOL[x.color]||ICOL.navy;return `<article class="card p-7 group rv" style="--d:${i*80}ms">${crn()}
      <div class="flex justify-between items-start"><span class="w-14 h-14 rounded-2xl grid place-items-center transition-transform group-hover:rotate-6 group-hover:scale-110" style="background:${c[1]};color:${c[0]}">${ic(x.icon,'w-7 h-7')}</span>
@@ -328,17 +307,15 @@ function viewHome(){const ins=DB.data.initiatives,gals=DB.data.gallery.slice(0,6
      <p class="mt-2 text-[15px] ${x.desc.startsWith('[')?'ph':'text-ink/70'}">${esc(x.desc)}</p>
      <a href="#initiatives" class="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-ver hover:gap-3 transition-all">Explore ${ic('arrowR','w-4 h-4')}</a></article>`;}).join('')}
    </div>
-   <div class="text-center mt-8 rv"><span class="edi-note">${ic('edit','w-3.5 h-3.5')} Initiative cards are editable — Admin &rarr; Initiatives</span></div>
  </div></section>
  ${statsBand()}
- ${videoSection()}
  <section class="py-20 md:py-24 bg-white/70"><div class="wrap">
    ${secHead('Moments &amp; Memories','From Our Gallery','Glimpses of the work, the people and the joy in between.')}
-   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-12">
-   ${gals.map((g,i)=>`<button class="g-item rv aspect-square" data-act="lb" data-scope="home" data-idx="${i}" style="--d:${i*60}ms" aria-label="Open photo"><img src="${esc(g.src)}" alt="Foundation photo placeholder" loading="lazy"><span class="g-ov text-xs">${ic('image','w-4 h-4 mb-1')} View</span></button>`).join('')}
+   <div class="masonry mt-12" id="home-gallery">
+   ${gals.map((g,i)=>`<button class="g-item rv" data-act="lb" data-scope="home" data-idx="${i}" aria-label="Open photo: ${esc(g.title)}"><img src="${esc(g.src)}" alt="${esc(g.title)}" ${g.width && g.height ? `width="${g.width}" height="${g.height}"` : ''} loading="lazy" decoding="async"><span class="g-ov text-xs">${ic('image','w-4 h-4 mb-1')} View</span></button>`).join('')}
    </div>
    <div class="text-center mt-8 rv"><a href="#gallery" class="btn btn-ghost">${ic('camera')} View Full Gallery</a>
-   <p class="text-xs text-ink/45 mt-3">Preview images shown are placeholders — upload real photos via Admin &rarr; Photos.</p></div>
+   </div>
  </div></section>
  ${socialWall()}
  <section class="py-20 md:py-24 bg-white/70"><div class="wrap">
@@ -348,7 +325,7 @@ function viewHome(){const ins=DB.data.initiatives,gals=DB.data.gallery.slice(0,6
  </div></section>`;}function updateCard(u,i=0){const d=new Date(u.date);
  return `<article class="card p-6 rv" style="--d:${i*90}ms">${crn()}
   <div class="flex items-center gap-3">
-    <span class="cal" aria-hidden="true"><b>${u.date ? d.toLocaleDateString('en-IN',{month:'short'}).toUpperCase() : 'DATE'}</b><span>${u.date ? d.getDate() : '—'}</span></span>
+    <span class="cal" aria-hidden="true"><b>${u.date ? d.toLocaleDateString(window.SJFLocale?.locale || 'en-IN',{month:'short'}).toUpperCase() : 'DATE'}</b><span>${u.date ? d.getDate() : '—'}</span></span>
     <span class="badge ${u.sample?'b-wait':'b-init'}">${u.sample?'SAMPLE':esc(u.tag||'Update')}</span></div>
   <h3 class="mt-4 text-lg font-extrabold text-navy leading-snug">${esc(u.title)}</h3>
   <p class="mt-2 text-ink/70 text-[15px] whitespace-pre-line line-clamp-4">${esc(u.body)}</p>
@@ -401,7 +378,7 @@ function viewAbout(){const vals=[['heart','Compassion','Every decision begins wi
  </div></section>`;}
 
 /* ---------------- INITIATIVES ---------------- */
-function viewInitiatives(){const ins=DB.data.initiatives;
+function viewInitiatives(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5');
  return `${pageHero('Our Initiatives','Streams of steady, grassroots work — each one shaped with the communities it serves.')}
  <section class="py-16 md:py-20"><div class="wrap grid md:grid-cols-2 gap-6">
   ${ins.map((x,i)=>{const c=ICOL[x.color]||ICOL.navy;return `<article class="card p-8 rv" style="--d:${i*80}ms">${crn()}
@@ -435,8 +412,7 @@ function galleryGrid(){const cats=['All',...new Set(DB.data.gallery.map(g=>g.cat
  const list=gfilter==='All'?DB.data.gallery:DB.data.gallery.filter(g=>g.cat===gfilter);
  return `<div class="flex flex-wrap gap-2.5 justify-center rv">
   ${cats.map(c=>`<button class="gfil ${c===gfilter?'on':''}" data-act="gfil" data-cat="${esc(c)}">${esc(c)} ${c==='All'?`(${DB.data.gallery.length})`:`(${DB.data.gallery.filter(g=>g.cat===c).length})`}</button>`).join('')}</div>
- <div id="g-grid" class="masonry mt-10">${list.map((g,i)=>`<button class="g-item rv in" data-act="lb" data-scope="gallery" data-idx="${i}" aria-label="Open photo: ${esc(g.cat)}"><img src="${esc(g.src)}" alt="${esc(g.title)}" loading="lazy"><span class="g-ov"><span class="text-xs">${ic('image','w-4 h-4 inline mb-0.5')} ${esc(g.cat)}${g.up?' · New':''}</span></span></button>`).join('')}</div>
- <p class="text-center text-xs text-ink/45 mt-8">Images marked "Sample" are placeholders — upload the foundation's real photos from Admin &rarr; Photos.</p>`;}
+ <div id="g-grid" class="masonry mt-10">${list.map((g,i)=>`<button class="g-item rv in" data-act="lb" data-scope="gallery" data-idx="${i}" aria-label="Open photo: ${esc(g.title)}"><img src="${esc(g.src)}" alt="${esc(g.title)}" ${g.width && g.height ? `width="${g.width}" height="${g.height}"` : ''} loading="lazy" decoding="async"><span class="g-ov"><span class="text-xs">${ic('image','w-4 h-4 inline mb-0.5')} ${esc(g.cat)}</span></span></button>`).join('')}</div>`;}
 function viewGallery(){return `${pageHero('Gallery','Moments, memories and milestones — straight from the field.')}
  <section class="pb-24"><div class="wrap">${galleryGrid()}</div></section>`;}
 
@@ -445,7 +421,8 @@ function videoCard(v,i){return `<article class="card !p-3 rv" style="--d:${(i%3)
  ${videoFrame(v)}
  <div class="p-4"><h3 class="font-extrabold text-navy">${esc(v.title)}</h3>
  <p class="text-sm text-ink/60 mt-2">${esc(v.desc || '')}</p>${v.date?`<p class="text-xs text-ink/50 mt-1">Added ${fmtDate(v.date)}</p>`:''}</div></article>`;}
-function viewVideos(){const vs=DB.data.videos;
+function galleryVideos(){return DB.data.videos.filter(video=>/^sjf-day-\d+$/.test(video.id)).sort((a,b)=>Number(a.id.slice(8))-Number(b.id.slice(8)));}
+function viewVideos(){const vs=galleryVideos();
  return `${pageHero('Videos','Video stories from the foundation — watch, share, believe.')}
  <section class="pb-24"><div class="wrap">
  ${vs.length?`<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">${vs.map((v,i)=>videoCard(v,i)).join('')}</div>
@@ -456,6 +433,73 @@ function viewVideos(){const vs=DB.data.videos;
    <p class="ph mt-3 max-w-md mx-auto">New video stories from the foundation will appear here.</p>
    <div class="grid md:grid-cols-3 gap-5 mt-10">${[1,2,3].map(()=>`<div class="aspect-video rounded-xl sk"></div>`).join('')}</div></div>`}
  </div></section>`;}
+
+/* Full-screen gallery player keeps its navigation around the video. */
+let videoViewer = null;
+function stopViewerVideo() {
+  const player = $('#sjf-video-viewer video');
+  if (!player) return;
+  player.pause();
+  player.removeAttribute('src');
+  $$('source',player).forEach(source => source.remove());
+  player.load();
+}
+function paintVideoViewer() {
+  if (!videoViewer) return;
+  stopViewerVideo();
+  const item = videoViewer.items[videoViewer.index];
+  $('#sjf-video-viewer-title').textContent = item.title;
+  $('#sjf-video-viewer-count').textContent = `${videoViewer.index + 1} / ${videoViewer.items.length}`;
+  window.SJFMedia.mount($('#sjf-video-viewer-stage'),item,{background:true});
+  const player = $('#sjf-video-viewer video');
+  if (player) player.setAttribute('controlsList','nofullscreen');
+}
+function stepVideoViewer(step) {
+  if (!videoViewer) return;
+  videoViewer.index = (videoViewer.index + step + videoViewer.items.length) % videoViewer.items.length;
+  paintVideoViewer();
+}
+function closeVideoViewer() {
+  const dialog = $('#sjf-video-viewer'), state = videoViewer;
+  if (!dialog || !state) return;
+  videoViewer = null;
+  stopViewerVideo();
+  if (dialog.contains(document.fullscreenElement) && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+  dialog.close();
+  dialog.remove();
+  document.body.style.overflow = state.overflow;
+  state.trigger?.focus({preventScroll:true});
+}
+function openVideoViewer(id,trigger) {
+  const items = galleryVideos(), index = items.findIndex(item => item.id === id);
+  if (index < 0) return;
+  closeModal();
+  videoViewer = {items,index,trigger,overflow:document.body.style.overflow,wasFullscreen:false};
+  $('#modal-root').innerHTML = `<dialog id="sjf-video-viewer" class="sjf-video-viewer" aria-labelledby="sjf-video-viewer-title"><div class="sjf-video-viewer-shell">
+    <header class="sjf-video-viewer-bar"><div aria-live="polite"><h2 id="sjf-video-viewer-title"></h2><span id="sjf-video-viewer-count"></span></div>
+      <button type="button" class="sjf-video-viewer-control" data-act="video-close" aria-label="Close video">${ic('x')}</button></header>
+    <div class="sjf-video-viewer-body"><button type="button" class="sjf-video-viewer-control" data-act="video-prev" aria-label="Previous video">${ic('chevL')}</button>
+      <div id="sjf-video-viewer-stage"></div>
+      <button type="button" class="sjf-video-viewer-control" data-act="video-next" aria-label="Next video">${ic('chevR')}</button></div>
+  </div></dialog>`;
+  const dialog = $('#sjf-video-viewer');
+  dialog.addEventListener('cancel',event => { event.preventDefault(); closeVideoViewer(); });
+  dialog.showModal();
+  document.body.style.overflow = 'hidden';
+  paintVideoViewer();
+  $('[data-act="video-close"]',dialog).focus();
+  const shell = $('.sjf-video-viewer-shell',dialog);
+  if (shell.requestFullscreen) {
+    shell.requestFullscreen().then(() => {
+      if (videoViewer && dialog.isConnected) videoViewer.wasFullscreen = true;
+      else if (document.fullscreenElement === shell) document.exitFullscreen().catch(() => {});
+    }).catch(() => { /* The viewport-filling dialog also works on browsers without fullscreen permission. */ });
+  }
+}
+document.addEventListener('fullscreenchange',() => {
+  if (videoViewer && document.fullscreenElement === $('.sjf-video-viewer-shell')) videoViewer.wasFullscreen = true;
+  else if (videoViewer?.wasFullscreen) closeVideoViewer();
+});
 
 /* ---------------- UPDATES ---------------- */
 function viewUpdates(){const ups=DB.data.updates,s=DB.data.settings;
@@ -573,7 +617,7 @@ function viewContact(){const s=DB.data.settings;
   </div></div></section>`;}
 
 
-function openLB(scope,i){LB.items=(scope==='home'?DB.data.gallery.slice(0,6):(gfilter==='All'?DB.data.gallery:DB.data.gallery.filter(g=>g.cat===gfilter)));LB.i=+i;paintLB();}
+function openLB(scope,i){LB.items=(scope==='home'?DB.data.gallery:(gfilter==='All'?DB.data.gallery:DB.data.gallery.filter(g=>g.cat===gfilter)));LB.i=+i;paintLB();}
 function paintLB(){const g=LB.items[LB.i];if(!g)return closeModal();
  openModal(`<div class="relative max-w-4xl mx-auto">
   <img src="${esc(g.src)}" alt="${esc(g.title)}" class="w-full max-h-[76vh] object-contain rounded-2xl border-4 border-cream/25 shadow-2xl">
@@ -598,6 +642,7 @@ function socialURL(value, network) {
   try { const url = new URL(v); return url.protocol === 'https:' ? url.href : ''; } catch (_) { return ''; }
 }
 function mediaURL(value) {
+  if (/^assets\/images\/[a-z0-9_-]+\.(?:jpe?g|png|webp)$/i.test(value || '')) return value;
   if (/^data:image\/(png|jpeg|webp|gif);base64,[a-z0-9+/=]+$/i.test(value || '')) return value;
   try { const url = new URL(value); return url.protocol === 'https:' ? url.href : ''; } catch (_) { return ''; }
 }
@@ -611,7 +656,7 @@ const DB = {data:null,load() {
     gallery:DATA.read('photos').map((p,i) => {
       const sample = SAMPLE_PHOTOS[i % SAMPLE_PHOTOS.length];
       return {id:p.id,src:mediaURL(p.src) || 'https://picsum.photos/seed/'+sample[0]+'/'+sample[1]+'/'+sample[2]+'.jpg',
-        title:p.src ? p.caption : 'Sample photo — replace via Admin',cat:p.cat || 'Community',up:!!p.src};
+        title:p.src ? p.caption : 'Sample photo — replace via Admin',cat:p.cat || 'Community',up:!!p.src,width:Number(p.width)||0,height:Number(p.height)||0};
     }),
     videos:DATA.read('videos').map(window.SJFMedia.normalize).filter(Boolean),
     updates:DATA.read('updates').map(u => ({...u,tag:u.cat,sample:!u.date}))
@@ -626,14 +671,73 @@ function announcement() {
 }
 
 let revealObserver;
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 function initReveal() {
-  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { $$('.rv').forEach(e => e.classList.add('in')); return; }
   if (revealObserver) revealObserver.disconnect();
-  revealObserver = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); }
-  }), {threshold:.08});
-  $$('.rv:not(.in)').forEach(e => revealObserver.observe(e));
+  $$('.rv').forEach(el => el.classList.add('in'));
+  const enabled = 'IntersectionObserver' in window && !motionPreference.matches;
+  document.body.classList.toggle('sjf-scroll-motion', enabled);
+  if (!enabled) return;
+
+  // Observe content-sized targets, never entire sections or forms: a tall section
+  // must not hide its children while a visitor reads, types or watches a video.
+  const content = selector => $$(`:is(#main, #app > footer) :is(${selector})`).filter(el => !el.closest('[data-motion-static], [aria-hidden="true"], .section-announcement'));
+  const mark = (el, effect) => {
+    el.classList.add('sjf-reveal');
+    el.dataset.scrollEffect = effect;
+  };
+  content('h1,h2,h3,h4').forEach(heading => {
+    mark(heading, 'ink');
+    // Keep live hero copy and gradient spans intact when admin changes the heading.
+    if (heading.dataset.motionWords || heading.querySelector('[data-home-copy]')) return;
+    heading.dataset.motionWords = 'true';
+    const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    let index = 0;
+    nodes.forEach(node => {
+      const fragment = document.createDocumentFragment();
+      node.textContent.split(/(\s+)/).forEach(word => {
+        if (!word.trim()) { fragment.appendChild(document.createTextNode(word)); return; }
+        const span = document.createElement('span');
+        span.className = 'sjf-reveal-word';
+        span.style.setProperty('--word-delay', Math.min(index++ * 35, 245) + 'ms');
+        span.textContent = word;
+        fragment.appendChild(span);
+      });
+      node.replaceWith(fragment);
+    });
+  });
+  content('p,blockquote').forEach(el => mark(el, 'brush'));
+  content('.card:not(form),article:not(.card),.sjf-story-footer-card').forEach(el => {
+    if (!el.querySelector('form') && !el.parentElement.closest('.card,article')) mark(el, 'rise');
+  });
+  content('img:not(.sjf-logo):not(.sjf-hero-logo),.hero-kids-frame').forEach((el,index) => {
+    if (el.tagName === 'IMG' && el.closest('.hero-kids-frame')) return;
+    // Keep native video controls uncovered; animate their surrounding image frame.
+    mark(el, el.classList.contains('hero-kids-frame') || index % 3 === 0 ? 'ripple' : 'sketch');
+  });
+  content('.eyebrow,.badge,.sjf-story-badge').forEach(el => mark(el, 'breathe'));
+  content('a,button,li,dt,dd,label,input,textarea,select,[data-count]').forEach(el => {
+    if (el.matches('input[type="hidden"]') || el.closest('h1,h2,h3,h4,p,li') !== (el.matches('li') ? el : null)) return;
+    if (!el.classList.contains('sjf-reveal') && !el.querySelector('.sjf-reveal')) mark(el, 'rise');
+  });
+  content('.rv').forEach(el => {
+    if (!el.matches('form') && !el.classList.contains('sjf-reveal') && !el.querySelector('.sjf-reveal,form,video,input')) mark(el, 'rise');
+  });
+  revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    const el = entry.target;
+    if (el.contains(document.activeElement)) return;
+    const visible = entry.isIntersecting;
+    el.classList.toggle('sjf-exit-top', !visible && entry.boundingClientRect.top < 0);
+    el.classList.toggle('sjf-revealed', visible);
+  }), {threshold:0, rootMargin:'0px 0px -24px 0px'});
+  content('.sjf-reveal').forEach(el => revealObserver.observe(el));
 }
+motionPreference.addEventListener?.('change', initReveal);
+document.addEventListener('focusin', event => {
+  event.target.closest?.('.sjf-reveal')?.classList.add('sjf-revealed');
+});
 function initCounters() {
   $$('[data-count]').forEach(el => { el.textContent = el.dataset.count + (el.dataset.suffix || ''); });
 }
@@ -643,14 +747,33 @@ function initFishCursor() {
   cursor.id='sjf-fish-cursor'; cursor.className='sjf-fish-cursor'; cursor.innerHTML=fish('#F15A24');
   trails.forEach((t,i)=>{t.className='sjf-fish-trail sjf-fish-trail-'+i;document.body.appendChild(t);}); document.body.appendChild(cursor);
   document.body.classList.add('sjf-fish-cursor-active');
-  let pointer={x:innerWidth/2,y:innerHeight/2,angle:0}, last={x:pointer.x,y:pointer.y}, dots=trails.map(()=>({x:pointer.x,y:pointer.y})), frame;
-  const paint=()=>{frame=0; let dx=pointer.x-last.x;if(Math.abs(dx)>1) pointer.angle=dx>0?180:0; last={x:pointer.x,y:pointer.y};
-    cursor.style.transform=`translate(${pointer.x-29}px,${pointer.y-29}px) rotate(${pointer.angle}deg)`;
-    dots.forEach((dot,i)=>{const target=i?dots[i-1]:pointer; dot.x+=(target.x-dot.x)*(.2-i*.035);dot.y+=(target.y-dot.y)*(.2-i*.035);trails[i].style.transform=`translate(${dot.x-6}px,${dot.y-6}px)`;trails[i].style.opacity=String(.75-i*.2);});
+  let pointer={x:innerWidth/2,y:innerHeight/2}, last=null, angle=0, targetAngle=0, active=false;
+  const dots=trails.map(()=>({x:pointer.x,y:pointer.y}));
+  let frame=0;
+  const paint=()=>{
+    frame=0;
+    if (!active) return;
+    // Take the shortest turn across the 0/360 boundary; the artwork faces left.
+    const turn=((targetAngle-angle)%360+540)%360-180;
+    angle+=Math.abs(turn)<.1?turn:turn*.22;
+    cursor.style.transform=`translate(${pointer.x}px,${pointer.y}px) translate(-50%,-50%) rotate(${angle}deg)`;
+    let moving=Math.abs(turn)>.1;
+    dots.forEach((dot,i)=>{const target=i?dots[i-1]:pointer; dot.x+=(target.x-dot.x)*(.2-i*.035);dot.y+=(target.y-dot.y)*(.2-i*.035);trails[i].style.transform=`translate(${dot.x-6}px,${dot.y-6}px)`;trails[i].style.opacity=String(.75-i*.2);if(Math.hypot(target.x-dot.x,target.y-dot.y)>.2)moving=true;});
+    if(moving)frame=requestAnimationFrame(paint);
   };
-  addEventListener('pointermove',e=>{pointer.x=e.clientX;pointer.y=e.clientY;if(!frame)frame=requestAnimationFrame(paint)},{passive:true});
-  addEventListener('pointerleave',()=>{cursor.style.opacity='0';trails.forEach(t=>t.style.opacity='0');});
-  addEventListener('pointerenter',()=>{cursor.style.opacity='1';});
+  addEventListener('pointermove',e=>{
+    pointer.x=e.clientX;pointer.y=e.clientY;
+    if(last){
+      const dx=pointer.x-last.x,dy=pointer.y-last.y;
+      if(Math.hypot(dx,dy)>=2){targetAngle=Math.atan2(dy,dx)*180/Math.PI+180;last={...pointer};}
+    }else{last={...pointer};dots.forEach(dot=>Object.assign(dot,pointer));}
+    active=true;cursor.style.opacity='1';
+    if(!frame)frame=requestAnimationFrame(paint);
+  },{passive:true});
+  document.documentElement.addEventListener('pointerleave',()=>{
+    active=false;last=null;cancelAnimationFrame(frame);frame=0;
+    cursor.style.opacity='0';trails.forEach(t=>t.style.opacity='0');
+  });
 }
 function closeMenu() {
   $('#mnav')?.classList.remove('open');
@@ -672,24 +795,38 @@ function navigate(name) {
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
   activeNav(name);
 }
-function selectedHero() {
-  const config = window.SJFHero.read();
-  if (config.layout === 'blue') return window.SJFBlueHero.render(config);
-  if (config.layout === 'heritage') return heritageHero();
-  if (config.layout === 'community') return communityHero();
-  return heroSection();
-}
 function applyHeroCopy() {
   const s = window.SJFHero.resolve(window.SJFHero.read());
   $$('#publicHero [data-home-copy]').forEach(el => { el.textContent = s[el.dataset.homeCopy]; });
+  playHeroVideo();
 }
+function playHeroVideo() {
+  const video = $('#publicHero .hero-kids-frame video');
+  if (!video || document.hidden) return;
+  if (!video.dataset.loopReady) {
+    video.dataset.loopReady = 'true';
+    video.addEventListener('canplay', playHeroVideo);
+    video.addEventListener('pause', () => {
+      if (video.isConnected && !document.hidden && !video.error) playHeroVideo();
+    });
+  }
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  const playback = video.play();
+  if (playback && playback.catch) playback.catch(() => {});
+}
+document.addEventListener('visibilitychange', playHeroVideo);
+document.addEventListener('pointerdown', playHeroVideo);
+document.addEventListener('keydown', playHeroVideo);
 function refreshHero() {
   const slot = $('#publicHeroSlot');
   if (!slot) return;
-  slot.innerHTML = selectedHero();
+  slot.innerHTML = heroSection();
   applyHeroCopy();
   // Reveal only the replaced hero; every other section keeps its current DOM and form state.
-  $$('.rv',slot).forEach(el => el.classList.add('in'));
+  window.SJFLocale?.apply(slot);
+  initReveal();
 }
 function render() {
   DB.load();
@@ -703,10 +840,13 @@ function render() {
   });
   applyHeroCopy();
   // Every submission stays local in the requested demo.
+  const storyFrame = $('#homeFeaturedVideo .vframe');
+  const story = storyFrame && DB.data.videos.find(video => video.id === storyFrame.dataset.id);
+  if (story) window.SJFMedia.mount(storyFrame, story, {muted:true, loop:true, background:true});
   $$('form[data-form]').forEach(form => {
     const note = document.createElement('p'); note.className = 'demo-form-note'; note.textContent = 'Demo: saved in this browser only.'; form.appendChild(note);
   });
-  initReveal(); initCounters();
+  initCounters(); window.SJFLocale?.apply($('#app')); initReveal();
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
   activeNav(name);
 }
@@ -725,6 +865,7 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]'); if (!el) return;
   const act = el.dataset.act;
   switch (act) {
+    case 'language': window.SJFLocale?.openPicker(); break;
     case 'nav-toggle': { const open = $('#mnav').classList.toggle('open'); el.setAttribute('aria-expanded',String(open)); break; }
     case 'modal-x': closeModal(); break;
     case 'lb': openLB(el.dataset.scope,el.dataset.idx); break;
@@ -734,24 +875,17 @@ document.addEventListener('click', e => {
       gfilter = el.dataset.cat; const grid = $('#g-grid'); if (grid) { grid.parentElement.innerHTML = galleryGrid(); initReveal(); } break;
     }
     case 'play-video': {
+      if (el.closest('#videos')) { openVideoViewer(el.dataset.id,el); break; }
       const v = DB.data.videos.find(v => v.id === el.dataset.id), frame = el.closest('.vframe') || $('#homeFeaturedVideo .vframe');
       if (v && frame) {
         if (frame.closest('#homeFeaturedVideo')) $('#homeVideoTitle').textContent = v.title;
-        window.SJFMedia.mount(frame,v);
+        window.SJFMedia.mount(frame,v,{loop:Boolean(frame.closest('#homeFeaturedVideo'))});
       }
       break;
     }
-    case 'hero-background': {
-      const allowed = ['assets/images/hero1.jpeg','assets/images/k1.jpeg','assets/images/r3.jpeg','assets/images/c3.jpeg'];
-      const image = el.dataset.image;
-      const hero = $('#publicHero.sjf-blue-hero');
-      if (!hero || !allowed.includes(image)) break;
-      try { localStorage.setItem('sjf_madhubani_hero_background', image); } catch (_) {}
-      const config = window.SJFHero.read();
-      window.SJFData.write('hero', {...config, layout:'madhubani'});
-      refreshHero();
-      break;
-    }
+    case 'video-prev': stepVideoViewer(-1); break;
+    case 'video-next': stepVideoViewer(1); break;
+    case 'video-close': closeVideoViewer(); break;
     case 'amt': {
       donAmt = Number(el.dataset.amt); $('#amt-custom').value = '';
       $$('.amt').forEach(b => { b.className = 'amt px-3 py-3.5 rounded-xl font-extrabold border-2 transition ' + (Number(b.dataset.amt) === donAmt ? 'g-fire text-white border-transparent shadow-lg' : 'border-navy/15 text-navy hover:border-navy/40'); }); break;
@@ -793,6 +927,13 @@ document.addEventListener('submit', e => {
   }
 });
 document.addEventListener('keydown', e => {
+  if (videoViewer) {
+    if (e.key === 'Escape') { e.preventDefault(); closeVideoViewer(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault(); stepVideoViewer(e.key === 'ArrowLeft' ? -1 : 1);
+    }
+    return;
+  }
   if (e.key === 'Escape') { closeModal(); closeMenu(); }
   if ($('#modal-root .lb-bg') && LB.items.length) {
     if (e.key === 'ArrowLeft') { LB.i = (LB.i-1+LB.items.length)%LB.items.length; paintLB(); }
@@ -804,6 +945,7 @@ window.addEventListener('hashchange',() => {
   if (name in PUBLIC_VIEWS && name !== currentPage()) location.replace(routeHref(name));
 });
 window.addEventListener('storage',e => {
+  if (e.key === 'sjf_language') return;
   if (e.key === 'sjf_hero') { refreshHero(); return; }
   if (e.key === 'sjf_admin_credentials') return;
   if (!e.key || e.key.startsWith('sjf_')) render();
@@ -818,7 +960,20 @@ window.addEventListener('scroll',() => {
   });
 },{passive:true});
 window.addEventListener('resize',() => document.documentElement.style.setProperty('--public-header-height',$('#site-head').offsetHeight+'px'));
+window.addEventListener('sjf:languagechange',() => {
+  // Preserve in-progress forms while rendering the selected language.
+  const fields = $$('form input, form textarea, form select').map(el => ({id:el.id,name:el.name,form:el.closest('form').dataset.form,value:el.value,checked:el.checked}));
+  const scrollPosition = scrollY;
+  if (videoViewer) closeVideoViewer();
+  render();
+  $$('form input, form textarea, form select').forEach(el => {
+    const saved = fields.find(field => el.id ? field.id === el.id : field.name === el.name && field.form === el.closest('form').dataset.form && (el.type !== 'checkbox' || field.value === el.value));
+    if (saved) { el.value=saved.value; if ('checked' in el) el.checked=saved.checked; }
+  });
+  window.scrollTo(0,scrollPosition);
+});
 render();
+window.SJFLocale?.init();
 initFishCursor();
 requestAnimationFrame(() => {
   const legacyRoute = sectionName();
