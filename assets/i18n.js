@@ -9,9 +9,9 @@
   let language = choice || 'en';
   const originalTitle = document.title;
   const dictionary = {
-    'The minimum donation to support children at the foundation is just Rs. 11/- ? a small amount that makes it easier for everyone to contribute.':'???????? ??? ?????? ?? ??? ?? ??? ??????? ??? ???? ?11/- ?? ? ???? ???? ???? ?? ?? ??? ????? ?? ???? ?????? ?? ???? ???',
-    'Volunteer photo slideshow':'????????? ?? ???????? ?? ????????','Previous photo':'????? ??????','Next photo':'???? ??????','Pause slideshow':'???????? ?????','Play slideshow':'???????? ?????',
-    'Volunteers leading a classroom activity':'????? ?? ??????? ?? ?????? ???? ?????????','Volunteers sharing treats with children':'?????? ?? ???????? ?????? ?????????','A guest receiving a traditional welcome':'????? ?? ???????? ??????','Guests at a foundation gathering':'???????? ?? ????????? ??? ?????','A guest being welcomed with a shawl':'??? ???? ????? ?? ??????','Community members in conversation at the foundation':'???????? ??? ?????? ???? ?????? ?? ?????','Guests sharing a discussion at the foundation':'???????? ??? ????? ???? ?????','Volunteers and guests meeting together':'??????????? ?? ???????? ?? ????',
+    'The minimum donation to support children at the foundation is just Rs. 11/- — a small amount that makes it easier for everyone to contribute.':'फाउंडेशन में बच्चों की मदद के लिए न्यूनतम दान केवल ₹11/- है — इतनी छोटी राशि से हर कोई आसानी से अपना योगदान दे सकता है।',
+    'Volunteer photo slideshow':'स्वयंसेवा की तस्वीरों का स्लाइडशो','Previous photo':'पिछली तस्वीर','Next photo':'अगली तस्वीर','Pause slideshow':'स्लाइडशो रोकें','Play slideshow':'स्लाइडशो चलाएँ',
+    'Volunteers leading a classroom activity':'कक्षा की गतिविधि का संचालन करते स्वयंसेवक','Volunteers sharing treats with children':'बच्चों को मिठाइयाँ बाँटते स्वयंसेवक','A guest receiving a traditional welcome':'अतिथि का पारंपरिक स्वागत','Guests at a foundation gathering':'फाउंडेशन के कार्यक्रम में अतिथि','A guest being welcomed with a shawl':'शॉल देकर अतिथि का स्वागत','Community members in conversation at the foundation':'फाउंडेशन में बातचीत करते समुदाय के सदस्य','Guests sharing a discussion at the foundation':'फाउंडेशन में चर्चा करते अतिथि','Volunteers and guests meeting together':'स्वयंसेवकों और अतिथियों की बैठक',
 
     'Children and volunteers with saplings':'पौधों के साथ बच्चे और स्वयंसेवक',
     'Community members saluting at the flag ceremony':'ध्वजारोहण समारोह में सलामी देते समुदाय के सदस्य',
@@ -50,7 +50,7 @@
     'Rooted in':'हमारी जड़ें','Culture':'संस्कृति में','Empowering':'सशक्त होते','Communities':'समुदाय','Growing':'बढ़ती','Hope':'आशा',
     'A community-led foundation creating spaces where children learn, grow and belong.':'समुदाय द्वारा संचालित एक फाउंडेशन, जहाँ बच्चों को सीखने, आगे बढ़ने और अपनापन महसूस करने का अवसर मिलता है।',
     'EDUCATION':'शिक्षा','EMPOWERMENT':'सशक्तीकरण','PROGRESS':'प्रगति','Knowledge creates opportunity.':'ज्ञान अवसर पैदा करता है।','Every individual deserves a chance.':'हर व्यक्ति एक अवसर का हकदार है।','Together, we build a better tomorrow.':'मिलकर हम एक बेहतर कल बनाते हैं।','Foundation values':'फाउंडेशन के मूल्य',
-    'Donate Now':'अभी दान करें','Become a Volunteer':'स्वयंसेवक बनें','Inspired by Bihar\'s living Madhubani heritage':'बिहार की जीवंत मधुबनी विरासत से प्रेरित','Culture-Rooted':'संस्कृति से जुड़े','Community-First':'समुदाय सर्वप्रथम','Transparent':'पारदर्शी',
+    'Donate Now':'अभी दान करें','Become a Volunteer':'स्वयंसेवक बनें','Supervised by Gaurav Thakur':'गौरव ठाकुर की देखरेख में','Culture-Rooted':'संस्कृति से जुड़े','Community-First':'समुदाय सर्वप्रथम','Transparent':'पारदर्शी',
     'Stories that moved us':'हमारे दिल को छू गई कहानियाँ','Stories that move us.':'दिल को छूने वाली कहानियाँ।','We Give Child A Gift Of Education':'बच्चों को शिक्षा का उपहार दें','Become A Volunteer?':'स्वयंसेवक बनना चाहेंगे?','Make Donation To Us?':'हमारा सहयोग करना चाहेंगे?','Contact Now':'अभी संपर्क करें','Watch All Videos':'सभी वीडियो देखें',
     'SERVICE':'सेवा','COMPASSION':'करुणा','DIGNITY':'गरिमा','COMMUNITY':'समुदाय','CULTURE':'संस्कृति','HOPE':'आशा',
     'Who We Are':'हम कौन हैं','A promise painted in':'देखभाल के हर रंग में','every shade of care.':'एक वादा।',

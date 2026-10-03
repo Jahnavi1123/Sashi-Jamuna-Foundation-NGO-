@@ -201,7 +201,7 @@ function heroSection(){const background = heroBackground(); return `<section id=
         <a href="#donate" class="btn btn-fire">${ic('heart')} Donate Now</a>
         <a href="#volunteer" class="btn btn-ghost">${ic('sparkle')} Become a Volunteer</a></div>
       <div class="mt-10 flex items-center gap-3 justify-center lg:justify-start rv" style="--d:320ms">
-        ${foundationLogo(30)}<span class="text-sm font-bold text-navy/70">Inspired by Bihar's living Madhubani heritage</span></div>
+        ${foundationLogo(30)}<span class="text-sm font-bold text-navy/70">Supervised by Gaurav Thakur</span></div>
     </div>
     <div class="sjf-home-hero-media relative rv" style="--d:200ms">
       <div class="sjf-home-hero-circle relative mx-auto">
@@ -289,7 +289,7 @@ function viewHome(){const ins=DB.data.initiatives.filter(x=>x.id!=='i5'),gals=DB
      <div class="rv"><span class="eyebrow">Who We Are</span>
        <h2 class="font-disp text-[clamp(1.9rem,4vw,2.9rem)] leading-tight text-navy mt-3">A promise painted in<br>every shade of care.</h2></div>
      <p class="mt-5 text-ink/75 text-lg rv text-center" style="--d:100ms">The Shashi Jamuna Foundation is a regional non-profit organization based in Rosera, Bihar, India. It actively engages in community development and promotes local art, culture, and youth achievement, including honoring international performers and preserving traditional folk arts such as the Jhijhiya dance.</p>
-    <p class="mt-5 text-ink/75 text-lg rv">The minimum donation to support children at the foundation is just Rs. 11/- ? a small amount that makes it easier for everyone to contribute.</p>
+    <p class="mt-5 text-ink/75 text-lg rv">The minimum donation to support children at the foundation is just Rs. 11/- — a small amount that makes it easier for everyone to contribute.</p>
      <p class="mt-6 text-ink/70 text-[15px] rv text-center" style="--d:160ms">Rosera, Bihar, India — a grassroots foundation rooted in local action, heritage preservation, youth growth and community care.</p>
      <ul class="mt-6 space-y-3.5 rv" style="--d:220ms">
        <li class="flex gap-3 items-start">${ic('users','text-ver mt-0.5')}<span class="font-bold text-navy">Community-first</span><span class="text-ink/65">— programs shaped with the people we serve</span></li>
@@ -343,7 +343,7 @@ function viewAbout(){const vals=[['heart','Compassion','Every decision begins wi
   <div class="rv" style="--d:120ms"><span class="eyebrow">Our Story</span>
     <h2 class="font-disp text-[clamp(1.8rem,3.6vw,2.6rem)] text-navy mt-3 leading-tight">Born from a simple belief:<br>together, we rise.</h2>
     <p class="mt-5 text-ink/75 text-lg">The Shashi Jamuna Foundation is a regional non-profit organization based in Rosera, Bihar, India. It actively engages in community development and promotes local art, culture, and youth achievement, including honoring international performers and preserving traditional folk arts such as the Jhijhiya dance.</p>
-    <p class="mt-5 text-ink/75 text-lg rv">The minimum donation to support children at the foundation is just Rs. 11/- ? a small amount that makes it easier for everyone to contribute.</p>
+    <p class="mt-5 text-ink/75 text-lg rv">The minimum donation to support children at the foundation is just Rs. 11/- — a small amount that makes it easier for everyone to contribute.</p>
     <div class="card p-5 mt-6">${crn()}<p class="ph text-[15px]">Based in Rosera, Bihar, the foundation brings people together around education, cultural pride, community care and opportunity. It stands as a local platform for youth, families and artists to grow with dignity and purpose.</p></div>
     <div class="flex flex-wrap gap-3 mt-6">${['Rosera, Bihar','Volunteer-powered','Culture-led'].map(t=>`<span class="px-4 py-2 rounded-full bg-navy/5 text-navy font-bold text-sm border-1.5 border-navy/15">${t}</span>`).join('')}</div></div>
  </div></section>
@@ -571,7 +571,7 @@ function viewVolunteer(){const ins=DB.data.initiatives, photos=DATA.defaults.pho
   <div class="rv"><div class="card !p-3 rotate-1 hover:rotate-0 transition-transform duration-500">${crn()}
     <div id="volunteer-slideshow" data-motion-static role="region" aria-label="Volunteer photo slideshow">
       <div class="volunteer-slides">${photos.map((p,i)=>`<img src="${p.src}" alt="${esc(p.caption)}" width="${p.width}" height="${p.height}" decoding="async" class="${i===0?'is-active':''}" aria-hidden="${i!==0}">`).join('')}</div>
-      <div class="volunteer-slide-controls"><button type="button" data-slide="prev" aria-label="Previous photo">${ic('chevL')}</button><span data-slide-count>1 / 8</span><button type="button" data-slide="next" aria-label="Next photo">${ic('chevR')}</button><button type="button" data-slide="pause" aria-label="Pause slideshow" aria-pressed="false">?</button></div>
+      <div class="volunteer-slide-controls"><button type="button" data-slide="prev" aria-label="Previous photo">${ic('chevL')}</button><span data-slide-count>1 / 8</span><button type="button" data-slide="next" aria-label="Next photo">${ic('chevR')}</button><button type="button" data-slide="pause" aria-label="Pause slideshow" aria-pressed="false">Ⅱ</button></div>
     </div></div>
    <div class="grid grid-cols-2 gap-4 mt-8">
     ${[['clock','Flexible commitments','Weekdays, weekends or remote — every hour counts.'],['users','Choose your cause','Pick the initiative that speaks to you.'],['sparkle','Learn &amp; grow','Grassroots skills no classroom teaches.'],['heart','A community','Of doers who quickly feel like family.']].map((v,i)=>`<div class="card p-5 rv" style="--d:${i*80}ms">${ic(v[0],'w-6 h-6 text-ver')}<b class="block text-navy mt-2">${v[1]}</b><span class="text-sm text-ink/60">${v[2]}</span></div>`).join('')}</div>
@@ -602,7 +602,7 @@ function initVolunteerSlideshow() {
   const slides = $$('.volunteer-slides img', root), pause = $('[data-slide="pause"]', root);
   let index = 0, paused = motionPreference.matches;
   const syncPause = () => {
-    pause.textContent = paused ? '?' : '?';
+    pause.textContent = paused ? '▶' : 'Ⅱ';
     pause.setAttribute('aria-pressed', String(paused));
     pause.setAttribute('aria-label', window.SJFLocale?.translate(paused ? 'Play slideshow' : 'Pause slideshow') || (paused ? 'Play slideshow' : 'Pause slideshow'));
   };
