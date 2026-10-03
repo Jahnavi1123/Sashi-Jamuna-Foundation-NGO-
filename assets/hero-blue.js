@@ -112,8 +112,17 @@
     render(settings) {
       const s = window.SJFHero.resolve({...settings,layout:'blue'});
       const words = ['Education','Healthcare','Women Empowerment','Skill Development','Madhubani Heritage','Environment','Disaster Relief'];
+      const collageImages = [
+        ['assets/images/hero1.jpeg','Children enjoying a foundation outing'],
+        ['assets/images/k1.jpeg','Sashi Jamuna Foundation recognition event'],
+        ['assets/images/r3.jpeg','Children at a community plantation drive'],
+        ['assets/images/c3.jpeg','Children learning together in a community session']
+      ];
+      let selectedBackground = '';
+      try { selectedBackground = localStorage.getItem('sjf_blue_hero_background') || ''; } catch (_) {}
+      if (!collageImages.some(([src]) => src === selectedBackground)) selectedBackground = '';
       const group = '<div class="sbh-band-group">'+words.map(word=>'<span>'+word+'</span><i>◆</i>').join('')+'</div>';
-      return `<section id="publicHero" class="sjf-blue-hero" data-hero-layout="blue">
+      return `<section id="publicHero" class="sjf-blue-hero ${selectedBackground ? 'sbh-photo-background' : ''}" data-hero-layout="blue"${selectedBackground ? ` style="--sbh-photo:url('${selectedBackground}')"` : ''}>
         <div class="sbh-glow" aria-hidden="true"></div><div class="sbh-pattern" aria-hidden="true"></div>
         <div class="sbh-grid"><div>
           <span class="sbh-eyebrow">Rooted in Bihar · Serving Communities</span>
@@ -122,7 +131,7 @@
           <div class="sbh-actions"><a href="#donate" class="sbh-button sbh-button-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.3-9A5.3 5.3 0 0 1 12 6.4 5.3 5.3 0 0 1 21.3 12c-1.8 4.4-9.3 9-9.3 9Z"/></svg>Donate Now</a><a href="#initiatives" class="sbh-button">Explore Initiatives <span aria-hidden="true">→</span></a></div>
           <div class="sbh-notes"><span><svg viewBox="0 0 24 24" fill="none" stroke="#168642" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>80G Tax Benefit [Verify]</span><span><svg viewBox="0 0 24 24" fill="none" stroke="#168a45" stroke-width="2.6" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Transparent Reporting</span><span><svg viewBox="0 0 24 24" fill="none" stroke="#168642" stroke-width="2.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Volunteer-Led</span></div>
         </div><div class="sbh-collage">
-          ${[0,1,2,3].map(i=>'<div class="sbh-art">'+artSVG(i,'Madhubani inspired artwork')+'</div>').join('')}
+          ${collageImages.map(([src,alt])=>'<button type="button" class="sbh-art" data-act="hero-background" data-image="'+src+'" aria-label="Use '+alt+' as the hero background" aria-pressed="'+String(src === selectedBackground)+'"><img src="'+src+'" alt="'+alt+'" loading="eager"></button>').join('')}
           <div class="sbh-badge"><img class="sjf-hero-logo" src="assets/images/sjf-logo.png" alt="Sashi Jamuna Foundation logo" width="112" height="112"></div>
         </div></div>
         <div class="sbh-band" aria-hidden="true"><div class="sbh-band-track">${group}${group}</div></div>

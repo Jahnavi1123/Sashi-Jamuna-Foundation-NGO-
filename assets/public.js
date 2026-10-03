@@ -736,6 +736,18 @@ document.addEventListener('click', e => {
       }
       break;
     }
+    case 'hero-background': {
+      const allowed = ['assets/images/hero1.jpeg','assets/images/k1.jpeg','assets/images/r3.jpeg','assets/images/c3.jpeg'];
+      const image = el.dataset.image;
+      const hero = $('#publicHero.sjf-blue-hero');
+      if (!hero || !allowed.includes(image)) break;
+      hero.classList.add('sbh-photo-background');
+      hero.style.setProperty('--sbh-photo', `url('${image}')`);
+      $$('.sbh-art[data-act="hero-background"]', hero).forEach(card => card.setAttribute('aria-pressed', String(card === el)));
+      try { localStorage.setItem('sjf_blue_hero_background', image); } catch (_) {}
+      toast('Hero background updated.');
+      break;
+    }
     case 'amt': {
       donAmt = Number(el.dataset.amt); $('#amt-custom').value = '';
       $$('.amt').forEach(b => { b.className = 'amt px-3 py-3.5 rounded-xl font-extrabold border-2 transition ' + (Number(b.dataset.amt) === donAmt ? 'g-fire text-white border-transparent shadow-lg' : 'border-navy/15 text-navy hover:border-navy/40'); }); break;
