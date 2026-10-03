@@ -745,7 +745,6 @@ document.addEventListener('click', e => {
       hero.style.setProperty('--sbh-photo', `url('${image}')`);
       $$('.sbh-art[data-act="hero-background"]', hero).forEach(card => card.setAttribute('aria-pressed', String(card === el)));
       try { localStorage.setItem('sjf_blue_hero_background', image); } catch (_) {}
-      toast('Hero background updated.');
       break;
     }
     case 'amt': {
