@@ -40,6 +40,7 @@ async function check(file, reduced = false, observerAvailable = true) {
     scrollToY(100);
     assert(!d.querySelector('#site-head').classList.contains('sjf-header-hidden'),'Direction reversal shows menu again');
     w.requestAnimationFrame = () => 1;
+    if(reduced) assert(!d.querySelector('.sjf-hero-sketch'),'Reduced motion skips opening sketch');
     if(reduced || !observerAvailable) {
       assert(!d.body.classList.contains('sjf-scroll-motion'),'Fallback never hides content');
       assert(d.querySelector('#main h1'),'Page content rendered');
@@ -59,12 +60,23 @@ async function check(file, reduced = false, observerAvailable = true) {
       assert(!el.classList.contains('sjf-exit-top'));
     }
     if(file==='3.html') {
+      const hero = d.querySelector('#publicHero');
+      assert(hero.classList.contains('sjf-hero-sketch'),'Hero prepares the opening sketch');
+      assert(!observer.targets.some(el=>hero.contains(el)),'Scrolling does not replay the hero intro');
+      assert(hero.querySelector('.sjf-hero-values-photo.sjf-sketch-part'));
+      assert(hero.querySelector('.hero-kids-frame.sjf-sketch-part video[autoplay][loop]'),'Sketch keeps continuous video');
+      const done = new w.Event('animationend',{bubbles:true});
+      Object.defineProperty(done,'animationName',{value:'sjf-hero-sketch'});
+      [...hero.querySelectorAll('.sjf-sketch-part')].at(-1).dispatchEvent(done);
+      assert(!hero.classList.contains('sjf-hero-sketch'),'Intro cleans up after completion');
+      assert(!hero.querySelector('.sjf-pencil-ring'),'Temporary pencil outline removed');
       const effects = new Set(observer.targets.map(el=>el.dataset.scrollEffect));
       for(const effect of ['ripple','ink','brush','sketch','rise','breathe']) assert(effects.has(effect),effect+' available');
       assert(d.querySelector('#who-we-are h2.sjf-revealed'),'Who We Are is visible on entry');
       assert(d.querySelector('footer .sjf-reveal'),'Footer included');
       d.querySelector('[data-act="language"]').click();
       d.querySelector('[data-language="hi"]').click();
+      assert(!d.querySelector('.sjf-hero-sketch'),'Completed intro does not replay on language changes');
       assert(d.querySelector('#main').textContent.includes('ज्ञान अवसर पैदा करता है।'),'Hindi survives animated word markup');
     }
     const input = d.querySelector('form input.sjf-reveal[name="name"],form input.sjf-reveal[type="email"]');

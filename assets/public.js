@@ -179,7 +179,7 @@ function heroBackground(){
   let image = ''; try { image = localStorage.getItem('sjf_madhubani_hero_background') || ''; } catch (_) {}
   return allowed.includes(image) ? image : '';
 }
-function heroSection(){const background = heroBackground(); return `<section id="publicHero" class="relative min-h-[94vh] flex items-center overflow-hidden pt-28 pb-16 ${background ? 'sjf-madhubani-photo-hero' : ''}"${background ? ` style="--sjf-hero-photo:url('${background}')"` : ''}>
+function heroSection(){const background = heroBackground(); return `<section id="publicHero" data-motion-static class="relative min-h-[94vh] flex items-center overflow-hidden pt-28 pb-16 ${background ? 'sjf-madhubani-photo-hero' : ''}"${background ? ` style="--sjf-hero-photo:url('${background}')"` : ''}>
   <div class="hero-fish-track hero-fish-right" aria-hidden="true">${fish('#F15A24')}</div>
   <div class="hero-fish-track hero-fish-left" aria-hidden="true">${fish()}</div>
   <div class="hero-fish-track hero-fish-mini hero-fish-mini-one" aria-hidden="true">${fish('#F15A24')}</div>
@@ -670,6 +670,27 @@ function announcement() {
   return '<div class="section-announcement"><div class="announcement-window" aria-hidden="true"><div class="announcement-track">' + group + group + '</div></div><button type="button" class="announcement-toggle" aria-label="' + (paused ? 'Play' : 'Pause') + ' announcements" aria-pressed="' + paused + '">' + (paused ? '▶' : 'Ⅱ') + '</button></div>';
 }
 
+// A single opening sketch, paused while the language picker or loader covers it.
+let heroSketchPlayed = false;
+function initHeroSketch() {
+  const hero = $('#publicHero');
+  if (!hero || heroSketchPlayed || motionPreference.matches) return;
+  const targets = $$('.hero-kids-frame,.sjf-home-hero-copy > .rv,.sjf-hero-slogans > div,.sjf-hero-values-photo,.chip,.hero-fish-track > svg', hero);
+  hero.classList.add('sjf-hero-sketch');
+  targets.forEach((el,i) => {
+    el.classList.add('sjf-sketch-part');
+    el.style.setProperty('--sketch-delay', Math.min(i * 70, 630) + 'ms');
+  });
+  const circle = $('.sjf-home-hero-circle', hero);
+  circle.insertAdjacentHTML('beforeend','<svg class="sjf-pencil-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" pathLength="100"/></svg>');
+  hero.addEventListener('animationend', event => {
+    if (event.animationName !== 'sjf-hero-sketch' || event.target !== targets.at(-1)) return;
+    heroSketchPlayed = true;
+    hero.classList.remove('sjf-hero-sketch');
+    $('.sjf-pencil-ring', hero)?.remove();
+  });
+}
+
 let revealObserver;
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 function initReveal() {
@@ -846,7 +867,7 @@ function render() {
   $$('form[data-form]').forEach(form => {
     const note = document.createElement('p'); note.className = 'demo-form-note'; note.textContent = 'Demo: saved in this browser only.'; form.appendChild(note);
   });
-  initCounters(); window.SJFLocale?.apply($('#app')); initReveal();
+  initCounters(); window.SJFLocale?.apply($('#app')); initReveal(); initHeroSketch();
   document.documentElement.style.setProperty('--public-header-height', $('#site-head').offsetHeight + 'px');
   activeNav(name);
 }
