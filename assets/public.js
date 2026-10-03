@@ -707,7 +707,7 @@ let heroSketchPlayed = false;
 function initHeroSketch() {
   const hero = $('#publicHero');
   if (!hero || heroSketchPlayed || motionPreference.matches) return;
-  const targets = $$('.hero-kids-frame,.sjf-home-hero-copy > .rv,.sjf-hero-slogans > div,.sjf-hero-values-photo,.chip,.hero-fish-track > svg', hero);
+  const targets = $$('.hero-kids-frame,.sjf-home-hero-copy > .rv:not(h1):not([data-home-copy]),.sjf-hero-values-photo,.chip,.hero-fish-track > svg', hero);
   hero.classList.add('sjf-hero-sketch');
   targets.forEach((el,i) => {
     el.classList.add('sjf-sketch-part');
@@ -778,6 +778,12 @@ function initReveal() {
   content('.rv').forEach(el => {
     if (!el.matches('form') && !el.classList.contains('sjf-reveal') && !el.querySelector('.sjf-reveal,form,video,input')) mark(el, 'rise');
   });
+  // Hero text repeats its ink reveal independently of the one-time media sketch.
+  const heroText = $$('#publicHero h1,#publicHero [data-home-copy="heroDescription"],#publicHero .sjf-hero-slogans dt,#publicHero .sjf-hero-slogans dd');
+  heroText.forEach((el,i) => {
+    mark(el, 'hero-ink');
+    el.style.setProperty('--ink-delay', Math.min(i * 60, 240) + 'ms');
+  });
   revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
     const el = entry.target;
     if (el.contains(document.activeElement)) return;
@@ -785,7 +791,7 @@ function initReveal() {
     el.classList.toggle('sjf-exit-top', !visible && entry.boundingClientRect.top < 0);
     el.classList.toggle('sjf-revealed', visible);
   }), {threshold:0, rootMargin:'0px 0px -24px 0px'});
-  content('.sjf-reveal').forEach(el => revealObserver.observe(el));
+  [...content('.sjf-reveal'), ...heroText].forEach(el => revealObserver.observe(el));
 }
 motionPreference.addEventListener?.('change', initReveal);
 document.addEventListener('focusin', event => {

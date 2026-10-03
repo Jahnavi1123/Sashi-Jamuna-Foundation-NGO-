@@ -258,6 +258,18 @@ html.sjf-loading-visible .sjf-hero-sketch :is(.sjf-sketch-part,.sjf-pencil-ring)
 .sjf-scroll-motion [data-scroll-effect="breathe"].sjf-revealed{animation:sjf-scroll-breathe 2.8s ease-in-out .6s 2}
 .sjf-scroll-motion .sjf-reveal.sjf-exit-top:not(.sjf-revealed){translate:0 -12px;clip-path:inset(0 0 100% 0);transition-duration:.35s}
 .sjf-scroll-motion .sjf-reveal:focus-within{clip-path:none!important;animation:none!important}
+/* Ink pools spread across the hero copy on each viewport entry. */
+.sjf-scroll-motion [data-scroll-effect="hero-ink"]{translate:none;transition:opacity .3s ease;mask-image:radial-gradient(ellipse,#000 58%,transparent 72%),radial-gradient(ellipse,#000 58%,transparent 72%),radial-gradient(ellipse,#000 58%,transparent 72%);mask-repeat:no-repeat;mask-position:0% 45%,48% 70%,100% 30%;mask-size:0% 0%;clip-path:none}
+.sjf-scroll-motion [data-scroll-effect="hero-ink"].sjf-revealed{animation:sjf-hero-ink 1.65s cubic-bezier(.2,.65,.3,1) var(--ink-delay,0ms) both}
+html.sjf-loading-visible [data-scroll-effect="hero-ink"],body:has(#sjf-language-picker[open]) [data-scroll-effect="hero-ink"]{animation-play-state:paused!important}
+@keyframes sjf-hero-ink{
+  0%{mask-size:0% 0%,0% 0%,0% 0%;filter:blur(1.5px);opacity:.3}
+  35%{mask-size:65% 180%,30% 120%,15% 80%;filter:blur(.6px);opacity:1}
+  70%{mask-size:130% 280%,110% 250%,85% 220%;filter:blur(.2px)}
+  100%{mask-size:240% 400%,240% 400%,240% 400%;filter:none;opacity:1}
+}
+@media(prefers-reduced-motion:reduce){[data-scroll-effect="hero-ink"]{mask:none!important}}
+@media print{[data-scroll-effect="hero-ink"]{mask:none!important}}
 @keyframes sjf-sketch-trace{0%{outline:2px dashed #f15a2480;outline-offset:-10px}55%{outline:2px dashed #16864290;outline-offset:-3px}100%{outline:2px dashed transparent;outline-offset:0}}
 @keyframes sjf-scroll-breathe{0%,100%{scale:1}50%{scale:1.025}}
 .sjf-reveal-word{display:inline-block}
